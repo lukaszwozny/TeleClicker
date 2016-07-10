@@ -85,8 +85,8 @@ public class ScoreService {
     }
 
     private void loadScore() {
-        points = prefs.getFloat(GAME_SCORE);
         passiveIncome = prefs.getFloat(GAME_PASSIVE_INCOME);
+        points = prefs.getFloat(GAME_SCORE);
     }
 
     public void saveCurrentGameState() {
