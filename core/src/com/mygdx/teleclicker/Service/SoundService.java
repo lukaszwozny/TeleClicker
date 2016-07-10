@@ -1,6 +1,7 @@
 package com.mygdx.teleclicker.Service;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 /**
@@ -13,6 +14,8 @@ public class SoundService {
     private Sound evilLaughJewSound;
     private Sound bombExplosionSound;
 
+    private Music cakelandMusic;
+
     public SoundService(){
         init();
     }
@@ -22,6 +25,8 @@ public class SoundService {
         cashRegisterSound = Gdx.audio.newSound(Gdx.files.internal("sounds/cash_register.mp3"));
         evilLaughJewSound = Gdx.audio.newSound(Gdx.files.internal("sounds/evil_laugh_jew.mp3"));
         bombExplosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bomb_explosion.mp3"));
+
+        cakelandMusic = Gdx.audio.newMusic(Gdx.files.internal("music/caketown.mp3"));
     }
 
     public void playPopSound(){
@@ -38,5 +43,10 @@ public class SoundService {
 
     public void playBombExplosionSound(){
         bombExplosionSound.play();
+    }
+
+    public void playCaketownMusic(boolean looped){
+        cakelandMusic.play();
+        cakelandMusic.setLooping(looped);
     }
 }

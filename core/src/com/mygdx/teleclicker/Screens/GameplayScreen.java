@@ -35,6 +35,11 @@ public class GameplayScreen extends AbstractScreen{
         initResetScoreButton();
         initScoreLabel();
         initFlyingStuffController();
+        startTheMusic();
+    }
+
+    private void startTheMusic() {
+        game.getSoundService().playCaketownMusic(true);
     }
 
     private void initFlyingStuffController() {
