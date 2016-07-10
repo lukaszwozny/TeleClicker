@@ -79,16 +79,19 @@ public class FlyingObject extends Image{
         switch (type) {
             case MONEY:
                 game.addPoints(50);
-                game.getSoundService().playMonaySound();
+                game.getSoundService().playCashRegisterSound();
                 break;
             case MONEY_DOWN:
                 game.addPoints(-50);
+                game.getSoundService().playBombExplosionSound();
                 break;
             case PASSIVE:
                 game.addPassiveIncome(5);
+                game.getSoundService().playPopSound();
                 break;
             case PASSIVE_DOWN:
                 game.addPassiveIncome(-5);
+                game.getSoundService().playEvillaughJewSound();
                 break;
         }
         FlyingObject.this.remove();
