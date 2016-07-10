@@ -2,9 +2,11 @@ package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.mygdx.teleclicker.Controllers.FlyingObjectController;
 import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.TeleClicker;
+import com.mygdx.teleclicker.ui.BasicDialog;
 import com.mygdx.teleclicker.ui.IClickCallback;
 import com.mygdx.teleclicker.ui.PlayerButton;
 import com.mygdx.teleclicker.ui.ResetScoreButton;
@@ -12,7 +14,7 @@ import com.mygdx.teleclicker.ui.ResetScoreButton;
 /**
  * Created by Senpai on 10.07.2016.
  */
-public class GameplayScreen extends AbstractScreen{
+public class GameplayScreen extends AbstractScreen {
     private Image bgImg;
     private Player player;
     private PlayerButton playerButton;
@@ -33,6 +35,16 @@ public class GameplayScreen extends AbstractScreen{
         game.getScoreService().initLabels(stage);
         initFlyingStuffController();
         startTheMusic();
+        initPassiveIncomeDialog();
+    }
+
+    private void initPassiveIncomeDialog() {
+        float pointsGained = game.getScoreService().getPointsToAdd();
+        if (pointsGained > 0) {
+            BasicDialog basicDialog = new BasicDialog();
+            stage.addActor(basicDialog);
+            basicDialog.initContent("Podczas nieobecności zarobiłeś/aś\n    " + pointsGained + " Erlangów.");
+        }
     }
 
     private void startTheMusic() {
@@ -68,7 +80,6 @@ public class GameplayScreen extends AbstractScreen{
                 game.getScoreService().addPoint();
             }
         });
-
         stage.addActor(playerButton);
     }
 

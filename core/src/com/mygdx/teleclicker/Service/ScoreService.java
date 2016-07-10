@@ -4,7 +4,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
-import com.mygdx.teleclicker.ui.ScoreLabel;
+import com.mygdx.teleclicker.ui.GameLabel;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,9 +18,10 @@ public class ScoreService {
 
     private float points;
     private float passiveIncome;
+    private float pointsToAdd;
 
-    private ScoreLabel scoreLabel;
-    private ScoreLabel passiveIncomeLabel;
+    private GameLabel scoreLabel;
+    private GameLabel passiveIncomeLabel;
 
     private Preferences prefs;
 
@@ -30,8 +31,10 @@ public class ScoreService {
     }
 
     public void initLabels(Stage stage) {
-        scoreLabel = new ScoreLabel(20, 650);
-        passiveIncomeLabel = new ScoreLabel(20, 630);
+        scoreLabel = new GameLabel();
+        scoreLabel.setPosition(20,650);
+        passiveIncomeLabel = new GameLabel();
+        passiveIncomeLabel.setPosition(20,630);
         stage.addActor(scoreLabel);
         stage.addActor(passiveIncomeLabel);
     }
@@ -56,7 +59,9 @@ public class ScoreService {
         if (getSavedTimeStamp() > 0) {
             final float multiplier = 0.1f;
             long deleyTime = TimeUtils.millis() - getSavedTimeStamp();
-            points += TimeUnit.MILLISECONDS.toSeconds(deleyTime) * multiplier * passiveIncome;
+
+            pointsToAdd = TimeUnit.MILLISECONDS.toSeconds(deleyTime) * multiplier * passiveIncome;
+            points += pointsToAdd;
         }
     }
 
@@ -107,5 +112,9 @@ public class ScoreService {
 
     public float getPoints() {
         return points;
+    }
+
+    public float getPointsToAdd() {
+        return pointsToAdd;
     }
 }

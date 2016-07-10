@@ -12,10 +12,10 @@ import com.mygdx.teleclicker.TeleClicker;
  * Created by Senpai on 10.07.2016.
  */
 public class Player extends Image {
-    private final static int WIDHT = 180;
+    private final static int WIDTH = 180;
     private final static int HEIGHT = 200;
 
-    private final static int STARTING_X = TeleClicker.WIDTH / 2 - WIDHT / 2;
+    private final static int STARTING_X = TeleClicker.WIDTH / 2 - WIDTH / 2;
     private final static int STARTING_Y = TeleClicker.HEIGHT / 2 - HEIGHT / 2 - 50;
 
     private TeleClicker game;
@@ -24,8 +24,8 @@ public class Player extends Image {
         super(new Texture("img/skins/player/phone_old1.png"));
         this.game = game;
 
-        this.setOrigin(WIDHT / 2, HEIGHT / 2);
-        this.setSize(WIDHT, HEIGHT);
+        this.setOrigin(WIDTH / 2, HEIGHT / 2);
+        this.setSize(WIDTH, HEIGHT);
 
         // starting position
         this.setPosition(STARTING_X, STARTING_Y);
