@@ -1,4 +1,4 @@
-package Entities;
+package com.mygdx.teleclicker.Entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;

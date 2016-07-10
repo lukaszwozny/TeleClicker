@@ -1,16 +1,25 @@
-package Screens;
+package com.mygdx.teleclicker.Screens;
+
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.mygdx.teleclicker.Entities.Player;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygdx.teleclicker.TeleClicker;
+import com.mygdx.teleclicker.ui.IClickCallback;
+import com.mygdx.teleclicker.ui.PlayerButton;
+import com.mygdx.teleclicker.ui.ResetScoreButton;
+import com.mygdx.teleclicker.ui.ScoreLabel;
 
 /**
  * Created by Senpai on 10.07.2016.
  */
-public class GameplayScreen {
+public class GameplayScreen extends AbstractScreen{
     private Player player;
     private PlayerButton playerButton;
     private ResetScoreButton resetScoreButton;
     private Label scoreLabel;
     private Label resetButtonLabel;
 
-    public GameplayScreen(Clicker game) {
+    public GameplayScreen(TeleClicker game) {
         super(game);
     }
 
