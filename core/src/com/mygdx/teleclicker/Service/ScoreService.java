@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.ui.ScoreLabel;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Senpai on 10.07.2016.
  */
@@ -45,8 +47,6 @@ public class ScoreService {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-
-                System.out.println("Test");
                 points += passiveIncome;
             }
         }, 1, 1);
@@ -54,7 +54,8 @@ public class ScoreService {
 
     private void calculateGainedPassiveIncome() {
         long deleyTime = TimeUtils.millis() - getSavedTimeStamp();
-        points += deleyTime / 1000 * passiveIncome / 10;
+        points += TimeUnit.MILLISECONDS.toSeconds(deleyTime) / 10.0f * passiveIncome;
+
     }
 
     public void addPoints(float pointsToAdd) {
