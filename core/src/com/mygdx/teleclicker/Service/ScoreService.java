@@ -2,6 +2,7 @@ package com.mygdx.teleclicker.Service;
 
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.ui.ScoreLabel;
 
 /**
@@ -9,22 +10,23 @@ import com.mygdx.teleclicker.ui.ScoreLabel;
  */
 public class ScoreService {
     public final static String GAME_SCORE = "com.mygdx.clicker.prefs.score";
+    public final static String PASSIVE_INCOME = "com.mygdx.clicker.prefs.passive";
 
-    private int points;
-    private int passiveIncome;
+    private float points;
+    private float passiveIncome;
 
     private ScoreLabel scoreLabel;
     private ScoreLabel passiveIncomeLabel;
 
     private Preferences prefs;
 
-    public ScoreService(Preferences prefs){
+    public ScoreService(Preferences prefs) {
         this.prefs = prefs;
         init();
     }
 
     public void initLabels(Stage stage) {
-        scoreLabel = new ScoreLabel(20,650);
+        scoreLabel = new ScoreLabel(20, 650);
         passiveIncomeLabel = new ScoreLabel(20, 630);
         stage.addActor(scoreLabel);
         stage.addActor(passiveIncomeLabel);
@@ -32,44 +34,55 @@ public class ScoreService {
 
     private void init() {
         loadScore();
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+
+                System.out.println("Test");
+                points += passiveIncome;
+            }
+        }, 1, 1);
     }
 
-    public void addPoints(int pointsToAdd){
+    public void addPoints(float pointsToAdd) {
         points += pointsToAdd;
         updateSavedScoreInPrefs();
     }
 
-    public void addPoint(){
+    public void addPoint() {
         points++;
         updateSavedScoreInPrefs();
     }
 
     public void resetGameScore() {
-        points = 0;
+        points = 0.0f;
+        passiveIncome = 0.0f;
         updateSavedScoreInPrefs();
     }
 
     private void loadScore() {
-        points = prefs.getInteger(GAME_SCORE);
+        points = prefs.getFloat(GAME_SCORE);
+        passiveIncome = prefs.getFloat(PASSIVE_INCOME);
     }
 
     private void updateSavedScoreInPrefs() {
-        prefs.putInteger(GAME_SCORE, points);
+        prefs.putFloat(GAME_SCORE, points);
+        prefs.putFloat(PASSIVE_INCOME, passiveIncome);
         prefs.flush();
     }
 
     public void addPassiveIncome(int value) {
-        // TODO implement
-        System.out.println("passive income click");
+        passiveIncome += value;
+        updateSavedScoreInPrefs();
     }
 
     /**
      * ---------------------
      * getters and setters
-     *
      */
 
-    public int getPoints() {
+    public float getPoints() {
         return points;
     }
 

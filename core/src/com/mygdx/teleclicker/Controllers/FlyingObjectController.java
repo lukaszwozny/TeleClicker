@@ -25,7 +25,6 @@ public class FlyingObjectController {
             public void run() {
 
                 Timer.schedule(new Timer.Task() {
-
                     @Override
                     public void run() {
 
