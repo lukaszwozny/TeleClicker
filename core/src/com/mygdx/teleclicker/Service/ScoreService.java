@@ -36,7 +36,7 @@ public class ScoreService {
         stage.addActor(passiveIncomeLabel);
     }
 
-    public void saveTimeStamp(){
+    public void saveTimeStamp() {
 
     }
 
@@ -53,7 +53,7 @@ public class ScoreService {
     }
 
     private void calculateGainedPassiveIncome() {
-        if(getSavedTimeStamp() > 0){
+        if (getSavedTimeStamp() > 0) {
             final float multiplier = 0.1f;
             long deleyTime = TimeUtils.millis() - getSavedTimeStamp();
             points += TimeUnit.MILLISECONDS.toSeconds(deleyTime) * multiplier * passiveIncome;
@@ -80,6 +80,8 @@ public class ScoreService {
 
     public void addPassiveIncome(int value) {
         passiveIncome += value;
+        if (passiveIncome < 0)
+            passiveIncome = 0;
     }
 
     private void loadScore() {
@@ -90,7 +92,7 @@ public class ScoreService {
     public void saveCurrentGameState() {
         prefs.putFloat(GAME_SCORE, points);
         prefs.putFloat(GAME_PASSIVE_INCOME, passiveIncome);
-        prefs.putLong(GAME_SAVED_TIMESTAMP,TimeUtils.millis());
+        prefs.putLong(GAME_SAVED_TIMESTAMP, TimeUtils.millis());
         prefs.flush();
     }
 
@@ -99,7 +101,7 @@ public class ScoreService {
      * getters and setters
      */
 
-    private Long getSavedTimeStamp(){
+    private Long getSavedTimeStamp() {
         return prefs.getLong(GAME_SAVED_TIMESTAMP);
     }
 
