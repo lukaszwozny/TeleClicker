@@ -16,14 +16,13 @@ public abstract class AbstractScreen implements Screen {
     protected TeleClicker game;
 
     protected Stage stage;
-    protected OrthographicCamera camera;
-
+    private OrthographicCamera camera;
     protected SpriteBatch spriteBatch;
 
-    public AbstractScreen(TeleClicker game) {
+    public AbstractScreen(TeleClicker game){
         this.game = game;
         createCamera();
-        stage = new Stage(new StretchViewport(TeleClicker.WIDTH, TeleClicker.HEIGHT));
+        stage = new Stage(new StretchViewport(TeleClicker.WIDTH, TeleClicker.HEIGHT, camera));
         spriteBatch = new SpriteBatch();
         Gdx.input.setInputProcessor(stage);
         init();
@@ -35,7 +34,6 @@ public abstract class AbstractScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, TeleClicker.WIDTH, TeleClicker.HEIGHT);
         camera.update();
-
     }
 
     @Override
@@ -46,12 +44,10 @@ public abstract class AbstractScreen implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
+    public void show() {}
 
     private void clearScreen() {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
@@ -66,17 +62,14 @@ public abstract class AbstractScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {
         game.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
     }
 }

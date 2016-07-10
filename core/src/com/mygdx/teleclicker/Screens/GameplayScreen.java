@@ -1,6 +1,9 @@
 package com.mygdx.teleclicker.Screens;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.mygdx.teleclicker.Controllers.FlyingObjectController;
 import com.mygdx.teleclicker.Entities.Player;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.teleclicker.TeleClicker;
@@ -13,11 +16,12 @@ import com.mygdx.teleclicker.ui.ScoreLabel;
  * Created by Senpai on 10.07.2016.
  */
 public class GameplayScreen extends AbstractScreen{
+    private Image bgImg;
     private Player player;
     private PlayerButton playerButton;
     private ResetScoreButton resetScoreButton;
-    private Label scoreLabel;
-    private Label resetButtonLabel;
+    private ScoreLabel scoreLabel;
+    private FlyingObjectController flyingObjectController;
 
     public GameplayScreen(TeleClicker game) {
         super(game);
@@ -25,29 +29,32 @@ public class GameplayScreen extends AbstractScreen{
 
     @Override
     protected void init() {
+        initBg();
         initPlayer();
         initPlayerButton();
-        initResetButtonLabel();
         initResetScoreButton();
         initScoreLabel();
+        initFlyingStuffController();
     }
 
-    private void initResetButtonLabel() {
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont();
-        resetButtonLabel = new Label("RESET", labelStyle);
-        resetButtonLabel.setX(385);
-        resetButtonLabel.setY(640);
-        stage.addActor(resetButtonLabel);
+    private void initFlyingStuffController() {
+        flyingObjectController = new FlyingObjectController(game, stage);
+    }
+
+    private void initBg() {
+        bgImg = new Image(new Texture("bg.png"));
+        stage.addActor(bgImg);
     }
 
     private void initResetScoreButton() {
         resetScoreButton = new ResetScoreButton(new IClickCallback() {
+
             @Override
             public void onClick() {
-                game.resetScore();
+                game.resetGameScore();
             }
         });
+
         stage.addActor(resetScoreButton);
     }
 
@@ -64,10 +71,9 @@ public class GameplayScreen extends AbstractScreen{
                 game.addPoint();
             }
         });
+
         stage.addActor(playerButton);
-
     }
-
 
     private void initPlayer() {
         player = new Player();
@@ -79,11 +85,10 @@ public class GameplayScreen extends AbstractScreen{
         super.render(delta);
         update();
 
-        System.out.println(game.getPoints());
-
         spriteBatch.begin();
         stage.draw();
         spriteBatch.end();
+
     }
 
     private void update() {

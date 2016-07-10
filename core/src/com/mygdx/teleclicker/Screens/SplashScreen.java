@@ -8,10 +8,11 @@ import com.mygdx.teleclicker.TeleClicker;
  * Created by Senpai on 10.07.2016.
  */
 public class SplashScreen extends AbstractScreen {
-    private Texture textureImg;
+    private Texture splashImg;
 
     public SplashScreen(final TeleClicker game) {
         super(game);
+
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -22,7 +23,8 @@ public class SplashScreen extends AbstractScreen {
 
     @Override
     protected void init() {
-        textureImg = new Texture("img/phone_background.png");
+        // TODO implement better assets loading when game grows
+        splashImg = new Texture("splash.png");
     }
 
 
@@ -31,7 +33,8 @@ public class SplashScreen extends AbstractScreen {
         super.render(delta);
 
         spriteBatch.begin();
-        spriteBatch.draw(textureImg, 0, 0);
+        spriteBatch.draw(splashImg, 0, 0);
         spriteBatch.end();
     }
+
 }
