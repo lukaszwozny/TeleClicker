@@ -53,25 +53,24 @@ public class ScoreService {
     }
 
     private void calculateGainedPassiveIncome() {
-        long deleyTime = TimeUtils.millis() - getSavedTimeStamp();
-        points += TimeUnit.MILLISECONDS.toSeconds(deleyTime) / 10.0f * passiveIncome;
-
+        if(getSavedTimeStamp() > 0){
+            final float multiplier = 0.1f;
+            long deleyTime = TimeUtils.millis() - getSavedTimeStamp();
+            points += TimeUnit.MILLISECONDS.toSeconds(deleyTime) * multiplier * passiveIncome;
+        }
     }
 
     public void addPoints(float pointsToAdd) {
         points += pointsToAdd;
-        updateSavedScoreInPrefs();
     }
 
     public void addPoint() {
         points++;
-        updateSavedScoreInPrefs();
     }
 
     public void resetGameScore() {
         points = 0.0f;
         passiveIncome = 0.0f;
-        updateSavedScoreInPrefs();
     }
 
     public void updateScoreLabel() {
@@ -79,14 +78,8 @@ public class ScoreService {
         passiveIncomeLabel.setText("Erl / sec: " + passiveIncome);
     }
 
-    public void saveCurrentTmeStamp() {
-        prefs.putLong(GAME_SAVED_TIMESTAMP,TimeUtils.millis());
-        prefs.flush();
-    }
-
     public void addPassiveIncome(int value) {
         passiveIncome += value;
-        updateSavedScoreInPrefs();
     }
 
     private void loadScore() {
@@ -94,9 +87,10 @@ public class ScoreService {
         passiveIncome = prefs.getFloat(GAME_PASSIVE_INCOME);
     }
 
-    private void updateSavedScoreInPrefs() {
+    public void saveCurrentGameState() {
         prefs.putFloat(GAME_SCORE, points);
         prefs.putFloat(GAME_PASSIVE_INCOME, passiveIncome);
+        prefs.putLong(GAME_SAVED_TIMESTAMP,TimeUtils.millis());
         prefs.flush();
     }
 
