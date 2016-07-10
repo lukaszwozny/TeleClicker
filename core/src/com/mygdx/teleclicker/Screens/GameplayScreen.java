@@ -92,7 +92,7 @@ public class GameplayScreen extends AbstractScreen{
     }
 
     private void update() {
-        scoreLabel.setText("Score: " + game.getPoints());
+        scoreLabel.setText("Erlangi: " + game.getPoints());
         stage.act();
     }
 }
