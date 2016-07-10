@@ -79,6 +79,7 @@ public class FlyingObject extends Image{
         switch (type) {
             case MONEY:
                 game.addPoints(50);
+                game.getSoundService().playMonaySound();
                 break;
             case MONEY_DOWN:
                 game.addPoints(-50);

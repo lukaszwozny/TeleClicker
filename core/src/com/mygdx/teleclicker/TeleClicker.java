@@ -1,9 +1,11 @@
 package com.mygdx.teleclicker;
 
+import com.badlogic.gdx.audio.Sound;
 import com.mygdx.teleclicker.Screens.SplashScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.mygdx.teleclicker.Service.SoundService;
 
 public class TeleClicker extends Game {
 	public final static String GAME_PREFS = "com.mygdx.clicker.prefs";
@@ -15,6 +17,8 @@ public class TeleClicker extends Game {
 	public final static int HEIGHT = 700;
 
 	private boolean paused;
+
+	private SoundService soundService;
 
 	private Preferences prefs;
 
@@ -29,6 +33,7 @@ public class TeleClicker extends Game {
 	private void init() {
 		prefs =  Gdx.app.getPreferences(GAME_PREFS);
 		loadScore();
+		soundService = new SoundService();
 	}
 
 	private void loadScore() {
@@ -61,15 +66,15 @@ public class TeleClicker extends Game {
 		System.out.println("passive income click");
 	}
 
+	public boolean isPaused() {
+		return paused;
+	}
+
 	/**
 	 * ---------------------
 	 * getters and setters
 	 *
 	 */
-
-	public boolean isPaused() {
-		return paused;
-	}
 
 	public void setPaused(boolean paused) {
 		this.paused = paused;
@@ -77,5 +82,9 @@ public class TeleClicker extends Game {
 
 	public int getPoints() {
 		return points;
+	}
+
+	public SoundService getSoundService() {
+		return soundService;
 	}
 }
