@@ -21,8 +21,8 @@ public class FlyingObject extends Image{
     public final static String MONEY_DOWN = "img/skins/flying_object/bomb_1.png";
     public final static String PASSIVE_DOWN = "img/skins/flying_object/jew_greedy.png";
 
-    private final static int WIDHT = 150;
-    private final static int HEIGHT = 150;
+    private final static int WIDHT = 70;
+    private final static int HEIGHT = 70;
 
     private final static int STARTING_X = 0;
     private final static int STARTING_Y = -100;
