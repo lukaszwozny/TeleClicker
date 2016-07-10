@@ -1,33 +1,74 @@
 package com.mygdx.teleclicker;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TeleClicker extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
+public class TeleClicker extends Game {
+	public final static String GAME_PREFS = "com.mygdx.clicker.prefs";
+	public final static String GAME_SCORE = "com.mygdx.clicker.prefs.score";
+
+	public final static String GAME_NAME = "Tele Clicker";
+
+	public final static int WIDTH = 480;
+	public final static int HEIGHT = 720;
+
+	private boolean paused;
+
+	private Preferences prefs;
+
+	private int points;
 
 	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	public void create() {
+		this.setScreen(new SplashScreen(this));
+		init();
 	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+
+	private void init() {
+		prefs = Gdx.app.getPreferences(GAME_PREFS);
+		loadScore();
+	}
+
+	private void loadScore() {
+		points = prefs.getInteger(GAME_SCORE);
+	}
+
+	public void addPoint() {
+		++points;
+		updateScorePrefs();
+	}
+
+	public void resetScore() {
+		points = 0;
+		updateScorePrefs();
+	}
+
+	private void updateScorePrefs() {
+		prefs.putInteger(GAME_SCORE, points);
+		prefs.flush();
+	}
+
+	/*
+    *
+	* ----------------------
+	* Getters and setters
+	*
+	 */
+
+	public boolean isPaused() {
+		return paused;
+	}
+
+	public void setPaused(boolean paused) {
+		this.paused = paused;
+	}
+
+	public int getPoints() {
+		return points;
 	}
 }
