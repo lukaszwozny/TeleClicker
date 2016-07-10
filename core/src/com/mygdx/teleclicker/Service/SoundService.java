@@ -13,6 +13,7 @@ public class SoundService {
     private Sound cashRegisterSound;
     private Sound evilLaughJewSound;
     private Sound bombExplosionSound;
+    private Sound clickSound;
 
     private Music cakelandMusic;
 
@@ -25,6 +26,7 @@ public class SoundService {
         cashRegisterSound = Gdx.audio.newSound(Gdx.files.internal("sounds/cash_register.mp3"));
         evilLaughJewSound = Gdx.audio.newSound(Gdx.files.internal("sounds/evil_laugh_jew.mp3"));
         bombExplosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bomb_explosion.mp3"));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click_1.mp3"));
 
         cakelandMusic = Gdx.audio.newMusic(Gdx.files.internal("music/caketown.mp3"));
     }
@@ -43,6 +45,10 @@ public class SoundService {
 
     public void playBombExplosionSound(){
         bombExplosionSound.play();
+    }
+
+    public void playClickSound(){
+        clickSound.play();
     }
 
     public void playCaketownMusic(boolean looped){

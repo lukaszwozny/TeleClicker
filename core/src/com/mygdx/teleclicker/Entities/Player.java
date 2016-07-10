@@ -18,8 +18,11 @@ public class Player extends Image {
     private final static int STARTING_X = TeleClicker.WIDTH / 2 - WIDHT / 2;
     private final static int STARTING_Y = TeleClicker.HEIGHT / 2 - HEIGHT / 2 - 50;
 
-    public Player() {
+    private TeleClicker game;
+
+    public Player(TeleClicker game) {
         super(new Texture("img/skins/player/phone_old1.png"));
+        this.game = game;
 
         this.setOrigin(WIDHT / 2, HEIGHT / 2);
         this.setSize(WIDHT, HEIGHT);
@@ -29,6 +32,7 @@ public class Player extends Image {
     }
 
     public void reactOnClick() {
+        game.getSoundService().playClickSound();
         int xMoveAmmount = MathUtils.random(-130, 130);
         int yMoveAmmount = 10;
         float moveActionTime = 0.30f;
