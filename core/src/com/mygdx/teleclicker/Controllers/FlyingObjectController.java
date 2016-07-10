@@ -45,7 +45,7 @@ public class FlyingObjectController {
     private void addRandomFlyingObjectToStage(TeleClicker game, Stage stage){
         FlyingObject flyingObject = null;
 
-        switch (MathUtils.random(3)){
+        switch (MathUtils.random(0,3)){
             case 0:
                 flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.MONEY, game);
                 break;
