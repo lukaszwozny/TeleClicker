@@ -1,6 +1,7 @@
 package com.mygdx.teleclicker.Entities;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -24,8 +25,12 @@ public class FlyingObject extends Image{
     private final static int WIDHT = 70;
     private final static int HEIGHT = 70;
 
-    private final static int STARTING_X = 0;
+    private final static int STARTING_X1 = 0;
+    private final static int STARTING_X2 = TeleClicker.WIDTH + WIDHT;
     private final static int STARTING_Y = -100;
+
+    private int starting_x, ending_x;
+    private int starting_y, ending_y;
 
     private TeleClicker game;
     private FlyingObjectType type;
@@ -40,7 +45,8 @@ public class FlyingObject extends Image{
         this.setSize(WIDHT, HEIGHT);
 
         // starting position
-        this.setPosition(STARTING_X, STARTING_Y);
+        randomizeStartingAndEndingCoord();
+        this.setPosition(starting_x, starting_y);
 
         this.addListener(new ClickListener(){
             @Override
@@ -53,6 +59,20 @@ public class FlyingObject extends Image{
 
 
         });
+    }
+
+    private void randomizeStartingAndEndingCoord() {
+        if(MathUtils.randomBoolean()){ //UP or DOWN
+            starting_y = MathUtils.randomBoolean() ? -90 : TeleClicker.HEIGHT;
+            ending_y = TeleClicker.HEIGHT - starting_y;
+            starting_x = MathUtils.random(0,TeleClicker.WIDTH);
+            ending_x = MathUtils.random(0,TeleClicker.WIDTH);
+        } else {
+            starting_x = MathUtils.randomBoolean() ? -90 : TeleClicker.WIDTH;
+            ending_x = TeleClicker.WIDTH - starting_x;
+            starting_y = MathUtils.random(-70,TeleClicker.HEIGHT);
+            ending_y = MathUtils.random(-70,TeleClicker.HEIGHT);
+        }
     }
 
     private void reactOnClick() {
@@ -89,14 +109,22 @@ public class FlyingObject extends Image{
 
     public void flyLikeHell(){
 
+        int rand_point_x1 = MathUtils.random(0,TeleClicker.HEIGHT);
+        int rand_point_y1 = MathUtils.random(0,TeleClicker.HEIGHT);
+        int rand_move_time_1 = MathUtils.random(2,7);
+        int rand_rotate_1 = MathUtils.random(-720,720);
+
         Action a = Actions.parallel(
-                Actions.moveBy(300, 200, 5),
-                Actions.rotateBy(360, 5)
+                Actions.moveTo(rand_point_x1, rand_point_y1, rand_move_time_1),
+                Actions.rotateBy(rand_rotate_1, rand_move_time_1)
         );
 
+        int rand_move_time_2 = MathUtils.random(1,6);
+        int rand_rotate_2 = MathUtils.random(-720,720);
+
         Action b = Actions.parallel(
-                Actions.moveBy(-500, 900, 3),
-                Actions.rotateBy(360, 3)
+                Actions.moveTo(ending_x, ending_y, rand_move_time_2),
+                Actions.rotateBy(rand_rotate_2, rand_move_time_2)
         );
 
         Action c = Actions.run(new Runnable() {
