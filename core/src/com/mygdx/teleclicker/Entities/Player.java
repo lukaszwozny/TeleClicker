@@ -19,7 +19,7 @@ public class Player extends Image {
     private final static int STARTING_Y = TeleClicker.HEIGHT / 2 - HEIGHT / 2 - 50;
 
     public Player() {
-        super(new Texture("img/skins/phone_old1.png"));
+        super(new Texture("img/skins/player/phone_old1.png"));
 
         this.setOrigin(WIDHT / 2, HEIGHT / 2);
         this.setSize(WIDHT, HEIGHT);

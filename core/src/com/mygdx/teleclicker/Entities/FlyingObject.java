@@ -16,10 +16,10 @@ public class FlyingObject extends Image{
         MONEY, MONEY_DOWN, PASSIVE, PASSIVE_DOWN
     }
 
-    public final static String MONEY = "img/skins/cash_1.png";
-    public final static String PASSIVE = "img/skins/diamond_1.png";
-    public final static String MONEY_DOWN = "img/skins/bomb_1.png";
-    public final static String PASSIVE_DOWN = "img/skins/jew_greedy.png";
+    public final static String MONEY = "img/skins/flying_object/cash_1.png";
+    public final static String PASSIVE = "img/skins/flying_object/diamond_1.png";
+    public final static String MONEY_DOWN = "img/skins/flying_object/bomb_1.png";
+    public final static String PASSIVE_DOWN = "img/skins/flying_object/jew_greedy.png";
 
     private final static int WIDHT = 150;
     private final static int HEIGHT = 150;
