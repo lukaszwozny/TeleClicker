@@ -42,7 +42,7 @@ public class GameplayScreen extends AbstractScreen{
     }
 
     private void initBg() {
-        bgImg = new Image(new Texture("bg.png"));
+        bgImg = new Image(new Texture("img/bg/phone_and_paper_bg.png"));
         stage.addActor(bgImg);
     }
 

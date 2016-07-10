@@ -11,14 +11,14 @@ import com.mygdx.teleclicker.TeleClicker;
 /**
  * Created by Senpai on 10.07.2016.
  */
-public class Player extends Image{
-    private final static int WIDHT = 150;
-    private final static int HEIGHT = 180;
+public class Player extends Image {
+    private final static int WIDHT = 180;
+    private final static int HEIGHT = 200;
 
-    private final static int STARTING_X = 200;
-    private final static int STARTING_Y = 300;
+    private final static int STARTING_X = TeleClicker.WIDTH / 2 - WIDHT / 2;
+    private final static int STARTING_Y = TeleClicker.HEIGHT / 2 - HEIGHT / 2 - 50;
 
-    public Player(){
+    public Player() {
         super(new Texture("img/skins/phone_old1.png"));
 
         this.setOrigin(WIDHT / 2, HEIGHT / 2);
@@ -40,7 +40,7 @@ public class Player extends Image{
         int xGrowAmmount = MathUtils.random(-30, 100);
         int yGrowAmmount = 20;
         float growActionTime = 0.2f;
-        Action growAction =  Actions.sequence(
+        Action growAction = Actions.sequence(
                 Actions.sizeBy(xGrowAmmount, yGrowAmmount, growActionTime, Interpolation.circleOut),
                 Actions.sizeBy(-xGrowAmmount, -yGrowAmmount, growActionTime, Interpolation.circle)
         );
@@ -48,7 +48,7 @@ public class Player extends Image{
         this.addAction(moveAction);
         this.addAction(growAction);
 
-        if(this.getHeight() > 170){
+        if (this.getHeight() > 170) {
             this.addAction(Actions.rotateBy(MathUtils.randomSign() * 360, 0.4f));
         }
     }
