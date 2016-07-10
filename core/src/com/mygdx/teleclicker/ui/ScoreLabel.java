@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  * Created by Senpai on 10.07.2016.
  */
 public class ScoreLabel extends Label {
-    public ScoreLabel(){
+    public ScoreLabel(int x, int y){
         super("",prepareLabelStyle());
-        this.setX(20);
-        this.setY(650);
+        this.setX(x);
+        this.setY(y);
     }
 
     private static LabelStyle prepareLabelStyle() {

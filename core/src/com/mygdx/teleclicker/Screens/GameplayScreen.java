@@ -1,16 +1,13 @@
 package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.teleclicker.Controllers.FlyingObjectController;
 import com.mygdx.teleclicker.Entities.Player;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.IClickCallback;
 import com.mygdx.teleclicker.ui.PlayerButton;
 import com.mygdx.teleclicker.ui.ResetScoreButton;
-import com.mygdx.teleclicker.ui.ScoreLabel;
 
 /**
  * Created by Senpai on 10.07.2016.
@@ -20,7 +17,6 @@ public class GameplayScreen extends AbstractScreen{
     private Player player;
     private PlayerButton playerButton;
     private ResetScoreButton resetScoreButton;
-    private ScoreLabel scoreLabel;
     private FlyingObjectController flyingObjectController;
 
     public GameplayScreen(TeleClicker game) {
@@ -33,7 +29,7 @@ public class GameplayScreen extends AbstractScreen{
         initPlayer();
         initPlayerButton();
         initResetScoreButton();
-        initScoreLabel();
+        game.getScoreService().initLabels(stage);
         initFlyingStuffController();
         startTheMusic();
     }
@@ -56,24 +52,19 @@ public class GameplayScreen extends AbstractScreen{
 
             @Override
             public void onClick() {
-                game.resetGameScore();
+                game.getScoreService().resetGameScore();
             }
         });
-
         stage.addActor(resetScoreButton);
     }
 
-    private void initScoreLabel() {
-        scoreLabel = new ScoreLabel();
-        stage.addActor(scoreLabel);
-    }
 
     private void initPlayerButton() {
         playerButton = new PlayerButton(new IClickCallback() {
             @Override
             public void onClick() {
                 player.reactOnClick();
-                game.addPoint();
+                game.getScoreService().addPoint();
             }
         });
 
@@ -97,7 +88,7 @@ public class GameplayScreen extends AbstractScreen{
     }
 
     private void update() {
-        scoreLabel.setText("Erlangi: " + game.getPoints());
+        game.getScoreService().updateScoreLabel();
         stage.act();
     }
 }

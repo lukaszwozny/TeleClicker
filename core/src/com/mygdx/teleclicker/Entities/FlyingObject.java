@@ -78,19 +78,19 @@ public class FlyingObject extends Image{
     private void reactOnClick() {
         switch (type) {
             case MONEY:
-                game.addPoints(50);
+                game.getScoreService().addPoints(50);
                 game.getSoundService().playCashRegisterSound();
                 break;
             case MONEY_DOWN:
-                game.addPoints(-50);
+                game.getScoreService().addPoints(-50);
                 game.getSoundService().playBombExplosionSound();
                 break;
             case PASSIVE:
-                game.addPassiveIncome(5);
+                game.getScoreService().addPassiveIncome(5);
                 game.getSoundService().playPopSound();
                 break;
             case PASSIVE_DOWN:
-                game.addPassiveIncome(-5);
+                game.getScoreService().addPassiveIncome(-5);
                 game.getSoundService().playEvillaughJewSound();
                 break;
         }
