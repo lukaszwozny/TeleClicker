@@ -19,6 +19,7 @@ public class GameplayScreen extends AbstractScreen{
     private ResetScoreButton resetScoreButton;
     private FlyingObjectController flyingObjectController;
 
+
     public GameplayScreen(TeleClicker game) {
         super(game);
     }
@@ -74,6 +75,18 @@ public class GameplayScreen extends AbstractScreen{
     private void initPlayer() {
         player = new Player(game);
         stage.addActor(player);
+    }
+
+    @Override
+    public void pause() {
+        super.pause();
+        game.getScoreService().saveCurrentTmeStamp();
+        //TODO make flush() of scoreservice olways on screen pause()
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
     @Override
