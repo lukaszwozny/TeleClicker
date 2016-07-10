@@ -45,10 +45,19 @@ public class FlyingObjectController {
     private void addRandomFlyingObjectToStage(TeleClicker game, Stage stage){
         FlyingObject flyingObject = null;
 
-        if(MathUtils.randomBoolean()){
-            flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.MONEY, game);
-        } else{
-            flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.PASSIVE, game);
+        switch (MathUtils.random(3)){
+            case 0:
+                flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.MONEY, game);
+                break;
+            case 1:
+                flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.MONEY_DOWN, game);
+                break;
+            case 2:
+                flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.PASSIVE, game);
+                break;
+            case 3:
+                flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.PASSIVE_DOWN, game);
+                break;
         }
 
         stage.addActor(flyingObject);

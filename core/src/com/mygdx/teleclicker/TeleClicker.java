@@ -56,7 +56,7 @@ public class TeleClicker extends Game {
 	}
 
 
-	public void addPassiveIncome() {
+	public void addPassiveIncome(int value) {
 		// TODO implement
 		System.out.println("passive income click");
 	}

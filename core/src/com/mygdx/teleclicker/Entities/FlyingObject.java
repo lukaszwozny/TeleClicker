@@ -13,11 +13,13 @@ import com.mygdx.teleclicker.TeleClicker;
  */
 public class FlyingObject extends Image{
     public enum FlyingObjectType{
-        MONEY, PASSIVE
+        MONEY, MONEY_DOWN, PASSIVE, PASSIVE_DOWN
     }
 
-    public final static String MONEY = "money.png";
-    public final static String BOOKS = "books.png";
+    public final static String MONEY = "img/skins/cash_1.png";
+    public final static String PASSIVE = "img/skins/diamond_1.png";
+    public final static String MONEY_DOWN = "img/skins/bomb_1.png";
+    public final static String PASSIVE_DOWN = "img/skins/jew_greedy.png";
 
     private final static int WIDHT = 150;
     private final static int HEIGHT = 150;
@@ -54,22 +56,34 @@ public class FlyingObject extends Image{
     }
 
     private void reactOnClick() {
-        if(FlyingObjectType.MONEY.equals(type)){
-            game.addPoints(50);
-        } else if(FlyingObjectType.PASSIVE.equals(type)){
-            game.addPassiveIncome();
+        switch (type) {
+            case MONEY:
+                game.addPoints(50);
+                break;
+            case MONEY_DOWN:
+                game.addPoints(-50);
+                break;
+            case PASSIVE:
+                game.addPassiveIncome(5);
+                break;
+            case PASSIVE_DOWN:
+                game.addPassiveIncome(-5);
+                break;
         }
-
         FlyingObject.this.remove();
     }
 
     private static String getTextureString(FlyingObjectType type) {
-        if(FlyingObjectType.MONEY.equals(type)){
-            return MONEY;
-        } else if(FlyingObjectType.PASSIVE.equals(type)){
-            return BOOKS;
+        switch (type) {
+            case MONEY:
+                return MONEY;
+            case MONEY_DOWN:
+                return MONEY_DOWN;
+            case PASSIVE:
+                return PASSIVE;
+            case PASSIVE_DOWN:
+                return PASSIVE_DOWN;
         }
-
         return "";
     }
 

@@ -19,7 +19,7 @@ public class Player extends Image{
     private final static int STARTING_Y = 300;
 
     public Player(){
-        super(new Texture("img/skins/penguin_cinema.png"));
+        super(new Texture("img/skins/phone_old1.png"));
 
         this.setOrigin(WIDHT / 2, HEIGHT / 2);
         this.setSize(WIDHT, HEIGHT);
