@@ -5,27 +5,26 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
- * Created by Senpai on 10.07.2016.
+ * Created by Senpai on 11.07.2016.
  */
-public class SplashScreen extends AbstractScreen {
-    private final String SPLASH_BG_DIR = "img/bg/splash.png";
-    private Texture splashBg;
+public class ShopScreen extends AbstractScreen {
+    private final String SHOP_BG_DIR = "img/bg/shop_bg.png";
+    private Texture shopBg;
 
-    public SplashScreen(final TeleClicker game) {
+    public ShopScreen(final TeleClicker game) {
         super(game);
-
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                game.setScreen(new GameplayScreen(game, false));
+                game.setScreen(new GameplayScreen(game, true));
             }
-        }, 3);
+        },5);
     }
 
     @Override
     protected void init() {
         // TODO implement better assets loading when game grows
-        splashBg = new Texture(SPLASH_BG_DIR);
+        shopBg = new Texture(SHOP_BG_DIR);
     }
 
 
@@ -34,8 +33,7 @@ public class SplashScreen extends AbstractScreen {
         super.render(delta);
 
         spriteBatch.begin();
-        spriteBatch.draw(splashBg, 0, 0);
+        spriteBatch.draw(shopBg, 0, 0);
         spriteBatch.end();
     }
-
 }

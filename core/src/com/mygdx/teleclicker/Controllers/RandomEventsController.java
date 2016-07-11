@@ -65,7 +65,7 @@ public class RandomEventsController {
         float randMultiplier = MathUtils.random(1, 10);
         System.out.println("Randmulti :" + randMultiplier);
         basicDialog.initContent("Przewalutowales swoje\n" +
-                " Erlangi na Franki.\n" +
+                " rlangi na Franki.\n" +
                 "Tracisz na tym "+randMultiplier+"%.");
         randMultiplier = 1 - randMultiplier/100;
         game.getScoreService().multiplierPoints(randMultiplier);

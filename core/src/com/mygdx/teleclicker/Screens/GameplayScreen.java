@@ -21,9 +21,17 @@ public class GameplayScreen extends AbstractScreen {
     private ResetScoreButton resetScoreButton;
     private FlyingObjectsController flyingObjectsController;
     private RandomEventsController randomEventsController;
+    private ShopScreen shopScreen;
+    static boolean backFromShop;
 
-    public GameplayScreen(TeleClicker game) {
-        super(game);
+
+    public GameplayScreen(TeleClicker game, boolean isShop) {
+        super(setDestination(game,isShop));
+    }
+
+    private static TeleClicker setDestination(TeleClicker game, boolean isShop){
+        backFromShop = isShop;
+        return game;
     }
 
     @Override
@@ -46,10 +54,12 @@ public class GameplayScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 cornerPhone.reactOnClick();
+                game.setScreen(new ShopScreen(game));
             }
         });
         stage.addActor(cornerPhoneButton);
     }
+
 
     private void initCornerPhone() {
         cornerPhone = new CornerPhone(game);
@@ -62,7 +72,8 @@ public class GameplayScreen extends AbstractScreen {
 
     private void initPassiveIncomeDialog() {
         float pointsGained = game.getScoreService().getPointsToAdd();
-        if (pointsGained > 0) {
+        System.out.println("TEST: " + backFromShop);
+        if (!backFromShop && pointsGained > 0) {
             BasicDialog basicDialog = new BasicDialog();
 
             stage.addActor(basicDialog);
