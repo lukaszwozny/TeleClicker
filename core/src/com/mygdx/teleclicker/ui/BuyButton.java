@@ -10,31 +10,56 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 /**
  * Created by Senpai on 11.07.2016.
  */
-public class BuyButton extends Button{
+public class BuyButton extends Button {
 
     private static ButtonStyle buttonStyleGreen;
     private static ButtonStyle buttonStyleRed;
 
-    public BuyButton(final IClickCallback callback, int posX, int posY){
+    private GameLabel label;
+
+    private int posX;
+    private int posY;
+
+    private int numberOfBuys;
+
+    private boolean active = false;
+
+    public BuyButton(final IClickCallback callback, int posX, int posY) {
         super(prepareResetButtonStyle());
+        init(callback);
         this.setX(posX);
         this.setY(posY);
-        init(callback);
+        this.posX = posX;
+        this.posY = posY;
+
+        label = new GameLabel();
     }
 
-    public void updateColor(boolean isActive){
-        if(isActive){
+    public void initContent(String text) {
+        label.setText(text);
+        label.setPosition(15, posY + 20);
+
+        this.getStage().addActor(label);
+    }
+
+    public void Buy(){
+        numberOfBuys++;
+    }
+
+    public void updateColor(boolean isActive) {
+        if (isActive) {
             this.setStyle(buttonStyleGreen);
         } else {
             this.setStyle(buttonStyleRed);
         }
+        active = isActive;
     }
 
     private void init(final IClickCallback callback) {
         this.setWidth(70);
         this.setHeight(38);
 
-        this.addListener(new ClickListener(){
+        this.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y,
                                      int pointer, int button) {
@@ -61,4 +86,11 @@ public class BuyButton extends Button{
     }
 
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public int getNumberOfBuys() {
+        return numberOfBuys;
+    }
 }

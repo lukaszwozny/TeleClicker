@@ -39,17 +39,29 @@ public class ShopScreen extends AbstractScreen {
         clickBuyButton = new BuyButton(new IClickCallback() {
             @Override
             public void onClick() {
-                clickBuyButton.updateColor(true);
+                if(clickBuyButton.isActive()){
+                    clickBuyButton.Buy();
+                }
+                System.out.println("click button");
             }
         },START_X,START_Y);
         passiveBuyButton = new BuyButton(new IClickCallback() {
             @Override
             public void onClick() {
-                clickBuyButton.updateColor(true);
+                if(passiveBuyButton.isActive()){
+                    passiveBuyButton.Buy();
+                }
+                System.out.println("Passive");
             }
         },START_X,START_Y - INTERVAL_Y);
         stage.addActor(clickBuyButton);
         stage.addActor(passiveBuyButton);
+        initLabelsForButtons();
+    }
+
+    private void initLabelsForButtons() {
+        clickBuyButton.initContent("Buy Click Power");
+        passiveBuyButton.initContent("Buy Passive Income");
     }
 
     private void initCloseShopButton() {
@@ -67,6 +79,11 @@ public class ShopScreen extends AbstractScreen {
         stage.addActor(shopBg);
     }
 
+    @Override
+    public void pause() {
+        super.pause();
+        game.getScoreService().saveCurrentGameState();
+    }
 
     @Override
     public void render(float delta) {
@@ -80,6 +97,21 @@ public class ShopScreen extends AbstractScreen {
 
     private void update() {
         game.getScoreService().updateScoreLabel(true);
+        updateButtonsColor();
         stage.act();
+    }
+
+    private void updateButtonsColor() {
+        float points = game.getScoreService().getPoints();
+        if(points > 20){
+            clickBuyButton.updateColor(true);
+        } else {
+            clickBuyButton.updateColor(false);
+        }
+        if(points > 50){
+            passiveBuyButton.updateColor(true);
+        } else {
+            passiveBuyButton.updateColor(false);
+        }
     }
 }

@@ -127,7 +127,6 @@ public class GameplayScreen extends AbstractScreen {
     public void pause() {
         super.pause();
         game.getScoreService().saveCurrentGameState();
-        //TODO make flush() of scoreservice olways on screen pause()
     }
 
     @Override

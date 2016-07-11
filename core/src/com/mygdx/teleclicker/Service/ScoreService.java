@@ -17,10 +17,16 @@ public class ScoreService {
     public final static String GAME_SAVED_TIMESTAMP = "com.mygdx.clicker.prefs.timestamp";
     public final static String GAME_POINTS_PER_CLICK = "com.mygdx.clicker.prefs.pointsperclick";
 
+    public final static String GAME_NO_POINTS_PER_CLICK_BUYS = "com.mygdx.clicker.prefs.pointsperclickbuys";
+    public final static String GAME_NO_PASSIVE_POINTS_BUYS = "com.mygdx.clicker.prefs.passivepointsbuys";
+
     private float points;
     private float passiveIncome;
     private float pointsPerClick = 1.0f;
     private float pointsToAdd;
+
+    private int numberOfPointsPerClickPBuys;
+    private int numberOfPassivePointsPBuys;
 
     private GameLabel scoreLabel;
     private GameLabel passiveIncomeLabel;
@@ -91,6 +97,10 @@ public class ScoreService {
         points += pointsPerClick;
     }
 
+    public void addPointsPerClick(int add) {
+        pointsPerClick += add;
+    }
+
     public void resetGameScore() {
         points = 0.0f;
         passiveIncome = 0.0f;
@@ -116,10 +126,21 @@ public class ScoreService {
             passiveIncome = 0;
     }
 
+    public void increseNumberOfPointsPerClickBuys() {
+        numberOfPointsPerClickPBuys++;
+    }
+
+    public void increseNumberOfPassivePointsBuys() {
+        numberOfPassivePointsPBuys++;
+    }
+
     private void loadScore() {
         passiveIncome = prefs.getFloat(GAME_PASSIVE_INCOME);
         points = prefs.getFloat(GAME_SCORE);
-        points = prefs.getFloat(GAME_POINTS_PER_CLICK);
+        pointsPerClick = prefs.getFloat(GAME_POINTS_PER_CLICK);
+
+        numberOfPointsPerClickPBuys = prefs.getInteger(GAME_NO_POINTS_PER_CLICK_BUYS);
+        numberOfPassivePointsPBuys = prefs.getInteger(GAME_NO_PASSIVE_POINTS_BUYS);
     }
 
     public void saveCurrentGameState() {
@@ -127,6 +148,9 @@ public class ScoreService {
         prefs.putFloat(GAME_PASSIVE_INCOME, passiveIncome);
         prefs.putFloat(GAME_POINTS_PER_CLICK, pointsPerClick);
         prefs.putLong(GAME_SAVED_TIMESTAMP, TimeUtils.millis());
+
+        prefs.putInteger(GAME_NO_POINTS_PER_CLICK_BUYS, numberOfPointsPerClickPBuys);
+        prefs.putInteger(GAME_NO_PASSIVE_POINTS_BUYS, numberOfPassivePointsPBuys);
         prefs.flush();
     }
 
@@ -141,6 +165,14 @@ public class ScoreService {
 
     public float getPoints() {
         return points;
+    }
+
+    public int getNumberOfPointsPerClickBuys() {
+        return numberOfPointsPerClickPBuys;
+    }
+
+    public int getNumberOfPassivePointsPBuys() {
+        return numberOfPassivePointsPBuys;
     }
 
     public float getPointsToAdd() {

@@ -16,7 +16,7 @@ public class BasicDialog extends Image {
 
     private GameLabel label;
 
-    public final static int WIDTH = 405;
+    public final static int WIDTH = 440;
     public final static int HEIGHT = 218;
 
 
@@ -30,7 +30,7 @@ public class BasicDialog extends Image {
         this.setOrigin(WIDTH / 2, HEIGHT / 2);
         this.setSize(WIDTH, HEIGHT);
 
-        this.setPosition(10, 70);
+        this.setPosition(40, 70);
 
         label = new GameLabel(fontType);
 
@@ -47,7 +47,7 @@ public class BasicDialog extends Image {
     public void initContent(String text){
         final int MIDDLE_Y = 200;
         label.setText(text);
-        label.setPosition(45,MIDDLE_Y - label.getHeight()/2);
+        label.setPosition(75,MIDDLE_Y - label.getHeight()/2);
 
         this.getStage().addActor(label);
     }
