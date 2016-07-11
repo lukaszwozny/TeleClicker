@@ -19,6 +19,7 @@ public class RandomEventsController {
     public RandomEventsController(TeleClicker game, Stage stage) {
         this.game = game;
         this.stage = stage;
+        System.out.println("Init random events");
         init();
     }
 
@@ -33,9 +34,8 @@ public class RandomEventsController {
                     public void run() {
                         triggerRandomEvent();
                         randomizeSpawnTime();
-
                     }
-                }, spawnTime);
+                }, 10);
             }
         }, 1, TICK_INTERVAL);
     }
