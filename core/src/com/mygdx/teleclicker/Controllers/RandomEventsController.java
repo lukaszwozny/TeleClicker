@@ -24,8 +24,8 @@ public class RandomEventsController {
 
     private void init() {
         randomizeSpawnTime();
-
         Timer.schedule(new Timer.Task() {
+
             @Override
             public void run() {
                 Timer.schedule(new Timer.Task() {
@@ -33,6 +33,7 @@ public class RandomEventsController {
                     public void run() {
                         triggerRandomEvent();
                         randomizeSpawnTime();
+
                     }
                 }, spawnTime);
             }
@@ -104,6 +105,6 @@ public class RandomEventsController {
     }
 
     private void randomizeSpawnTime() {
-        spawnTime = MathUtils.random(5, 10);
+        spawnTime = MathUtils.random(30, 120);
     }
 }
