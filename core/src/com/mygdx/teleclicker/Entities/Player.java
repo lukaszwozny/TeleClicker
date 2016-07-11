@@ -18,10 +18,12 @@ public class Player extends Image {
     private final static int STARTING_X = TeleClicker.WIDTH / 2 - WIDTH / 2;
     private final static int STARTING_Y = TeleClicker.HEIGHT / 2 - HEIGHT / 2 - 50;
 
+    private static final String PHONE_OLD_DIR = "img/skins/player/phone_old1.png";
+
     private TeleClicker game;
 
     public Player(TeleClicker game) {
-        super(new Texture("img/skins/player/phone_old1.png"));
+        super(new Texture(PHONE_OLD_DIR));
         this.game = game;
 
         this.setOrigin(WIDTH / 2, HEIGHT / 2);
