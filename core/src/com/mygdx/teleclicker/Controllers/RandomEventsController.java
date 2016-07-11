@@ -61,8 +61,8 @@ public class RandomEventsController {
         stage.addActor(basicDialog);
         float randMultiplier = MathUtils.random(1, 10);
         System.out.println("Randmulti :" + randMultiplier);
-        basicDialog.initContent("Przewalutowales swoje Erlangi\n" +
-                "na Franki." +
+        basicDialog.initContent("Przewalutowales swoje\n" +
+                " Erlangi na Franki.\n" +
                 "Tracisz na tym "+randMultiplier+"%.");
         randMultiplier = 1 - randMultiplier/100;
         game.getScoreService().multiplierPoints(randMultiplier);
