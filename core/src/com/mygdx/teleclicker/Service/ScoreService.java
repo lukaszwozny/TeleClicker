@@ -67,6 +67,8 @@ public class ScoreService {
 
     public void addPoints(float pointsToAdd) {
         points += pointsToAdd;
+        if (points < 0)
+            points = 0;
     }
 
     public void addPoint() {
@@ -79,7 +81,7 @@ public class ScoreService {
     }
 
     public void updateScoreLabel() {
-        scoreLabel.setText("Erlangi: " + points);
+        scoreLabel.setText("Erlangi: " + String.format("%.2f", points));
         passiveIncomeLabel.setText("Erl / sec: " + passiveIncome);
     }
 
@@ -116,5 +118,9 @@ public class ScoreService {
 
     public float getPointsToAdd() {
         return pointsToAdd;
+    }
+
+    public void multiplierPoints(float multiplier) {
+        points *= multiplier;
     }
 }

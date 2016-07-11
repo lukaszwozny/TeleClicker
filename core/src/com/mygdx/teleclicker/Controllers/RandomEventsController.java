@@ -43,6 +43,7 @@ public class RandomEventsController {
         int randEvent = MathUtils.random(4);
         switch (randEvent) {
             case 0:
+                moneyMultiplierDownEvent();
                 break;
             case 1:
                 moneyDownEvent();
@@ -55,11 +56,23 @@ public class RandomEventsController {
         }
     }
 
+    private void moneyMultiplierDownEvent() {
+        BasicDialog basicDialog = new BasicDialog();
+        stage.addActor(basicDialog);
+        float randMultiplier = MathUtils.random(1, 10);
+        System.out.println("Randmulti :" + randMultiplier);
+        basicDialog.initContent("Przewalutowales swoje Erlangi\n" +
+                "na Franki." +
+                "Tracisz na tym "+randMultiplier+"%.");
+        randMultiplier = 1 - randMultiplier/100;
+        game.getScoreService().multiplierPoints(randMultiplier);
+    }
+
     private void passiveUpEvent() {
-        BasicDialog passiveUpDialog = new BasicDialog();
-        stage.addActor(passiveUpDialog);
+        BasicDialog basicDialog = new BasicDialog();
+        stage.addActor(basicDialog);
         int randPassive = MathUtils.random(1, 10) * 10;
-        passiveUpDialog.initContent("Bawiac sie w piaskownicy\n" +
+        basicDialog.initContent("Bawiac sie w piaskownicy\n" +
                 "odkrywasz zrodlo natezenia\n" +
                 "ruchu.\n" +
                 "Zyskujesz " + randPassive + " Erl/sec.");
@@ -67,14 +80,14 @@ public class RandomEventsController {
     }
 
     private void moneyDownEvent() {
-        BasicDialog moneyUpDialog = new BasicDialog();
-        stage.addActor(moneyUpDialog);
-        int randUpMoney = MathUtils.random(1, 10) * 100;
-        moneyUpDialog.initContent("Probujesz dodzwonic sie\n" +
+        BasicDialog basicDialog = new BasicDialog();
+        stage.addActor(basicDialog);
+        int randMoney = MathUtils.random(1, 10) * 100;
+        basicDialog.initContent("Probujesz dodzwonic sie\n" +
                 "na niebieska linie,\n" +
                 "niestety, nikt nie odbiera.\n" +
-                "Tracisz " + randUpMoney + " Erlangow.");
-        game.getScoreService().addPoints(-randUpMoney);
+                "Tracisz " + randMoney + " Erlangow.");
+        game.getScoreService().addPoints(-randMoney);
     }
 
     private void randomizeSpawnTime() {
