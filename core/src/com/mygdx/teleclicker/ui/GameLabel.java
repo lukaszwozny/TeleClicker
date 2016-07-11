@@ -39,6 +39,7 @@ public class GameLabel extends Label {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = font;
         labelStyle.fontColor = color;
+//        labelStyle.font.getData().setScale(0.9f);
 
         return labelStyle;
     }

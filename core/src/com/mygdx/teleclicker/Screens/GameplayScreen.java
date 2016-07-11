@@ -77,7 +77,9 @@ public class GameplayScreen extends AbstractScreen {
             BasicDialog basicDialog = new BasicDialog();
 
             stage.addActor(basicDialog);
-            basicDialog.initContent("Podczas nieobecnosci \nzarobiles/as " + String.format("%.1f",pointsGained) + " Erlangow.");
+            basicDialog.initContent("Podczas nieobecnosci \n" +
+                    "zarobiles\n" +
+                    String.format("%.1f",pointsGained) + " Erlangow.");
         }
     }
 
