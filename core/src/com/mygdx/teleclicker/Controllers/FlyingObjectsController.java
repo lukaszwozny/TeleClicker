@@ -10,6 +10,7 @@ import com.mygdx.teleclicker.TeleClicker;
  * Created by Senpai on 10.07.2016.
  */
 public class FlyingObjectsController {
+    private static final int RANDOM_TICK_INTERVAL = 5;
     private int spawnTime;
 
     public FlyingObjectsController(TeleClicker game, Stage stage){
@@ -34,7 +35,7 @@ public class FlyingObjectsController {
                     }
                 }, spawnTime);
             }
-        }, 0, 5);
+        }, 0, RANDOM_TICK_INTERVAL);
     }
 
     private void randomizeSpawnTime() {
