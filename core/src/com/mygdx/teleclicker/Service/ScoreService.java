@@ -15,13 +15,16 @@ public class ScoreService {
     public final static String GAME_SCORE = "com.mygdx.clicker.prefs.score";
     public final static String GAME_PASSIVE_INCOME = "com.mygdx.clicker.prefs.passive";
     public final static String GAME_SAVED_TIMESTAMP = "com.mygdx.clicker.prefs.timestamp";
+    public final static String GAME_POINTS_PER_CLICK = "com.mygdx.clicker.prefs.pointsperclick";
 
     private float points;
     private float passiveIncome;
+    private float pointsPerClick = 1.0f;
     private float pointsToAdd;
 
     private GameLabel scoreLabel;
     private GameLabel passiveIncomeLabel;
+    private GameLabel pointsPerClickLabel;
 
     private Preferences prefs;
 
@@ -38,12 +41,15 @@ public class ScoreService {
         if(isShop){
             scoreLabel.setPosition(10, 677);
             passiveIncomeLabel.setPosition(250, 677);
+            pointsPerClickLabel.setPosition(10, 20);
         } else {
-            scoreLabel.setPosition(30, 670);
-            passiveIncomeLabel.setPosition(30, 635);
+            scoreLabel.setPosition(30, 700);
+            passiveIncomeLabel.setPosition(30, 668);
+            pointsPerClickLabel.setPosition(30, 636);
         }
         stage.addActor(scoreLabel);
         stage.addActor(passiveIncomeLabel);
+        stage.addActor(pointsPerClickLabel);
     }
 
     public void saveTimeStamp() {
@@ -53,6 +59,7 @@ public class ScoreService {
     private void init() {
         scoreLabel = new GameLabel();
         passiveIncomeLabel = new GameLabel();
+        pointsPerClickLabel = new GameLabel();
         loadScore();
         calculateGainedPassiveIncome();
 
@@ -81,7 +88,7 @@ public class ScoreService {
     }
 
     public void addPoint() {
-        points++;
+        points += pointsPerClick;
     }
 
     public void resetGameScore() {
@@ -95,9 +102,11 @@ public class ScoreService {
                     "" + String.format("%.2f", points));
             passiveIncomeLabel.setText("Erl / sec: \n" +
                     "" + passiveIncome);
+            pointsPerClickLabel.setText("Erl / click: " + pointsPerClick);
         } else {
             scoreLabel.setText("Erlangi: " + String.format("%.2f", points));
             passiveIncomeLabel.setText("Erl / sec: " + passiveIncome);
+            pointsPerClickLabel.setText("Erl / click: " + pointsPerClick);
         }
     }
 
@@ -110,11 +119,13 @@ public class ScoreService {
     private void loadScore() {
         passiveIncome = prefs.getFloat(GAME_PASSIVE_INCOME);
         points = prefs.getFloat(GAME_SCORE);
+        points = prefs.getFloat(GAME_POINTS_PER_CLICK);
     }
 
     public void saveCurrentGameState() {
         prefs.putFloat(GAME_SCORE, points);
         prefs.putFloat(GAME_PASSIVE_INCOME, passiveIncome);
+        prefs.putFloat(GAME_POINTS_PER_CLICK, pointsPerClick);
         prefs.putLong(GAME_SAVED_TIMESTAMP, TimeUtils.millis());
         prefs.flush();
     }
