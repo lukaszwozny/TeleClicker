@@ -1,5 +1,6 @@
 package com.mygdx.teleclicker.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -15,11 +16,15 @@ public class BasicDialog extends Image {
 
     private GameLabel label;
 
-    public final static int WIDTH = 290;
-    public final static int HEIGHT = 170;
+    public final static int WIDTH = 440;
+    public final static int HEIGHT = 218;
 
 
-    public BasicDialog(){
+    public BasicDialog() {
+        this(GameLabel.FontType.TIMES_NEW_ROMAN);
+    }
+
+    public BasicDialog(GameLabel.FontType fontType){
         super(new Texture("img/popups/dialog.png"));
 
         this.setOrigin(WIDTH / 2, HEIGHT / 2);
@@ -27,13 +32,12 @@ public class BasicDialog extends Image {
 
         this.setPosition(40, 70);
 
-        label = new GameLabel();
-        label.setPosition(80,180);
+        label = new GameLabel(fontType);
+        label.setPosition(75,240);
 
         this.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Test popup.");
                 fadeOutDialog();
                 
                 return super.touchDown(event, x, y, pointer, button);
@@ -42,7 +46,9 @@ public class BasicDialog extends Image {
     }
 
     public void initContent(String text){
+        final int MIDDLE_Y = 200;
         label.setText(text);
+        label.setY(MIDDLE_Y - label.getHeight()/2);
         this.getStage().addActor(label);
     }
 
@@ -60,4 +66,9 @@ public class BasicDialog extends Image {
         this.addAction(sequence);
         label.addAction(Actions.fadeOut(1.5f));
     }
+
+    public GameLabel getLabel(){
+        return label;
+    }
+
 }

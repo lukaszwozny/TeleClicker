@@ -6,10 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.mygdx.teleclicker.Controllers.FlyingObjectController;
 import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.TeleClicker;
-import com.mygdx.teleclicker.ui.BasicDialog;
-import com.mygdx.teleclicker.ui.IClickCallback;
-import com.mygdx.teleclicker.ui.PlayerButton;
-import com.mygdx.teleclicker.ui.ResetScoreButton;
+import com.mygdx.teleclicker.ui.*;
 
 /**
  * Created by Senpai on 10.07.2016.
@@ -42,8 +39,9 @@ public class GameplayScreen extends AbstractScreen {
         float pointsGained = game.getScoreService().getPointsToAdd();
         if (pointsGained > 0) {
             BasicDialog basicDialog = new BasicDialog();
+
             stage.addActor(basicDialog);
-            basicDialog.initContent("Podczas nieobecności zarobiłeś/aś\n    " + pointsGained + " Erlangów.");
+            basicDialog.initContent("Podczas nieobecnosci \nzarobiles/as " + pointsGained + " Erlangow.");
         }
     }
 
