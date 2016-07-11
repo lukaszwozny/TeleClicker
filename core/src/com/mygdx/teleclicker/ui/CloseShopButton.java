@@ -16,8 +16,8 @@ public class CloseShopButton extends Button{
     private void init(final IClickCallback callback) {
         this.setWidth(43);
         this.setHeight(43);
-        this.setX(0);
-        this.setY(0);
+        this.setX(339);
+        this.setY(661);
         this.setDebug(true);
 
         this.addListener(new ClickListener(){

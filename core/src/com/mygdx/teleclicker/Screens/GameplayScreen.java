@@ -142,7 +142,6 @@ public class GameplayScreen extends AbstractScreen {
         spriteBatch.begin();
         stage.draw();
         spriteBatch.end();
-
     }
 
     private void update() {
