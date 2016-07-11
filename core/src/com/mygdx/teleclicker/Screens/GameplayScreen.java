@@ -147,7 +147,7 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void update() {
-        game.getScoreService().updateScoreLabel();
+        game.getScoreService().updateScoreLabel(false);
         stage.act();
     }
 }

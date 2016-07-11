@@ -36,8 +36,8 @@ public class ScoreService {
 
     public void printLabels(Stage stage, boolean isShop) {
         if(isShop){
-            scoreLabel.setPosition(30, 670);
-            passiveIncomeLabel.setPosition(30, 635);
+            scoreLabel.setPosition(10, 677);
+            passiveIncomeLabel.setPosition(250, 677);
         } else {
             scoreLabel.setPosition(30, 670);
             passiveIncomeLabel.setPosition(30, 635);
@@ -89,9 +89,16 @@ public class ScoreService {
         passiveIncome = 0.0f;
     }
 
-    public void updateScoreLabel() {
-        scoreLabel.setText("Erlangi: " + String.format("%.2f", points));
-        passiveIncomeLabel.setText("Erl / sec: " + passiveIncome);
+    public void updateScoreLabel(boolean isShop) {
+        if(isShop){
+            scoreLabel.setText("Erlangi: \n" +
+                    "" + String.format("%.2f", points));
+            passiveIncomeLabel.setText("Erl / sec: \n" +
+                    "" + passiveIncome);
+        } else {
+            scoreLabel.setText("Erlangi: " + String.format("%.2f", points));
+            passiveIncomeLabel.setText("Erl / sec: " + passiveIncome);
+        }
     }
 
     public void addPassiveIncome(int value) {

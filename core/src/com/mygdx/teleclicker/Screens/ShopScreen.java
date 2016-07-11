@@ -56,7 +56,7 @@ public class ShopScreen extends AbstractScreen {
     }
 
     private void update() {
-        game.getScoreService().updateScoreLabel();
+        game.getScoreService().updateScoreLabel(true);
         stage.act();
     }
 }
