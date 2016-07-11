@@ -25,7 +25,7 @@ public class ScoreService {
     private float pointsPerClick = 1.0f;
     private float pointsToAdd;
 
-    private int numberOfPointsPerClickPBuys;
+    private int numberOfPointsPerClickPBuys = 2;
     private int numberOfPassivePointsPBuys;
 
     private GameLabel scoreLabel;
@@ -56,10 +56,6 @@ public class ScoreService {
         }
         stage.addActor(scoreLabel);
         stage.addActor(passiveIncomeLabel);
-    }
-
-    public void saveTimeStamp() {
-
     }
 
     private void init() {
@@ -104,6 +100,10 @@ public class ScoreService {
     public void resetGameScore() {
         points = 0.0f;
         passiveIncome = 0.0f;
+        pointsPerClick = 1.0f;
+
+        numberOfPointsPerClickPBuys = 0;
+        numberOfPassivePointsPBuys = 0;
     }
 
     public void updateScoreLabel(boolean isShop) {
@@ -127,10 +127,12 @@ public class ScoreService {
     }
 
     public void increseNumberOfPointsPerClickBuys() {
+        System.out.println("Points per click++");
         numberOfPointsPerClickPBuys++;
     }
 
     public void increseNumberOfPassivePointsBuys() {
+        System.out.println("passive++");
         numberOfPassivePointsPBuys++;
     }
 

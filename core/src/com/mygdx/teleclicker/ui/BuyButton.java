@@ -20,8 +20,6 @@ public class BuyButton extends Button {
     private int posX;
     private int posY;
 
-    private int numberOfBuys;
-
     private boolean active = false;
 
     public BuyButton(final IClickCallback callback, int posX, int posY) {
@@ -40,10 +38,6 @@ public class BuyButton extends Button {
         label.setPosition(15, posY + 20);
 
         this.getStage().addActor(label);
-    }
-
-    public void Buy(){
-        numberOfBuys++;
     }
 
     public void updateColor(boolean isActive) {
@@ -85,12 +79,8 @@ public class BuyButton extends Button {
         return buttonStyleRed;
     }
 
-
     public boolean isActive() {
         return active;
     }
 
-    public int getNumberOfBuys() {
-        return numberOfBuys;
-    }
 }

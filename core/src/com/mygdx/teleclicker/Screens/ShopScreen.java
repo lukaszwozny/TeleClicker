@@ -40,7 +40,7 @@ public class ShopScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 if(clickBuyButton.isActive()){
-                    clickBuyButton.Buy();
+                    game.getScoreService().increseNumberOfPointsPerClickBuys();
                 }
                 System.out.println("click button");
             }
@@ -49,19 +49,18 @@ public class ShopScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 if(passiveBuyButton.isActive()){
-                    passiveBuyButton.Buy();
+                    game.getScoreService().increseNumberOfPassivePointsBuys();
                 }
                 System.out.println("Passive");
             }
         },START_X,START_Y - INTERVAL_Y);
         stage.addActor(clickBuyButton);
         stage.addActor(passiveBuyButton);
-        initLabelsForButtons();
     }
 
-    private void initLabelsForButtons() {
-        clickBuyButton.initContent("Buy Click Power");
-        passiveBuyButton.initContent("Buy Passive Income");
+    private void updateLabelsForButtons() {
+        clickBuyButton.initContent("Buy Click Power (" + game.getScoreService().getNumberOfPointsPerClickBuys()+")");
+        passiveBuyButton.initContent("Buy Passive Income (" + game.getScoreService().getNumberOfPassivePointsPBuys()+")");
     }
 
     private void initCloseShopButton() {
@@ -98,6 +97,7 @@ public class ShopScreen extends AbstractScreen {
     private void update() {
         game.getScoreService().updateScoreLabel(true);
         updateButtonsColor();
+        updateLabelsForButtons();
         stage.act();
     }
 
