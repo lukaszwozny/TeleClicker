@@ -18,7 +18,6 @@ public class CloseShopButton extends Button{
         this.setHeight(43);
         this.setX(339);
         this.setY(661);
-        this.setDebug(true);
 
         this.addListener(new ClickListener(){
             @Override

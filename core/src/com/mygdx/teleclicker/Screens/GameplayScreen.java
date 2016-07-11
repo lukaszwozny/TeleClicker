@@ -42,7 +42,7 @@ public class GameplayScreen extends AbstractScreen {
         initCornerPhone();
         initCornerPhoneButton();
         initResetScoreButton();
-        game.getScoreService().initLabels(stage);
+        game.getScoreService().printLabels(stage);
         initFlyingObjectsController();
         initRandomEventsController();
         startTheMusic();

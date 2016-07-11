@@ -30,11 +30,18 @@ public class ScoreService {
         init();
     }
 
-    public void initLabels(Stage stage) {
-        scoreLabel = new GameLabel();
-        scoreLabel.setPosition(30,670);
-        passiveIncomeLabel = new GameLabel();
-        passiveIncomeLabel.setPosition(30,635);
+    public void printLabels(Stage stage) {
+        printLabels(stage, false);
+    }
+
+    public void printLabels(Stage stage, boolean isShop) {
+        if(isShop){
+            scoreLabel.setPosition(30, 670);
+            passiveIncomeLabel.setPosition(30, 635);
+        } else {
+            scoreLabel.setPosition(30, 670);
+            passiveIncomeLabel.setPosition(30, 635);
+        }
         stage.addActor(scoreLabel);
         stage.addActor(passiveIncomeLabel);
     }
@@ -44,6 +51,8 @@ public class ScoreService {
     }
 
     private void init() {
+        scoreLabel = new GameLabel();
+        passiveIncomeLabel = new GameLabel();
         loadScore();
         calculateGainedPassiveIncome();
 

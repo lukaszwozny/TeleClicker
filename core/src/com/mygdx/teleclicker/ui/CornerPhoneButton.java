@@ -18,7 +18,6 @@ public class CornerPhoneButton extends Button {
         this.setHeight(70);
         this.setX(0);
         this.setY(0);
-        this.setDebug(true);
 
         this.addListener(new ClickListener(){
             @Override

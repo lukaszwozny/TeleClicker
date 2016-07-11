@@ -11,7 +11,7 @@ import com.mygdx.teleclicker.ui.BasicDialog;
  */
 public class RandomEventsController {
 
-    private static final int RANDOM_TICK_INTERVAL = 5; //TODO Change spawnEvent Time
+    private static final int TICK_INTERVAL = 5;
     private int spawnTime;
     private Stage stage;
     private TeleClicker game;
@@ -37,7 +37,7 @@ public class RandomEventsController {
                     }
                 }, spawnTime);
             }
-        }, 0, RANDOM_TICK_INTERVAL);
+        }, 1, TICK_INTERVAL);
     }
 
     private void triggerRandomEvent() {
@@ -98,13 +98,13 @@ public class RandomEventsController {
         stage.addActor(basicDialog);
         int randPassive = MathUtils.random(1, 10) * 10;
         basicDialog.initContent("Bawiac sie w piaskownicy\n" +
-                "odkrywasz zrodlo natezenia\n" +
-                "ruchu.\n" +
+                "odkrywasz zrodlo \n" +
+                "natezenia ruchu.\n" +
                 "Zyskujesz " + randPassive + " Erl/sec.");
         game.getScoreService().addPassiveIncome(randPassive);
     }
 
     private void randomizeSpawnTime() {
-        spawnTime = MathUtils.random(30, 120);
+        spawnTime = MathUtils.random(30, 60);
     }
 }

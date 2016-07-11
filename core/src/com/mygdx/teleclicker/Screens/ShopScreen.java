@@ -26,6 +26,7 @@ public class ShopScreen extends AbstractScreen {
         // TODO implement better assets loading when game grows
         initBg();
         initCloseShopButton();
+        game.getScoreService().printLabels(stage,true);
     }
 
     private void initCloseShopButton() {
@@ -55,7 +56,7 @@ public class ShopScreen extends AbstractScreen {
     }
 
     private void update() {
-//        game.getScoreService().updateScoreLabel();
+        game.getScoreService().updateScoreLabel();
         stage.act();
     }
 }
