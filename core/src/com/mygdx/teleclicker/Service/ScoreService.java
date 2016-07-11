@@ -32,9 +32,9 @@ public class ScoreService {
 
     public void initLabels(Stage stage) {
         scoreLabel = new GameLabel();
-        scoreLabel.setPosition(20,650);
+        scoreLabel.setPosition(30,670);
         passiveIncomeLabel = new GameLabel();
-        passiveIncomeLabel.setPosition(20,630);
+        passiveIncomeLabel.setPosition(30,635);
         stage.addActor(scoreLabel);
         stage.addActor(passiveIncomeLabel);
     }

@@ -41,7 +41,7 @@ public class GameplayScreen extends AbstractScreen {
             BasicDialog basicDialog = new BasicDialog();
 
             stage.addActor(basicDialog);
-            basicDialog.initContent("Podczas nieobecnosci \nzarobiles/as " + pointsGained + " Erlangow.");
+            basicDialog.initContent("Podczas nieobecnosci \nzarobiles/as " + String.format("%.1f",pointsGained) + " Erlangow.");
         }
     }
 
@@ -54,7 +54,7 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initBg() {
-        bgImg = new Image(new Texture("img/bg/phone_and_paper_bg.png"));
+        bgImg = new Image(new Texture("img/bg/basic_bg.png"));
         stage.addActor(bgImg);
     }
 

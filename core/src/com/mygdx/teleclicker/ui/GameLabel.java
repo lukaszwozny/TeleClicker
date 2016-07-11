@@ -21,20 +21,24 @@ public class GameLabel extends Label {
     private final static String ARIAL_SRC = "fonts/Arial";
 
     public GameLabel() {
-        this(FontType.TIMES_NEW_ROMAN);
+        this(FontType.TIMES_NEW_ROMAN, Color.BLACK);
     }
 
     public GameLabel(FontType fontType) {
-        super("", prepareLabelStyle(fontType));
+        this(fontType,Color.BLACK);
     }
 
-    private static LabelStyle prepareLabelStyle(FontType fontType) {
+    public GameLabel(FontType fontType, Color color) {
+        super("", prepareLabelStyle(fontType, color));
+    }
+
+    private static LabelStyle prepareLabelStyle(FontType fontType, Color color) {
         String fontDir = getDirToFont(fontType);
         BitmapFont font = new BitmapFont(Gdx.files.internal(fontDir + ".fnt"), Gdx.files.internal(fontDir + ".png"), false);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = font;
-        labelStyle.fontColor = Color.BLACK;
+        labelStyle.fontColor = color;
 
         return labelStyle;
     }

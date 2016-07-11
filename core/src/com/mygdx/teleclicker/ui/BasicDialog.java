@@ -33,7 +33,6 @@ public class BasicDialog extends Image {
         this.setPosition(40, 70);
 
         label = new GameLabel(fontType);
-        label.setPosition(75,240);
 
         this.addListener(new ClickListener(){
             @Override
@@ -48,7 +47,8 @@ public class BasicDialog extends Image {
     public void initContent(String text){
         final int MIDDLE_Y = 200;
         label.setText(text);
-        label.setY(MIDDLE_Y - label.getHeight()/2);
+        label.setPosition(75,MIDDLE_Y - label.getHeight()/2);
+
         this.getStage().addActor(label);
     }
 
