@@ -37,7 +37,7 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initRandomEventsController() {
-        randomEventsController = new RandomEventsController();
+        randomEventsController = new RandomEventsController(game, stage);
     }
 
     private void initPassiveIncomeDialog() {
