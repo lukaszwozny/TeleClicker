@@ -12,6 +12,8 @@ import com.mygdx.teleclicker.TeleClicker;
 public class FlyingObjectsController {
     private static final int RANDOM_TICK_INTERVAL = 5;
     private int spawnTime;
+    private final int MIN_SPAWN_TIME_INTERVAL = 0;
+    private final int MAX_SPAWN_TIME_INTERVAL = 10;
 
     public FlyingObjectsController(TeleClicker game, Stage stage){
         init(game, stage);
@@ -39,7 +41,7 @@ public class FlyingObjectsController {
     }
 
     private void randomizeSpawnTime() {
-        spawnTime = MathUtils.random(5, 10);
+        spawnTime = MathUtils.random(MIN_SPAWN_TIME_INTERVAL, MAX_SPAWN_TIME_INTERVAL);
     }
 
     private void addRandomFlyingObjectToStage(TeleClicker game, Stage stage){

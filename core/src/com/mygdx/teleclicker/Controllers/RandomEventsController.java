@@ -19,7 +19,6 @@ public class RandomEventsController {
     public RandomEventsController(TeleClicker game, Stage stage) {
         this.game = game;
         this.stage = stage;
-        System.out.println("Init random events");
         init();
     }
 
@@ -64,7 +63,6 @@ public class RandomEventsController {
         BasicDialog basicDialog = new BasicDialog();
         stage.addActor(basicDialog);
         float randMultiplier = MathUtils.random(1, 10);
-        System.out.println("Randmulti :" + randMultiplier);
         basicDialog.initContent("Przewalutowales swoje\n" +
                 "Erlangi na Franki.\n" +
                 "Tracisz na tym "+randMultiplier+"%.");

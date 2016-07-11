@@ -12,8 +12,8 @@ import com.mygdx.teleclicker.TeleClicker;
 /**
  * Created by Senpai on 10.07.2016.
  */
-public class FlyingObject extends Image{
-    public enum FlyingObjectType{
+public class FlyingObject extends Image {
+    public enum FlyingObjectType {
         MONEY, MONEY_DOWN, PASSIVE, PASSIVE_DOWN
     }
 
@@ -35,7 +35,7 @@ public class FlyingObject extends Image{
     private TeleClicker game;
     private FlyingObjectType type;
 
-    public FlyingObject(FlyingObjectType type, TeleClicker game){
+    public FlyingObject(FlyingObjectType type, TeleClicker game) {
         super(new Texture(getTextureString(type)));
 
         this.type = type;
@@ -48,7 +48,7 @@ public class FlyingObject extends Image{
         randomizeStartingAndEndingCoord();
         this.setPosition(starting_x, starting_y);
 
-        this.addListener(new ClickListener(){
+        this.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y,
                                      int pointer, int button) {
@@ -62,16 +62,16 @@ public class FlyingObject extends Image{
     }
 
     private void randomizeStartingAndEndingCoord() {
-        if(MathUtils.randomBoolean()){ //UP or DOWN
+        if (MathUtils.randomBoolean()) { //UP or DOWN
             starting_y = MathUtils.randomBoolean() ? -90 : TeleClicker.HEIGHT;
             ending_y = TeleClicker.HEIGHT - starting_y;
-            starting_x = MathUtils.random(0,TeleClicker.WIDTH);
-            ending_x = MathUtils.random(0,TeleClicker.WIDTH);
+            starting_x = MathUtils.random(0, TeleClicker.WIDTH);
+            ending_x = MathUtils.random(0, TeleClicker.WIDTH);
         } else {
             starting_x = MathUtils.randomBoolean() ? -90 : TeleClicker.WIDTH;
             ending_x = TeleClicker.WIDTH - starting_x;
-            starting_y = MathUtils.random(-70,TeleClicker.HEIGHT);
-            ending_y = MathUtils.random(-70,TeleClicker.HEIGHT);
+            starting_y = MathUtils.random(-70, TeleClicker.HEIGHT);
+            ending_y = MathUtils.random(-70, TeleClicker.HEIGHT);
         }
     }
 
@@ -111,20 +111,24 @@ public class FlyingObject extends Image{
         return "";
     }
 
-    public void flyLikeHell(){
+    public void flyLikeHell() {
 
-        int rand_point_x1 = MathUtils.random(0,TeleClicker.HEIGHT);
-        int rand_point_y1 = MathUtils.random(0,TeleClicker.HEIGHT);
-        int rand_move_time_1 = MathUtils.random(2,7);
-        int rand_rotate_1 = MathUtils.random(-720,720);
+        final int MARGIN = 100;
+        final int MAX_SPINS = 6;
+        final int MIN_MOVED_TIME = 1;
+        final int MAX_MOVED_TIME = 10;
+        int rand_point_x1 = MathUtils.random(0, TeleClicker.WIDTH );
+        int rand_point_y1 = MathUtils.random(0, TeleClicker.HEIGHT);
+        int rand_move_time_1 = MathUtils.random(MIN_MOVED_TIME, MAX_MOVED_TIME);
+        int rand_rotate_1 = MathUtils.random(-MAX_SPINS*360, MAX_SPINS*360);
 
         Action a = Actions.parallel(
                 Actions.moveTo(rand_point_x1, rand_point_y1, rand_move_time_1),
                 Actions.rotateBy(rand_rotate_1, rand_move_time_1)
         );
 
-        int rand_move_time_2 = MathUtils.random(1,6);
-        int rand_rotate_2 = MathUtils.random(-720,720);
+        int rand_move_time_2 = MathUtils.random(MIN_MOVED_TIME, MAX_MOVED_TIME);
+        int rand_rotate_2 = MathUtils.random(-MAX_SPINS*360, MAX_SPINS*360);
 
         Action b = Actions.parallel(
                 Actions.moveTo(ending_x, ending_y, rand_move_time_2),

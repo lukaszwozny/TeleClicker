@@ -72,7 +72,6 @@ public class GameplayScreen extends AbstractScreen {
 
     private void initPassiveIncomeDialog() {
         float pointsGained = game.getScoreService().getPointsToAdd();
-        System.out.println("TEST: " + backFromShop);
         if (!backFromShop && (pointsGained > 0)) {
             BasicDialog basicDialog = new BasicDialog();
 

@@ -42,6 +42,7 @@ public class ScoreService {
             scoreLabel.setPosition(10, 677);
             passiveIncomeLabel.setPosition(250, 677);
             pointsPerClickLabel.setPosition(10, 20);
+            stage.addActor(pointsPerClickLabel);
         } else {
             scoreLabel.setPosition(30, 700);
             passiveIncomeLabel.setPosition(30, 668);
@@ -49,7 +50,6 @@ public class ScoreService {
         }
         stage.addActor(scoreLabel);
         stage.addActor(passiveIncomeLabel);
-        stage.addActor(pointsPerClickLabel);
     }
 
     public void saveTimeStamp() {
@@ -100,13 +100,13 @@ public class ScoreService {
         if(isShop){
             scoreLabel.setText("Erlangi: \n" +
                     "" + String.format("%.2f", points));
-            passiveIncomeLabel.setText("Erl / sec: \n" +
+            passiveIncomeLabel.setText("Erl/sec: \n" +
                     "" + passiveIncome);
-            pointsPerClickLabel.setText("Erl / click: " + pointsPerClick);
+            pointsPerClickLabel.setText("Erl/click: " + pointsPerClick);
         } else {
             scoreLabel.setText("Erlangi: " + String.format("%.2f", points));
-            passiveIncomeLabel.setText("Erl / sec: " + passiveIncome);
-            pointsPerClickLabel.setText("Erl / click: " + pointsPerClick);
+            passiveIncomeLabel.setText("Erl/sec: " + passiveIncome);
+            pointsPerClickLabel.setText("Erl/click: " + pointsPerClick);
         }
     }
 
