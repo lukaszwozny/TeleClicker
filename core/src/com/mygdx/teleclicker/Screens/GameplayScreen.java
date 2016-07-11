@@ -2,8 +2,8 @@ package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
-import com.mygdx.teleclicker.Controllers.FlyingObjectController;
+import com.mygdx.teleclicker.Controllers.FlyingObjectsController;
+import com.mygdx.teleclicker.Controllers.RandomEventsController;
 import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.*;
@@ -16,8 +16,8 @@ public class GameplayScreen extends AbstractScreen {
     private Player player;
     private PlayerButton playerButton;
     private ResetScoreButton resetScoreButton;
-    private FlyingObjectController flyingObjectController;
-
+    private FlyingObjectsController flyingObjectsController;
+    private RandomEventsController randomEventsController;
 
     public GameplayScreen(TeleClicker game) {
         super(game);
@@ -30,9 +30,14 @@ public class GameplayScreen extends AbstractScreen {
         initPlayerButton();
         initResetScoreButton();
         game.getScoreService().initLabels(stage);
-        initFlyingStuffController();
+        initFlyingObjectsController();
+        initRandomEventsController();
         startTheMusic();
         initPassiveIncomeDialog();
+    }
+
+    private void initRandomEventsController() {
+        randomEventsController = new RandomEventsController();
     }
 
     private void initPassiveIncomeDialog() {
@@ -49,8 +54,8 @@ public class GameplayScreen extends AbstractScreen {
         game.getSoundService().playCaketownMusic(true);
     }
 
-    private void initFlyingStuffController() {
-        flyingObjectController = new FlyingObjectController(game, stage);
+    private void initFlyingObjectsController() {
+        flyingObjectsController = new FlyingObjectsController(game, stage);
     }
 
     private void initBg() {

@@ -9,10 +9,10 @@ import com.mygdx.teleclicker.TeleClicker;
 /**
  * Created by Senpai on 10.07.2016.
  */
-public class FlyingObjectController {
+public class FlyingObjectsController {
     private int spawnTime;
 
-    public FlyingObjectController(TeleClicker game, Stage stage){
+    public FlyingObjectsController(TeleClicker game, Stage stage){
         init(game, stage);
     }
 
