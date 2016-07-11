@@ -17,6 +17,7 @@ public class GameplayScreen extends AbstractScreen {
     private Player player;
     private PlayerButton playerButton;
     private CornerPhone cornerPhone;
+    private CornerPhoneButton cornerPhoneButton;
     private ResetScoreButton resetScoreButton;
     private FlyingObjectsController flyingObjectsController;
     private RandomEventsController randomEventsController;
@@ -31,12 +32,23 @@ public class GameplayScreen extends AbstractScreen {
         initPlayer();
         initPlayerButton();
         initCornerPhone();
+        initCornerPhoneButton();
         initResetScoreButton();
         game.getScoreService().initLabels(stage);
         initFlyingObjectsController();
         initRandomEventsController();
         startTheMusic();
         initPassiveIncomeDialog();
+    }
+
+    private void initCornerPhoneButton() {
+        cornerPhoneButton = new CornerPhoneButton(new IClickCallback() {
+            @Override
+            public void onClick() {
+                cornerPhone.reactOnClick();
+            }
+        });
+        stage.addActor(cornerPhoneButton);
     }
 
     private void initCornerPhone() {
