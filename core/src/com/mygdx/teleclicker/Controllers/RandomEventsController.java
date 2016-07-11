@@ -40,18 +40,21 @@ public class RandomEventsController {
     }
 
     private void triggerRandomEvent() {
-        int randEvent = MathUtils.random(4);
+        int randEvent = MathUtils.random(5);
         switch (randEvent) {
             case 0:
                 moneyMultiplierDownEvent();
                 break;
             case 1:
-                moneyDownEvent();
+                moneyUpEvent();
                 break;
             case 2:
-                passiveUpEvent();
+                moneyDownEvent();
                 break;
             case 3:
+                passiveUpEvent();
+                break;
+            case 4:
                 break;
         }
     }
@@ -68,15 +71,14 @@ public class RandomEventsController {
         game.getScoreService().multiplierPoints(randMultiplier);
     }
 
-    private void passiveUpEvent() {
+    private void moneyUpEvent() {
         BasicDialog basicDialog = new BasicDialog();
         stage.addActor(basicDialog);
-        int randPassive = MathUtils.random(1, 10) * 10;
-        basicDialog.initContent("Bawiac sie w piaskownicy\n" +
-                "odkrywasz zrodlo natezenia\n" +
-                "ruchu.\n" +
-                "Zyskujesz " + randPassive + " Erl/sec.");
-        game.getScoreService().addPassiveIncome(randPassive);
+        int randMoney = MathUtils.random(1, 3);
+        basicDialog.initContent("Zmieniasz taryfe na\n" +
+                "Telgam - standard " + randMoney*12 +"mc.\n"+
+                "Zyskujesz " + randMoney*100 + " Erlangow.");
+        game.getScoreService().addPoints(randMoney*100);
     }
 
     private void moneyDownEvent() {
@@ -88,6 +90,17 @@ public class RandomEventsController {
                 "niestety, nikt nie odbiera.\n" +
                 "Tracisz " + randMoney + " Erlangow.");
         game.getScoreService().addPoints(-randMoney);
+    }
+
+    private void passiveUpEvent() {
+        BasicDialog basicDialog = new BasicDialog();
+        stage.addActor(basicDialog);
+        int randPassive = MathUtils.random(1, 10) * 10;
+        basicDialog.initContent("Bawiac sie w piaskownicy\n" +
+                "odkrywasz zrodlo natezenia\n" +
+                "ruchu.\n" +
+                "Zyskujesz " + randPassive + " Erl/sec.");
+        game.getScoreService().addPassiveIncome(randPassive);
     }
 
     private void randomizeSpawnTime() {
