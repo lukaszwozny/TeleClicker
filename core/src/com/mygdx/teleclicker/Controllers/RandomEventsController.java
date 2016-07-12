@@ -31,16 +31,17 @@ public class RandomEventsController {
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
+                        System.out.println("Random event time! Can't touch this! ");
                         triggerRandomEvent();
                         randomizeSpawnTime();
                     }
-                }, 10);
+                }, 5);
             }
         }, 1, TICK_INTERVAL);
     }
 
     private void triggerRandomEvent() {
-        int randEvent = MathUtils.random(5);
+        int randEvent = MathUtils.random(4);
         switch (randEvent) {
             case 0:
                 moneyMultiplierDownEvent();
@@ -54,8 +55,8 @@ public class RandomEventsController {
             case 3:
                 passiveUpEvent();
                 break;
-            case 4:
-                break;
+//            case 4:
+//                break;
         }
     }
 

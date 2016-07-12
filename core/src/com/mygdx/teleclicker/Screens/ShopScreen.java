@@ -21,6 +21,7 @@ public class ShopScreen extends AbstractScreen {
 
     public ShopScreen(final TeleClicker game) {
         super(game);
+        System.out.println("SHOP!!!");
     }
 
     @Override

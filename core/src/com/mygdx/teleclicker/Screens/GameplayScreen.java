@@ -25,6 +25,10 @@ public class GameplayScreen extends AbstractScreen {
     static boolean backFromShop;
 
 
+    public GameplayScreen(TeleClicker game) {
+        this(game,false);
+    }
+
     public GameplayScreen(TeleClicker game, boolean isShop) {
         super(setDestination(game,isShop));
     }
@@ -106,6 +110,11 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(resetScoreButton);
     }
 
+    @Override
+    public void hide() {
+        super.hide();
+        System.out.println("HIDE");
+    }
 
     private void initPlayerButton() {
         playerButton = new PlayerButton(new IClickCallback() {
