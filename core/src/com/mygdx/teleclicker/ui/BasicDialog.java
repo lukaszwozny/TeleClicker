@@ -16,7 +16,7 @@ public class BasicDialog extends Image {
 
     private GameLabel label;
 
-    public final static int WIDTH = 440;
+    public final static int WIDTH = 365;
     public final static int HEIGHT = 218;
 
 
