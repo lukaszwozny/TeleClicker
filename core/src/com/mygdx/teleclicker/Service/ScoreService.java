@@ -43,10 +43,6 @@ public class ScoreService {
     }
 
     public void printLabels(Stage stage) {
-        printLabels(stage, false);
-    }
-
-    public void printLabels(Stage stage, boolean isShop) {
         switch (game.getActualScreen()){
             case SPLASH:
                 break;
@@ -114,17 +110,20 @@ public class ScoreService {
         numberOfPassivePointsPBuys = 0;
     }
 
-    public void updateScoreLabel(boolean isShop) {
-        if(isShop){
-            scoreLabel.setText("Erlangi: \n" +
-                    "" + String.format("%.2f", points));
-            passiveIncomeLabel.setText("Erl/sec: \n" +
-                    "" + passiveIncome);
-            pointsPerClickLabel.setText("Erl/click: " + pointsPerClick);
-        } else {
-            scoreLabel.setText("Erlangi: " + String.format("%.2f", points));
-            passiveIncomeLabel.setText("Erl/sec: " + passiveIncome);
-            pointsPerClickLabel.setText("Erl/click: " + pointsPerClick);
+    public void updateScoreLabel() {
+        switch(game.getActualScreen()){
+            case GAMEPLAY:
+                scoreLabel.setText("Erlangi: " + String.format("%.2f", points));
+                passiveIncomeLabel.setText("Erl/sec: " + passiveIncome);
+                pointsPerClickLabel.setText("Erl/click: " + pointsPerClick);
+                break;
+            case SHOP:
+                scoreLabel.setText("Erlangi: \n" +
+                        "" + String.format("%.2f", points));
+                passiveIncomeLabel.setText("Erl/sec: \n" +
+                        "" + passiveIncome);
+                pointsPerClickLabel.setText("Erl/click: " + pointsPerClick);
+                break;
         }
     }
 

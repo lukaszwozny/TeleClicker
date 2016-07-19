@@ -36,7 +36,7 @@ public class ShopScreen extends AbstractScreen {
         initBg();
         initCloseShopButton();
         initBuyButtons();
-        game.getScoreService().printLabels(stage,true);
+        game.getScoreService().printLabels(stage);
     }
 
     private void initBuyButtons() {
@@ -92,9 +92,28 @@ public class ShopScreen extends AbstractScreen {
     }
 
     private void update() {
-        game.getScoreService().updateScoreLabel(true);
-        //updateButtonsColor();
-        //updateLabelsForButtons();
+        game.getScoreService().updateScoreLabel();
+        updateButtonsColor();
+        updateLabelsForButtons();
         stage.act();
+    }
+
+    private void updateLabelsForButtons() {
+        clickBuyButton.initContent("Buy Click Power (" + game.getScoreService().getNumberOfPointsPerClickBuys()+")");
+        passiveBuyButton.initContent("Buy Passive Income (" + game.getScoreService().getNumberOfPassivePointsPBuys()+")");
+    }
+
+    private void updateButtonsColor() {
+        float points = game.getScoreService().getPoints();
+        if(points > 20){
+            clickBuyButton.updateColor(true);
+        } else {
+            clickBuyButton.updateColor(false);
+        }
+        if(points > 50){
+            passiveBuyButton.updateColor(true);
+        } else {
+            passiveBuyButton.updateColor(false);
+        }
     }
 }

@@ -96,7 +96,7 @@ public class ShopScreen_old extends AbstractScreen {
     }
 
     private void update() {
-        game.getScoreService().updateScoreLabel(true);
+        game.getScoreService().updateScoreLabel();
         updateButtonsColor();
         updateLabelsForButtons();
         stage.act();

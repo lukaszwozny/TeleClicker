@@ -144,11 +144,12 @@ public class GameplayScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
+        System.out.println("Shoe gameplay");
         game.setActualScreen(TeleClicker.ScreenType.GAMEPLAY);
     }
 
     private void update() {
-        game.getScoreService().updateScoreLabel(false);
+        game.getScoreService().updateScoreLabel();
         stage.act();
     }
 }
