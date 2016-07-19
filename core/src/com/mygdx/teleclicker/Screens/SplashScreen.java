@@ -23,6 +23,12 @@ public class SplashScreen extends AbstractScreen {
     }
 
     @Override
+    public void show() {
+        super.show();
+        game.setActualScreen(TeleClicker.ScreenType.SPLASH);
+    }
+
+    @Override
     protected void init() {
         // TODO implement better assets loading when game grows
         splashBg = new Texture(SPLASH_BG_DIR);

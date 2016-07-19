@@ -14,11 +14,13 @@ public class TeleClicker extends Game {
     public final static String GAME_PREFS = "com.mygdx.clicker.prefs";
     public final static String GAME_NAME = "Tele Clicker";
 
-    public enum ScreenType{
+    public static enum ScreenType{
         SPLASH,
         GAMEPLAY,
         SHOP
     }
+
+    private ScreenType actualScreen;
 
     private SplashScreen splashScreen;
     private GameplayScreen gameplayScreen;
@@ -44,7 +46,7 @@ public class TeleClicker extends Game {
     private void init() {
         prefs = Gdx.app.getPreferences(GAME_PREFS);
         soundService = new SoundService();
-        scoreService = new ScoreService(prefs);
+        scoreService = new ScoreService(this, prefs);
 
         splashScreen = new SplashScreen(this);
         gameplayScreen = new GameplayScreen(this);
@@ -60,6 +62,14 @@ public class TeleClicker extends Game {
      * ---------------------
      * getters and setters
      */
+
+    public ScreenType getActualScreen() {
+        return actualScreen;
+    }
+
+    public void setActualScreen(ScreenType actualScreen) {
+        this.actualScreen = actualScreen;
+    }
 
     public void setPaused(boolean paused) {
         this.paused = paused;

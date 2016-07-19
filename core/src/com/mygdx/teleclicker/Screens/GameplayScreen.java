@@ -142,6 +142,12 @@ public class GameplayScreen extends AbstractScreen {
         spriteBatch.end();
     }
 
+    @Override
+    public void show() {
+        super.show();
+        game.setActualScreen(TeleClicker.ScreenType.GAMEPLAY);
+    }
+
     private void update() {
         game.getScoreService().updateScoreLabel(false);
         stage.act();

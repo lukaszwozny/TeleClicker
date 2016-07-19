@@ -24,6 +24,12 @@ public class ShopScreen extends AbstractScreen {
     }
 
     @Override
+    public void show() {
+        super.show();
+        game.setActualScreen(TeleClicker.ScreenType.SHOP);
+    }
+
+    @Override
     protected void init() {
         System.out.println("Hej tu shopscreen");
         // TODO implement better assets loading when game grows

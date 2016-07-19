@@ -4,6 +4,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
+import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.GameLabel;
 
 import java.util.concurrent.TimeUnit;
@@ -32,9 +33,11 @@ public class ScoreService {
     private GameLabel passiveIncomeLabel;
     private GameLabel pointsPerClickLabel;
 
+    private TeleClicker game;
     private Preferences prefs;
 
-    public ScoreService(Preferences prefs) {
+    public ScoreService(TeleClicker game, Preferences prefs) {
+        this.game = game;
         this.prefs = prefs;
         init();
     }
@@ -44,6 +47,7 @@ public class ScoreService {
     }
 
     public void printLabels(Stage stage, boolean isShop) {
+
         if(isShop){
             scoreLabel.setPosition(10, 677);
             passiveIncomeLabel.setPosition(250, 677);
