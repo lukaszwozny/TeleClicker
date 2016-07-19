@@ -14,6 +14,12 @@ public class TeleClicker extends Game {
     public final static String GAME_PREFS = "com.mygdx.clicker.prefs";
     public final static String GAME_NAME = "Tele Clicker";
 
+    public enum ScreenType{
+        SPLASH,
+        GAMEPLAY,
+        SHOP
+    }
+
     private SplashScreen splashScreen;
     private GameplayScreen gameplayScreen;
     private ShopScreen shopScreen;
