@@ -47,22 +47,26 @@ public class ScoreService {
     }
 
     public void printLabels(Stage stage, boolean isShop) {
-
-        if(isShop){
-            scoreLabel.setPosition(10, 677);
-            passiveIncomeLabel.setPosition(250, 677);
-            pointsPerClickLabel.setPosition(10, 20);
-            stage.addActor(pointsPerClickLabel);
-        } else {
-            scoreLabel.setPosition(30, 700);
-            passiveIncomeLabel.setPosition(30, 668);
-            pointsPerClickLabel.setPosition(30, 636);
+        switch (game.getActualScreen()){
+            case SPLASH:
+                break;
+            case GAMEPLAY:
+                scoreLabel.setPosition(30, 700);
+                passiveIncomeLabel.setPosition(30, 668);
+                pointsPerClickLabel.setPosition(30, 636);
+                break;
+            case SHOP:
+                scoreLabel.setPosition(10, 677);
+                passiveIncomeLabel.setPosition(250, 677);
+                pointsPerClickLabel.setPosition(10, 20);
+                stage.addActor(pointsPerClickLabel);
+                break;
         }
         stage.addActor(scoreLabel);
         stage.addActor(passiveIncomeLabel);
     }
 
-    private void init() {
+    public void init() {
         scoreLabel = new GameLabel();
         passiveIncomeLabel = new GameLabel();
         pointsPerClickLabel = new GameLabel();

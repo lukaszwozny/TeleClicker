@@ -45,6 +45,7 @@ public class TeleClicker extends Game {
 
     private void init() {
         prefs = Gdx.app.getPreferences(GAME_PREFS);
+        actualScreen = ScreenType.SPLASH;
         soundService = new SoundService();
         scoreService = new ScoreService(this, prefs);
 
@@ -64,7 +65,7 @@ public class TeleClicker extends Game {
      */
 
     public ScreenType getActualScreen() {
-        return actualScreen;
+        return ScreenType.SPLASH;
     }
 
     public void setActualScreen(ScreenType actualScreen) {

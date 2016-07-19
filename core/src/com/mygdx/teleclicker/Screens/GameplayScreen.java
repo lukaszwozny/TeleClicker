@@ -21,7 +21,6 @@ public class GameplayScreen extends AbstractScreen {
     private ResetScoreButton resetScoreButton;
     private FlyingObjectsController flyingObjectsController;
     private RandomEventsController randomEventsController;
-    private ShopScreen shopScreen;
     static boolean backFromShop;
 
 
