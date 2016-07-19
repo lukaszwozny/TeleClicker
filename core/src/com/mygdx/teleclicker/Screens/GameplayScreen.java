@@ -59,7 +59,7 @@ public class GameplayScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 cornerPhone.reactOnClick();
-                //game.setScreen(new ShopScreen_old(game));
+                game.setScreen(game.getShopScreen());
             }
         });
         stage.addActor(cornerPhoneButton);

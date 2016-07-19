@@ -26,7 +26,6 @@ public abstract class AbstractScreen implements Screen {
         createCamera();
         stage = new Stage(new StretchViewport(TeleClicker.WIDTH, TeleClicker.HEIGHT, camera));
         spriteBatch = new SpriteBatch();
-        Gdx.input.setInputProcessor(stage);
         init();
     }
 
@@ -46,7 +45,9 @@ public abstract class AbstractScreen implements Screen {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+    }
 
     private void clearScreen() {
         Gdx.gl.glClearColor(0, 0, 0, 0);
