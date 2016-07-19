@@ -29,8 +29,34 @@ public class ShopScreen extends AbstractScreen {
         // TODO implement better assets loading when game grows
         initBg();
         initCloseShopButton();
-//        initBuyButtons();
-//        game.getScoreService().printLabels(stage,true);
+        initBuyButtons();
+        game.getScoreService().printLabels(stage,true);
+    }
+
+    private void initBuyButtons() {
+        final int START_X = 330;
+        final int START_Y = 545;
+        final int INTERVAL_Y = 51;
+        clickBuyButton = new BuyButton(new IClickCallback() {
+            @Override
+            public void onClick() {
+                if(clickBuyButton.isActive()){
+                    game.getScoreService().increseNumberOfPointsPerClickBuys();
+                }
+                System.out.println("click button");
+            }
+        },START_X,START_Y);
+        passiveBuyButton = new BuyButton(new IClickCallback() {
+            @Override
+            public void onClick() {
+                if(passiveBuyButton.isActive()){
+                    game.getScoreService().increseNumberOfPassivePointsBuys();
+                }
+                System.out.println("Passive");
+            }
+        },START_X,START_Y - INTERVAL_Y);
+        stage.addActor(clickBuyButton);
+        stage.addActor(passiveBuyButton);
     }
 
     private void initCloseShopButton() {
