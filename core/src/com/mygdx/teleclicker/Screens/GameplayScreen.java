@@ -30,12 +30,7 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     public GameplayScreen(TeleClicker game, boolean isShop) {
-        super(setDestination(game,isShop));
-    }
-
-    private static TeleClicker setDestination(TeleClicker game, boolean isShop){
-        backFromShop = isShop;
-        return game;
+        super(game);
     }
 
     @Override
@@ -53,21 +48,21 @@ public class GameplayScreen extends AbstractScreen {
         initPassiveIncomeDialog();
     }
 
+
+    private void initCornerPhone() {
+        cornerPhone = new CornerPhone(game);
+        stage.addActor(cornerPhone);
+    }
+
     private void initCornerPhoneButton() {
         cornerPhoneButton = new CornerPhoneButton(new IClickCallback() {
             @Override
             public void onClick() {
                 cornerPhone.reactOnClick();
-                game.setScreen(new ShopScreen(game));
+                //game.setScreen(new ShopScreen_old(game));
             }
         });
         stage.addActor(cornerPhoneButton);
-    }
-
-
-    private void initCornerPhone() {
-        cornerPhone = new CornerPhone(game);
-        stage.addActor(cornerPhone);
     }
 
     private void initRandomEventsController() {
@@ -108,12 +103,6 @@ public class GameplayScreen extends AbstractScreen {
             }
         });
         stage.addActor(resetScoreButton);
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-        System.out.println("HIDE");
     }
 
     private void initPlayerButton() {

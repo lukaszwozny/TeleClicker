@@ -15,6 +15,8 @@ import com.mygdx.teleclicker.TeleClicker;
 public abstract class AbstractScreen implements Screen {
     protected TeleClicker game;
 
+
+
     protected Stage stage;
     private OrthographicCamera camera;
     protected SpriteBatch spriteBatch;
