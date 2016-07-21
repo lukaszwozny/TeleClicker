@@ -12,6 +12,7 @@ import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.IClickCallback;
 import com.mygdx.teleclicker.ui.PlayerButton;
+import com.mygdx.teleclicker.ui.PlayerButton_old;
 
 /**
  * Created by Senpai on 21.07.2016.
@@ -37,6 +38,7 @@ public class GameplayScreen extends AbstractScreen {
         initBgTexture();
         initScoreLabel();
         initPlayer();
+        initPlayerButton();
     }
 
     private void initPlayer() {

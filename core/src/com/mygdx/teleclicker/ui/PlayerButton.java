@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * Created by Senpai on 10.07.2016.
+ * Created by Senpai on 22.07.2016.
  */
 public class PlayerButton extends Button {
     public PlayerButton(final IClickCallback callback){
@@ -14,17 +14,17 @@ public class PlayerButton extends Button {
     }
 
     private void init(final IClickCallback callback) {
-            this.setWidth(480);
-            this.setHeight(580);
-            this.setX(0);
-            this.setY(0);
+        this.setWidth(480);
+        this.setHeight(500);
+        this.setX(0);
+        this.setY(80);
 
-            this.addListener(new ClickListener(){
-                @Override
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    callback.onClick();
-                    return super.touchDown(event, x, y, pointer, button);
-                }
-            });
+        this.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                callback.onClick();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
     }
 }

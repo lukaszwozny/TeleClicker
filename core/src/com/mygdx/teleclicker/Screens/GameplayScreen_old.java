@@ -15,7 +15,7 @@ import com.mygdx.teleclicker.ui.*;
 public class GameplayScreen_old extends AbstractScreen_old {
     private Image bgImg;
     private Player_old player;
-    private PlayerButton playerButton;
+    private PlayerButton_old playerButton;
     private CornerPhone cornerPhone;
     private CornerPhoneButton cornerPhoneButton;
     private ResetScoreButton resetScoreButton;
@@ -105,7 +105,7 @@ public class GameplayScreen_old extends AbstractScreen_old {
     }
 
     private void initPlayerButton() {
-        playerButton = new PlayerButton(new IClickCallback() {
+        playerButton = new PlayerButton_old(new IClickCallback() {
             @Override
             public void onClick() {
                 player.reactOnClick();
