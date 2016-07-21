@@ -21,12 +21,12 @@ public class ScoreService {
     private static ScoreService instance;
 
     private float points;
-    private float passiveIncome;
+    private float pointsPerSec;
     private float pointsPerClick = 1.0f;
     private float pointsToAdd;
 
     private int numberOfPointsPerClickPBuys = 2;
-    private int numberOfPassivePointsPBuys;
+    private int numberOfPointsPerSecBuys;
 
     private Preferences prefs;
 
@@ -51,7 +51,7 @@ public class ScoreService {
             final float multiplier = 0.1f;
             long deleyTime = TimeUtils.millis() - getSavedTimeStamp();
 
-            pointsToAdd = TimeUnit.MILLISECONDS.toSeconds(deleyTime) * multiplier * passiveIncome;
+            pointsToAdd = TimeUnit.MILLISECONDS.toSeconds(deleyTime) * multiplier * pointsPerSec;
             points += pointsToAdd;
         }
     }
@@ -72,17 +72,17 @@ public class ScoreService {
 
     public void resetGameScore() {
         points = 0.0f;
-        passiveIncome = 0.0f;
+        pointsPerSec = 0.0f;
         pointsPerClick = 1.0f;
 
         numberOfPointsPerClickPBuys = 0;
-        numberOfPassivePointsPBuys = 0;
+        numberOfPointsPerSecBuys = 0;
     }
 
-    public void addPassiveIncome(int value) {
-        passiveIncome += value;
-        if (passiveIncome < 0)
-            passiveIncome = 0;
+    public void addPointsPerSec(int value) {
+        pointsPerSec += value;
+        if (pointsPerSec < 0)
+            pointsPerSec = 0;
     }
 
     public void increseNumberOfPointsPerClickBuys() {
@@ -90,29 +90,28 @@ public class ScoreService {
         numberOfPointsPerClickPBuys++;
     }
 
-    public void increseNumberOfPassivePointsBuys() {
-        System.out.println("passive++");
-        numberOfPassivePointsPBuys++;
+    public void increseNumberOfPointsPerSecBuys() {
+        numberOfPointsPerSecBuys++;
     }
 
     private void loadScore() {
-        passiveIncome = prefs.getFloat(GAME_PASSIVE_INCOME);
+        pointsPerSec = prefs.getFloat(GAME_PASSIVE_INCOME);
         points = prefs.getFloat(GAME_SCORE);
         pointsPerClick = prefs.getFloat(GAME_POINTS_PER_CLICK);
 
         numberOfPointsPerClickPBuys = prefs.getInteger(GAME_NO_POINTS_PER_CLICK_BUYS);
-        numberOfPassivePointsPBuys = prefs.getInteger(GAME_NO_PASSIVE_POINTS_BUYS);
+        numberOfPointsPerSecBuys = prefs.getInteger(GAME_NO_PASSIVE_POINTS_BUYS);
     }
 
     public void saveCurrentGameState() {
         prefs.putFloat(GAME_SCORE, points);
-        prefs.putFloat(GAME_PASSIVE_INCOME, passiveIncome);
+        prefs.putFloat(GAME_PASSIVE_INCOME, pointsPerSec);
         prefs.putFloat(GAME_POINTS_PER_CLICK, pointsPerClick);
         prefs.putLong(GAME_SAVED_TIMESTAMP, TimeUtils.millis());
 
         // Shop values
         prefs.putInteger(GAME_NO_POINTS_PER_CLICK_BUYS, numberOfPointsPerClickPBuys);
-        prefs.putInteger(GAME_NO_PASSIVE_POINTS_BUYS, numberOfPassivePointsPBuys);
+        prefs.putInteger(GAME_NO_PASSIVE_POINTS_BUYS, numberOfPointsPerSecBuys);
 
         prefs.flush();
     }
@@ -131,15 +130,15 @@ public class ScoreService {
     }
 
     public float getPointsPerSec(){
-        return passiveIncome;
+        return pointsPerSec;
     }
 
     public int getNumberOfPointsPerClickBuys() {
         return numberOfPointsPerClickPBuys;
     }
 
-    public int getNumberOfPassivePointsPBuys() {
-        return numberOfPassivePointsPBuys;
+    public int getNumberOfPointsPerSecBuys() {
+        return numberOfPointsPerSecBuys;
     }
 
     public float getPointsToAdd() {

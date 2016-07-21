@@ -53,6 +53,7 @@ public class GameplayScreen extends AbstractScreen {
         cornerPhoneButton = new CornerPhoneButton(new IClickCallback() {
             @Override
             public void onClick() {
+                SoundService.getInstance().playClickSound();
                 cornerPhone.reactOnClick();
                 ScreenService.getInstance().SetScreen(ScreenEnum.SHOP);
             }

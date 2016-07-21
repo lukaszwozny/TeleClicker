@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.CloseShopButton;
 import com.mygdx.teleclicker.ui.IClickCallback;
-import com.mygdx.teleclicker.ui.BuyButton;
+import com.mygdx.teleclicker.ui.BuyButton_old;
 
 /**
  * Created by Senpai on 11.07.2016.
@@ -16,8 +16,8 @@ public class ShopScreen_old extends AbstractScreen_old {
 
     private CloseShopButton closeShopButton;
 
-    private BuyButton clickBuyButton;
-    private BuyButton passiveBuyButton;
+    private BuyButton_old clickBuyButton;
+    private BuyButton_old passiveBuyButton;
 
     public ShopScreen_old(TeleClicker game) {
         super(game);
@@ -37,7 +37,7 @@ public class ShopScreen_old extends AbstractScreen_old {
         final int START_X = 330;
         final int START_Y = 545;
         final int INTERVAL_Y = 51;
-        clickBuyButton = new BuyButton(new IClickCallback() {
+        clickBuyButton = new BuyButton_old(new IClickCallback() {
             @Override
             public void onClick() {
                 if(clickBuyButton.isActive()){
@@ -46,7 +46,7 @@ public class ShopScreen_old extends AbstractScreen_old {
                 System.out.println("click button");
             }
         },START_X,START_Y);
-        passiveBuyButton = new BuyButton(new IClickCallback() {
+        passiveBuyButton = new BuyButton_old(new IClickCallback() {
             @Override
             public void onClick() {
                 if(passiveBuyButton.isActive()){

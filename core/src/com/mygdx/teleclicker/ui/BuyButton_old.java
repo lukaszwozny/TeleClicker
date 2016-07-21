@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * Created by Senpai on 22.07.2016.
+ * Created by Senpai on 11.07.2016.
  */
-public class BuyButton extends Button {
+public class BuyButton_old extends Button {
 
     private static ButtonStyle buttonStyleGreen;
     private static ButtonStyle buttonStyleRed;
@@ -22,7 +22,7 @@ public class BuyButton extends Button {
 
     private boolean active = false;
 
-    public BuyButton(final IClickCallback callback, int posX, int posY) {
+    public BuyButton_old(final IClickCallback callback, int posX, int posY) {
         super(prepareResetButtonStyle());
         init(callback);
         this.setX(posX);
