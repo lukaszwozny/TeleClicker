@@ -4,6 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.TeleClicker;
+import com.sun.javafx.animation.TickCalculation;
 
 /**
  * Created by Senpai on 21.07.2016.
@@ -29,6 +30,7 @@ public class ScreenManager {
         // Show new Screen
         AbstractScreen newScreen = screenEnum.getScreen();
         newScreen.buildStage();
+        TeleClicker.setActualScreen(screenEnum);
         game.setScreen(newScreen);
 
         // Dispose old screen

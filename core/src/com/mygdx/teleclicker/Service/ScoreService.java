@@ -21,6 +21,8 @@ public class ScoreService {
     public final static String GAME_NO_POINTS_PER_CLICK_BUYS = "com.mygdx.clicker.prefs.pointsperclickbuys";
     public final static String GAME_NO_PASSIVE_POINTS_BUYS = "com.mygdx.clicker.prefs.passivepointsbuys";
 
+    private static ScoreService instance;
+
     private float points;
     private float passiveIncome;
     private float pointsPerClick = 1.0f;
@@ -36,10 +38,20 @@ public class ScoreService {
     private TeleClicker game;
     private Preferences prefs;
 
-    public ScoreService(TeleClicker game, Preferences prefs) {
-        this.game = game;
-        this.prefs = prefs;
+    private ScoreService() {
         init();
+    }
+
+    // ToDo Remove
+    public ScoreService(TeleClicker game, Preferences prefs) {
+        init();
+    }
+
+    public static ScoreService getInstance() {
+        if(instance == null){
+            instance = new ScoreService();
+        }
+        return instance;
     }
 
     public void printLabels(Stage stage) {
