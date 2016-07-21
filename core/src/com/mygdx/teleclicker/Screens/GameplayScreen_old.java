@@ -6,6 +6,7 @@ import com.mygdx.teleclicker.Controllers.FlyingObjectsController;
 import com.mygdx.teleclicker.Controllers.RandomEventsController;
 import com.mygdx.teleclicker.Entities.CornerPhone;
 import com.mygdx.teleclicker.Entities.Player;
+import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.*;
 

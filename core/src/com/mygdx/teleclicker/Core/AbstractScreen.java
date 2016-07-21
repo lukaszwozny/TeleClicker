@@ -1,4 +1,4 @@
-package com.mygdx.teleclicker.Screens;
+package com.mygdx.teleclicker.Core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
