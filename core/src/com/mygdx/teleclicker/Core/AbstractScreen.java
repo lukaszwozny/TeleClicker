@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.teleclicker.TeleClicker;
@@ -13,11 +14,15 @@ import com.mygdx.teleclicker.TeleClicker;
  */
 public abstract class AbstractScreen extends Stage implements Screen {
 
+    protected Texture bgTexture;
+
     public AbstractScreen(){
         super(new StretchViewport(TeleClicker.WIDTH,TeleClicker.HEIGHT,new OrthographicCamera()));
     }
 
     public abstract void buildStage();
+
+    public abstract void initBgTexture();
 
     @Override
     public void show() {

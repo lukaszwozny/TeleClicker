@@ -41,7 +41,7 @@ public class TeleClicker extends Game {
     @Override
     public void create() {
         ScreenManager.getInstance().initialize(this);
-        ScreenManager.getInstance().SetScreen(ScreenEnum.SPLASH);
+        ScreenManager.getInstance().SetScreen(ScreenEnum.GAMEPLAY);
     }
 
     private void init() {
