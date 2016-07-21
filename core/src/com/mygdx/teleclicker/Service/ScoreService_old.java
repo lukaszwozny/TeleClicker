@@ -1,15 +1,17 @@
 package com.mygdx.teleclicker.Service;
 
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.teleclicker.TeleClicker;
+import com.mygdx.teleclicker.ui.GameLabel;
 
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Senpai on 21.07.2016.
+ * Created by Senpai on 10.07.2016.
  */
-public class ScoreService {
+public class ScoreService_old {
     public final static String GAME_SCORE = "com.mygdx.clicker.prefs.score";
     public final static String GAME_PASSIVE_INCOME = "com.mygdx.clicker.prefs.passive";
     public final static String GAME_SAVED_TIMESTAMP = "com.mygdx.clicker.prefs.timestamp";
@@ -18,7 +20,7 @@ public class ScoreService {
     public final static String GAME_NO_POINTS_PER_CLICK_BUYS = "com.mygdx.clicker.prefs.pointsperclickbuys";
     public final static String GAME_NO_PASSIVE_POINTS_BUYS = "com.mygdx.clicker.prefs.passivepointsbuys";
 
-    private static ScoreService instance;
+    private static ScoreService_old instance;
 
     private float points;
     private float passiveIncome;
@@ -28,22 +30,62 @@ public class ScoreService {
     private int numberOfPointsPerClickPBuys = 2;
     private int numberOfPassivePointsPBuys;
 
+    private GameLabel scoreLabel;
+    private GameLabel passiveIncomeLabel;
+    private GameLabel pointsPerClickLabel;
+
+    private TeleClicker game;
     private Preferences prefs;
 
-    private ScoreService() {
-        this.prefs = TeleClicker.getPrefs();
-        loadScore();
+    private ScoreService_old() {
         init();
     }
 
-    public static ScoreService getInstance() {
+    // ToDo Remove
+    public ScoreService_old(TeleClicker game, Preferences prefs) {
+        init();
+    }
+
+    public static ScoreService_old getInstance() {
         if(instance == null){
-            instance = new ScoreService();
+            instance = new ScoreService_old();
         }
         return instance;
     }
 
+    public void printLabels(Stage stage) {
+        switch (TeleClicker.getActualScreen()){
+            case SPLASH:
+                break;
+            case GAMEPLAY:
+                scoreLabel.setPosition(30, 700);
+                passiveIncomeLabel.setPosition(30, 668);
+                pointsPerClickLabel.setPosition(30, 636);
+                break;
+            case SHOP:
+                scoreLabel.setPosition(10, 677);
+                passiveIncomeLabel.setPosition(250, 677);
+                pointsPerClickLabel.setPosition(10, 20);
+                stage.addActor(pointsPerClickLabel);
+                break;
+        }
+        stage.addActor(scoreLabel);
+        stage.addActor(passiveIncomeLabel);
+    }
+
     public void init() {
+        scoreLabel = new GameLabel();
+        passiveIncomeLabel = new GameLabel();
+        pointsPerClickLabel = new GameLabel();
+        //loadScore();
+        //calculateGainedPassiveIncome();
+
+//        Timer.schedule(new Timer.Task() {
+//            @Override
+//            public void run() {
+//                points += passiveIncome;
+//            }
+//        }, 1, 1);
     }
 
     private void calculateGainedPassiveIncome() {
@@ -79,6 +121,23 @@ public class ScoreService {
         numberOfPassivePointsPBuys = 0;
     }
 
+    public void updateScoreLabel() {
+        switch(game.getActualScreen()){
+            case GAMEPLAY:
+                scoreLabel.setText("Erlangi: " + String.format("%.2f", points));
+                passiveIncomeLabel.setText("Erl/sec: " + passiveIncome);
+                pointsPerClickLabel.setText("Erl/click: " + pointsPerClick);
+                break;
+            case SHOP:
+                scoreLabel.setText("Erlangi: \n" +
+                        "" + String.format("%.2f", points));
+                passiveIncomeLabel.setText("Erl/sec: \n" +
+                        "" + passiveIncome);
+                pointsPerClickLabel.setText("Erl/click: " + pointsPerClick);
+                break;
+        }
+    }
+
     public void addPassiveIncome(int value) {
         passiveIncome += value;
         if (passiveIncome < 0)
@@ -110,10 +169,8 @@ public class ScoreService {
         prefs.putFloat(GAME_POINTS_PER_CLICK, pointsPerClick);
         prefs.putLong(GAME_SAVED_TIMESTAMP, TimeUtils.millis());
 
-        // Shop values
         prefs.putInteger(GAME_NO_POINTS_PER_CLICK_BUYS, numberOfPointsPerClickPBuys);
         prefs.putInteger(GAME_NO_PASSIVE_POINTS_BUYS, numberOfPassivePointsPBuys);
-
         prefs.flush();
     }
 
@@ -128,10 +185,6 @@ public class ScoreService {
 
     public float getPoints() {
         return points;
-    }
-
-    public float getPointsPerSec(){
-        return passiveIncome;
     }
 
     public int getNumberOfPointsPerClickBuys() {

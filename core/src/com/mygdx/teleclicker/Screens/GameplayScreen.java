@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
+import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
@@ -57,7 +58,13 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void updateScoreLabel() {
-        scoreLabel.setText("Erlangi: " + 1 + "\n" +
-                "Per sec: " + 2);
+        scoreLabel.setText("Erlangi: " + ScoreService.getInstance().getPoints() + "\n" +
+                "Per sec: " + ScoreService.getInstance().getPointsPerSec());
+    }
+
+    @Override
+    public void pause() {
+        super.pause();
+        ScoreService.getInstance().saveCurrentGameState();
     }
 }

@@ -7,14 +7,13 @@ import com.mygdx.teleclicker.Screens.SplashScreen_old;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.mygdx.teleclicker.Service.ScoreService;
+import com.mygdx.teleclicker.Service.ScoreService_old;
 import com.mygdx.teleclicker.Service.ScreenManager;
 import com.mygdx.teleclicker.Service.SoundService;
 
 public class TeleClicker extends Game {
     public final static String GAME_PREFS = "com.mygdx.clicker.prefs";
     public final static String GAME_NAME = "Tele Clicker";
-
 
     public static enum ScreenType{
         SPLASH,
@@ -34,9 +33,9 @@ public class TeleClicker extends Game {
     private boolean paused;
 
     private SoundService soundService;
-    private ScoreService scoreService;
+    private ScoreService_old scoreService;
 
-    private Preferences prefs;
+    private static Preferences prefs;
 
     private static ScreenEnum actualScreen;
 
@@ -44,18 +43,6 @@ public class TeleClicker extends Game {
     public void create() {
         ScreenManager.getInstance().initialize(this);
         ScreenManager.getInstance().SetScreen(ScreenEnum.SPLASH);
-    }
-
-    private void init() {
-        prefs = Gdx.app.getPreferences(GAME_PREFS);
-//        actualScreen = ScreenType.SPLASH;
-        soundService = new SoundService();
-        scoreService = new ScoreService(this, prefs);
-
-        splashScreen = new SplashScreen_old(this);
-        gameplayScreen = new GameplayScreen_old(this);
-        shopScreen = new ShopScreenold_1(this);
-        shopScreen.hide();
     }
 
     public boolean isPaused() {
@@ -67,6 +54,12 @@ public class TeleClicker extends Game {
      * getters and setters
      */
 
+    public static Preferences getPrefs() {
+        if(prefs == null){
+            prefs = Gdx.app.getPreferences(GAME_PREFS);
+        }
+        return prefs;
+    }
 
     public static ScreenEnum getActualScreen() {
         return actualScreen;
@@ -92,7 +85,7 @@ public class TeleClicker extends Game {
         return soundService;
     }
 
-    public ScoreService getScoreService() {
+    public ScoreService_old getScoreService() {
         return scoreService;
     }
 
