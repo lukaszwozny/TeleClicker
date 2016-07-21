@@ -7,11 +7,11 @@ import com.mygdx.teleclicker.TeleClicker;
 /**
  * Created by Senpai on 10.07.2016.
  */
-public class SplashScreen extends AbstractScreen {
+public class SplashScreen_old extends AbstractScreen_old {
     private final String SPLASH_BG_DIR = "img/bg/splash.png";
     private Texture splashBg;
 
-    public SplashScreen(final TeleClicker game) {
+    public SplashScreen_old(final TeleClicker game) {
         super(game);
 
         Timer.schedule(new Timer.Task() {

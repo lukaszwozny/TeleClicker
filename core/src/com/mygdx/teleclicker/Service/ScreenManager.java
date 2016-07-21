@@ -1,5 +1,6 @@
 package com.mygdx.teleclicker.Service;
 
+import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
@@ -17,6 +18,10 @@ public class ScreenManager {
 
     public void initialize(TeleClicker game){
         this.game = game;
+    }
+
+    public void SetScreen(ScreenEnum screenEnum){
+
     }
 
     /*

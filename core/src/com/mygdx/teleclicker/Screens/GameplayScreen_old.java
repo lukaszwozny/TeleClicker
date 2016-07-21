@@ -12,7 +12,7 @@ import com.mygdx.teleclicker.ui.*;
 /**
  * Created by Senpai on 10.07.2016.
  */
-public class GameplayScreen extends AbstractScreen {
+public class GameplayScreen_old extends AbstractScreen_old {
     private Image bgImg;
     private Player player;
     private PlayerButton playerButton;
@@ -24,11 +24,11 @@ public class GameplayScreen extends AbstractScreen {
     static boolean backFromShop;
 
 
-    public GameplayScreen(TeleClicker game) {
+    public GameplayScreen_old(TeleClicker game) {
         this(game,false);
     }
 
-    public GameplayScreen(TeleClicker game, boolean isShop) {
+    public GameplayScreen_old(TeleClicker game, boolean isShop) {
         super(game);
     }
 

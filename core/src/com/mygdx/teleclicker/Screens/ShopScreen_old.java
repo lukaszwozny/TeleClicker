@@ -10,7 +10,7 @@ import com.mygdx.teleclicker.ui.BuyButton;
 /**
  * Created by Senpai on 11.07.2016.
  */
-public class ShopScreen_old extends AbstractScreen {
+public class ShopScreen_old extends AbstractScreen_old {
     private final String SHOP_BG_DIR = "img/bg/shop_bg.png";
     private Image shopBg;
 
@@ -68,7 +68,7 @@ public class ShopScreen_old extends AbstractScreen {
         closeShopButton = new CloseShopButton(new IClickCallback() {
             @Override
             public void onClick() {
-                game.setScreen(new GameplayScreen(game, true));
+                game.setScreen(new GameplayScreen_old(game, true));
             }
         });
         stage.addActor(closeShopButton);

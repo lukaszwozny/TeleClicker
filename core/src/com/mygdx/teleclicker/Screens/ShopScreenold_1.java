@@ -10,7 +10,7 @@ import com.mygdx.teleclicker.ui.IClickCallback;
 /**
  * Created by Senpai on 12.07.2016.
  */
-public class ShopScreen extends AbstractScreen {
+public class ShopScreenold_1 extends AbstractScreen_old {
     private final String SHOP_BG_DIR = "img/bg/shop_bg.png";
     private Image shopBg;
 
@@ -19,7 +19,7 @@ public class ShopScreen extends AbstractScreen {
     private BuyButton clickBuyButton;
     private BuyButton passiveBuyButton;
 
-    public ShopScreen(TeleClicker game) {
+    public ShopScreenold_1(TeleClicker game) {
         super(game);
     }
 

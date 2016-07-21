@@ -1,9 +1,8 @@
 package com.mygdx.teleclicker;
 
-import com.mygdx.teleclicker.Screens.GameplayScreen;
-import com.mygdx.teleclicker.Screens.ShopScreen;
-import com.mygdx.teleclicker.Screens.ShopScreen_old;
-import com.mygdx.teleclicker.Screens.SplashScreen;
+import com.mygdx.teleclicker.Screens.GameplayScreen_old;
+import com.mygdx.teleclicker.Screens.ShopScreenold_1;
+import com.mygdx.teleclicker.Screens.SplashScreen_old;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -22,9 +21,9 @@ public class TeleClicker extends Game {
 
     private ScreenType actualScreen;
 
-    private SplashScreen splashScreen;
-    private GameplayScreen gameplayScreen;
-    private ShopScreen shopScreen;
+    private SplashScreen_old splashScreen;
+    private GameplayScreen_old gameplayScreen;
+    private ShopScreenold_1 shopScreen;
 
     public final static int WIDTH = 405;
     public final static int HEIGHT = 720;
@@ -49,9 +48,9 @@ public class TeleClicker extends Game {
         soundService = new SoundService();
         scoreService = new ScoreService(this, prefs);
 
-        splashScreen = new SplashScreen(this);
-        gameplayScreen = new GameplayScreen(this);
-        shopScreen = new ShopScreen(this);
+        splashScreen = new SplashScreen_old(this);
+        gameplayScreen = new GameplayScreen_old(this);
+        shopScreen = new ShopScreenold_1(this);
         shopScreen.hide();
     }
 
@@ -84,11 +83,11 @@ public class TeleClicker extends Game {
         return scoreService;
     }
 
-    public GameplayScreen getGameplayScreen() {
+    public GameplayScreen_old getGameplayScreen() {
         return gameplayScreen;
     }
 
-    public ShopScreen getShopScreen() {
+    public ShopScreenold_1 getShopScreen() {
         return shopScreen;
     }
 }

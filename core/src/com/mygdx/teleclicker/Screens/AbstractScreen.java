@@ -4,75 +4,53 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
- * Created by Senpai on 10.07.2016.
+ * Created by Senpai on 21.07.2016.
  */
-public abstract class AbstractScreen implements Screen {
-    protected TeleClicker game;
+public abstract class AbstractScreen extends Stage implements Screen {
 
-
-
-    protected Stage stage;
-    private OrthographicCamera camera;
-    protected SpriteBatch spriteBatch;
-
-    public AbstractScreen(TeleClicker game){
-        this.game = game;
-        createCamera();
-        stage = new Stage(new StretchViewport(TeleClicker.WIDTH, TeleClicker.HEIGHT, camera));
-        spriteBatch = new SpriteBatch();
-        init();
+    public AbstractScreen(){
+        super(new StretchViewport(TeleClicker.WIDTH,TeleClicker.HEIGHT,new OrthographicCamera()));
     }
 
-    protected abstract void init();
+    public abstract void buildStage();
 
-    private void createCamera() {
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, TeleClicker.WIDTH, TeleClicker.HEIGHT);
-        camera.update();
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void render(float delta) {
-        clearScreen();
-        camera.update();
-        spriteBatch.setProjectionMatrix(camera.combined);
-    }
+        // Clear screen
+        Gdx.gl20.glClearColor(1,0,0,1);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    private void clearScreen() {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }
-
-    @Override
-    public void resume() {
-        game.setPaused(false);
-    }
-
-    @Override
-    public void pause() {
-        game.setPaused(true);
-    }
-
-    @Override
-    public void hide() {}
-
-    @Override
-    public void dispose() {
-        game.dispose();
+        super.act(delta);
+        super.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+        getViewport().update(width,height,true);
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
     }
 }
