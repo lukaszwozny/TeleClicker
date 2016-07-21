@@ -133,6 +133,10 @@ public class ScoreService {
         return pointsPerSec;
     }
 
+    public float getPointsPerClick(){
+        return pointsPerClick;
+    }
+
     public int getNumberOfPointsPerClickBuys() {
         return numberOfPointsPerClickPBuys;
     }
