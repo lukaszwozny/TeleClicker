@@ -1,5 +1,7 @@
 package com.mygdx.teleclicker.Service;
 
+import com.badlogic.gdx.Screen;
+import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.TeleClicker;
 
@@ -21,16 +23,24 @@ public class ScreenManager {
     }
 
     public void SetScreen(ScreenEnum screenEnum){
+        // Get current screen to dispose it
+        Screen curentScreen = game.getScreen();
 
+        // Show new Screen
+        AbstractScreen newScreen = screenEnum.getScreen();
+        newScreen.buildStage();
+        game.setScreen(newScreen);
+
+        // Dispose old screen
+        if(curentScreen!=null){
+            curentScreen.dispose();
+        }
     }
 
-    /*
-    *
-    * Getters and etters
-    *
-    */
-
     public static ScreenManager getInstance() {
+        if(instance == null){
+            instance = new ScreenManager();
+        }
         return instance;
     }
 }

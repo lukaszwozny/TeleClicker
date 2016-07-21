@@ -1,5 +1,6 @@
 package com.mygdx.teleclicker;
 
+import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Screens.GameplayScreen_old;
 import com.mygdx.teleclicker.Screens.ShopScreenold_1;
 import com.mygdx.teleclicker.Screens.SplashScreen_old;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.mygdx.teleclicker.Service.ScoreService;
+import com.mygdx.teleclicker.Service.ScreenManager;
 import com.mygdx.teleclicker.Service.SoundService;
 
 public class TeleClicker extends Game {
@@ -38,8 +40,8 @@ public class TeleClicker extends Game {
 
     @Override
     public void create() {
-        init();
-        this.setScreen(splashScreen);
+        ScreenManager.getInstance().initialize(this);
+        ScreenManager.getInstance().SetScreen(ScreenEnum.SPLASH);
     }
 
     private void init() {
