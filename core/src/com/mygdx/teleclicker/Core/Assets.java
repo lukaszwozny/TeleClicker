@@ -36,6 +36,7 @@ public class Assets implements Disposable {
 
     public void loadGameplayAssets(){
         manager.load(AssetsEnum.GAMEPLAY_BG.toString(), Texture.class);
+        manager.load(AssetsEnum.PLAYER_TEX.toString(), Texture.class);
     }
 
     public void loadShopAssets(){

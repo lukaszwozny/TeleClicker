@@ -6,24 +6,25 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.teleclicker.Core.Assets;
-import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
- * Created by Senpai on 21.07.2016.
+ * Created by Senpai on 10.07.2016.
  */
-public class Player extends Image {
+public class Player_old extends Image {
     private final static int WIDTH = 180;
     private final static int HEIGHT = 200;
 
     private final static int STARTING_X = TeleClicker.WIDTH / 2 - WIDTH / 2;
     private final static int STARTING_Y = TeleClicker.HEIGHT / 2 - HEIGHT / 2 - 50;
 
+    private static final String PHONE_OLD_DIR = "img/skins/player/phone_old1.png";
 
+    private TeleClicker game;
 
-    public Player(){
-        super(getPlayerTexture());
+    public Player_old(TeleClicker game) {
+        super(new Texture(PHONE_OLD_DIR));
+        this.game = game;
 
         this.setOrigin(WIDTH / 2, HEIGHT / 2);
         this.setSize(WIDTH, HEIGHT);
@@ -32,12 +33,8 @@ public class Player extends Image {
         this.setPosition(STARTING_X, STARTING_Y);
     }
 
-    private static Texture getPlayerTexture(){
-        return Assets.getInstance().manager.get(AssetsEnum.PLAYER_TEX.toString());
-    }
-
-    public void reactOnClick(){
-//        game.getSoundService().playClickSound();
+    public void reactOnClick() {
+        game.getSoundService().playClickSound();
         int xMoveAmmount = MathUtils.random(-130, 130);
         int yMoveAmmount = 10;
         float moveActionTime = 0.30f;
@@ -61,5 +58,4 @@ public class Player extends Image {
             this.addAction(Actions.rotateBy(MathUtils.randomSign() * 360, 0.4f));
         }
     }
-
 }

@@ -6,9 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
+import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.TeleClicker;
+import com.mygdx.teleclicker.ui.IClickCallback;
+import com.mygdx.teleclicker.ui.PlayerButton;
 
 /**
  * Created by Senpai on 21.07.2016.
@@ -16,6 +19,8 @@ import com.mygdx.teleclicker.TeleClicker;
 public class GameplayScreen extends AbstractScreen {
 
     private Label scoreLabel;
+    private PlayerButton playerButton;
+    private Player player;
 
     public GameplayScreen(){
         super();
@@ -31,6 +36,12 @@ public class GameplayScreen extends AbstractScreen {
     public void buildStage() {
         initBgTexture();
         initScoreLabel();
+        initPlayer();
+    }
+
+    private void initPlayer() {
+        player = new Player();
+        addActor(player);
     }
 
     private void initScoreLabel() {
@@ -45,6 +56,17 @@ public class GameplayScreen extends AbstractScreen {
         scoreLabel.setPosition(POS_X,POS_Y);
 
         addActor(scoreLabel);
+    }
+
+    private void initPlayerButton() {
+        playerButton = new PlayerButton(new IClickCallback() {
+            @Override
+            public void onClick() {
+                player.reactOnClick();
+                ScoreService.getInstance().addPoint();
+            }
+        });
+        addActor(playerButton);
     }
 
     @Override

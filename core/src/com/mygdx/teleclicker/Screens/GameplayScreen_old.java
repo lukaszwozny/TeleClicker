@@ -5,8 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.teleclicker.Controllers.FlyingObjectsController;
 import com.mygdx.teleclicker.Controllers.RandomEventsController;
 import com.mygdx.teleclicker.Entities.CornerPhone;
-import com.mygdx.teleclicker.Entities.Player;
-import com.mygdx.teleclicker.Enums.AssetsEnum;
+import com.mygdx.teleclicker.Entities.Player_old;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.*;
 
@@ -15,7 +14,7 @@ import com.mygdx.teleclicker.ui.*;
  */
 public class GameplayScreen_old extends AbstractScreen_old {
     private Image bgImg;
-    private Player player;
+    private Player_old player;
     private PlayerButton playerButton;
     private CornerPhone cornerPhone;
     private CornerPhoneButton cornerPhoneButton;
@@ -117,7 +116,7 @@ public class GameplayScreen_old extends AbstractScreen_old {
     }
 
     private void initPlayer() {
-        player = new Player(game);
+        player = new Player_old(game);
         stage.addActor(player);
     }
 

@@ -6,7 +6,9 @@ package com.mygdx.teleclicker.Enums;
 public enum AssetsEnum {
     SPLASH_BG("img/bg/splash.png"),
     GAMEPLAY_BG("img/bg/basic_bg.png"),
-    SHOP_BG("img/bg/shop_bg.png");
+    SHOP_BG("img/bg/shop_bg.png"),
+
+    PLAYER_TEX("img/skins/player/phone_old1.png");
 
     private String dir;
 
