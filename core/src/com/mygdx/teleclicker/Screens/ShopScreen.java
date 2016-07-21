@@ -5,7 +5,7 @@ import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
-import com.mygdx.teleclicker.Service.ScreenManager;
+import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.ui.CloseShopButton;
 import com.mygdx.teleclicker.ui.IClickCallback;
@@ -32,7 +32,7 @@ public class ShopScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
-                ScreenManager.getInstance().SetScreen(ScreenEnum.GAMEPLAY);
+                ScreenService.getInstance().SetScreen(ScreenEnum.GAMEPLAY);
             }
         });
         addActor(closeShopButton);

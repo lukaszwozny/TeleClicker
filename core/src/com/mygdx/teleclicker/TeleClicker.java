@@ -8,7 +8,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.mygdx.teleclicker.Service.ScoreService_old;
-import com.mygdx.teleclicker.Service.ScreenManager;
+import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.Service.SoundService_old;
 
@@ -43,8 +43,8 @@ public class TeleClicker extends Game {
     @Override
     public void create() {
         SoundService.getInstance().playCaketownMusic(true);
-        ScreenManager.getInstance().initialize(this);
-        ScreenManager.getInstance().SetScreen(ScreenEnum.SPLASH);
+        ScreenService.getInstance().initialize(this);
+        ScreenService.getInstance().SetScreen(ScreenEnum.SPLASH);
     }
 
     public boolean isPaused() {

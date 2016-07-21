@@ -6,7 +6,7 @@ import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
-import com.mygdx.teleclicker.Service.ScreenManager;
+import com.mygdx.teleclicker.Service.ScreenService;
 
 /**
  * Created by Senpai on 21.07.2016.
@@ -18,7 +18,7 @@ public class SplashScreen extends AbstractScreen {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                ScreenManager.getInstance().SetScreen(ScreenEnum.GAMEPLAY);
+                ScreenService.getInstance().SetScreen(ScreenEnum.GAMEPLAY);
             }
         },2);
     }

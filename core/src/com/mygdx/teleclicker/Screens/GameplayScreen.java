@@ -11,13 +11,12 @@ import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.ScoreService;
-import com.mygdx.teleclicker.Service.ScreenManager;
+import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.CornerPhoneButton;
 import com.mygdx.teleclicker.ui.IClickCallback;
 import com.mygdx.teleclicker.ui.PlayerButton;
-import com.mygdx.teleclicker.ui.PlayerButton_old;
 
 /**
  * Created by Senpai on 21.07.2016.
@@ -55,7 +54,7 @@ public class GameplayScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 cornerPhone.reactOnClick();
-                ScreenManager.getInstance().SetScreen(ScreenEnum.SHOP);
+                ScreenService.getInstance().SetScreen(ScreenEnum.SHOP);
             }
         });
         addActor(cornerPhoneButton);
