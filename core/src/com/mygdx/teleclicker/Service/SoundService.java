@@ -1,13 +1,16 @@
 package com.mygdx.teleclicker.Service;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.mygdx.teleclicker.Core.Assets;
+import com.mygdx.teleclicker.Enums.AssetsEnum;
 
 /**
- * Created by Senpai on 10.07.2016.
+ * Created by Senpai on 22.07.2016.
  */
 public class SoundService {
+
+    private static SoundService instance;
 
     private Sound popSound;
     private Sound cashRegisterSound;
@@ -15,20 +18,27 @@ public class SoundService {
     private Sound bombExplosionSound;
     private Sound clickSound;
 
-    private Music cakelandMusic;
+    private Music caketownMusic;
 
-    public SoundService(){
+    private SoundService(){
         init();
     }
 
-    private void init() {
-        popSound = Gdx.audio.newSound(Gdx.files.internal("sounds/pop.mp3"));
-        cashRegisterSound = Gdx.audio.newSound(Gdx.files.internal("sounds/cash_register.mp3"));
-        evilLaughJewSound = Gdx.audio.newSound(Gdx.files.internal("sounds/evil_laugh_jew.mp3"));
-        bombExplosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bomb_explosion.mp3"));
-        clickSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click_1.mp3"));
+    public static SoundService getInstance() {
+        if(instance == null){
+            instance = new SoundService();
+        }
+        return instance;
+    }
 
-        cakelandMusic = Gdx.audio.newMusic(Gdx.files.internal("music/caketown.mp3"));
+    private void init() {
+        popSound = Assets.getInstance().manager.get(AssetsEnum.POP_SOUND.toString());
+        cashRegisterSound = Assets.getInstance().manager.get(AssetsEnum.CASH_REGISTER_SOUND.toString());
+        evilLaughJewSound = Assets.getInstance().manager.get(AssetsEnum.EVIL_LAUGH_SOUND.toString());
+        bombExplosionSound = Assets.getInstance().manager.get(AssetsEnum.BOMP_EXPLOSION_SOUND.toString());
+        clickSound = Assets.getInstance().manager.get(AssetsEnum.CLICK_SOUND_1.toString());
+
+        caketownMusic = Assets.getInstance().manager.get(AssetsEnum.CAKETOWN_MUSIC.toString());
     }
 
     public void playPopSound(){
@@ -52,7 +62,8 @@ public class SoundService {
     }
 
     public void playCaketownMusic(boolean looped){
-        cakelandMusic.play();
-        cakelandMusic.setLooping(looped);
+        caketownMusic.play();
+        caketownMusic.setLooping(looped);
     }
+
 }

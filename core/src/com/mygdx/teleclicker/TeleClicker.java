@@ -10,6 +10,7 @@ import com.badlogic.gdx.Preferences;
 import com.mygdx.teleclicker.Service.ScoreService_old;
 import com.mygdx.teleclicker.Service.ScreenManager;
 import com.mygdx.teleclicker.Service.SoundService;
+import com.mygdx.teleclicker.Service.SoundService_old;
 
 public class TeleClicker extends Game {
     public final static String GAME_PREFS = "com.mygdx.clicker.prefs";
@@ -32,7 +33,7 @@ public class TeleClicker extends Game {
 
     private boolean paused;
 
-    private SoundService soundService;
+    private SoundService_old soundService;
     private ScoreService_old scoreService;
 
     private static Preferences prefs;
@@ -41,6 +42,7 @@ public class TeleClicker extends Game {
 
     @Override
     public void create() {
+        SoundService.getInstance().playCaketownMusic(true);
         ScreenManager.getInstance().initialize(this);
         ScreenManager.getInstance().SetScreen(ScreenEnum.SPLASH);
     }
@@ -81,7 +83,7 @@ public class TeleClicker extends Game {
         this.paused = paused;
     }
 
-    public SoundService getSoundService() {
+    public SoundService_old getSoundService() {
         return soundService;
     }
 

@@ -37,7 +37,6 @@ public class Player extends Image {
     }
 
     public void reactOnClick(){
-//        game.getSoundService().playClickSound();
         int xMoveAmmount = MathUtils.random(-130, 130);
         int yMoveAmmount = 10;
         float moveActionTime = 0.30f;

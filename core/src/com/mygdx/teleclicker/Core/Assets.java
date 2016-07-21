@@ -1,6 +1,8 @@
 package com.mygdx.teleclicker.Core;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
@@ -35,8 +37,19 @@ public class Assets implements Disposable {
     }
 
     public void loadGameplayAssets(){
+        // Textures
         manager.load(AssetsEnum.GAMEPLAY_BG.toString(), Texture.class);
         manager.load(AssetsEnum.PLAYER_TEX.toString(), Texture.class);
+
+        // Sounds
+        manager.load(AssetsEnum.POP_SOUND.toString(), Sound.class);
+        manager.load(AssetsEnum.CASH_REGISTER_SOUND.toString(), Sound.class);
+        manager.load(AssetsEnum.EVIL_LAUGH_SOUND.toString(), Sound.class);
+        manager.load(AssetsEnum.BOMP_EXPLOSION_SOUND.toString(), Sound.class);
+        manager.load(AssetsEnum.CLICK_SOUND_1.toString(), Sound.class);
+
+        // Music
+        manager.load(AssetsEnum.CAKETOWN_MUSIC.toString(), Music.class);
     }
 
     public void loadShopAssets(){

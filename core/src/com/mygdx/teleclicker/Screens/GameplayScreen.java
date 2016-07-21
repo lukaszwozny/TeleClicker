@@ -9,6 +9,7 @@ import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Service.ScoreService;
+import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.IClickCallback;
 import com.mygdx.teleclicker.ui.PlayerButton;
@@ -64,6 +65,7 @@ public class GameplayScreen extends AbstractScreen {
         playerButton = new PlayerButton(new IClickCallback() {
             @Override
             public void onClick() {
+                SoundService.getInstance().playClickSound();
                 player.reactOnClick();
                 ScoreService.getInstance().addPoint();
             }
