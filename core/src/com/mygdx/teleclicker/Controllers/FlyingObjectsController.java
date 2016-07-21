@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Entities.FlyingObject;
+import com.mygdx.teleclicker.Enums.FlyingObjectTypeEnum;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
@@ -49,16 +50,16 @@ public class FlyingObjectsController {
 
         switch (MathUtils.random(0,3)){
             case 0:
-                flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.MONEY, game);
+                flyingObject = new FlyingObject(FlyingObjectTypeEnum.MONEY, game);
                 break;
             case 1:
-                flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.MONEY_DOWN, game);
+                flyingObject = new FlyingObject(FlyingObjectTypeEnum.MONEY_DOWN, game);
                 break;
             case 2:
-                flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.PASSIVE, game);
+                flyingObject = new FlyingObject(FlyingObjectTypeEnum.PASSIVE, game);
                 break;
             case 3:
-                flyingObject = new FlyingObject(FlyingObject.FlyingObjectType.PASSIVE_DOWN, game);
+                flyingObject = new FlyingObject(FlyingObjectTypeEnum.PASSIVE_DOWN, game);
                 break;
         }
 

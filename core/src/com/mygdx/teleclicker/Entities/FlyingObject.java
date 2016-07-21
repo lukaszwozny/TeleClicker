@@ -7,15 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.teleclicker.Enums.FlyingObjectTypeEnum;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
  * Created by Senpai on 10.07.2016.
  */
 public class FlyingObject extends Image {
-    public enum FlyingObjectType {
-        MONEY, MONEY_DOWN, PASSIVE, PASSIVE_DOWN
-    }
 
     public final static String MONEY = "img/skins/flying_object/cash_1.png";
     public final static String PASSIVE = "img/skins/flying_object/diamond_1.png";
@@ -33,9 +31,9 @@ public class FlyingObject extends Image {
     private int starting_y, ending_y;
 
     private TeleClicker game;
-    private FlyingObjectType type;
+    private FlyingObjectTypeEnum type;
 
-    public FlyingObject(FlyingObjectType type, TeleClicker game) {
+    public FlyingObject(FlyingObjectTypeEnum type, TeleClicker game) {
         super(new Texture(getTextureString(type)));
 
         this.type = type;
@@ -97,7 +95,7 @@ public class FlyingObject extends Image {
         FlyingObject.this.remove();
     }
 
-    private static String getTextureString(FlyingObjectType type) {
+    private static String getTextureString(FlyingObjectTypeEnum type) {
         switch (type) {
             case MONEY:
                 return MONEY;
