@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
+import com.mygdx.teleclicker.Entities.CornerPhone;
 import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Service.ScoreService;
@@ -21,8 +22,9 @@ import com.mygdx.teleclicker.ui.PlayerButton_old;
 public class GameplayScreen extends AbstractScreen {
 
     private Label scoreLabel;
-    private PlayerButton playerButton;
     private Player player;
+    private PlayerButton playerButton;
+    private CornerPhone cornerPhone;
 
     public GameplayScreen(){
         super();
@@ -40,6 +42,12 @@ public class GameplayScreen extends AbstractScreen {
         initScoreLabel();
         initPlayer();
         initPlayerButton();
+        initCornerPhone();
+    }
+
+    private void initCornerPhone() {
+        cornerPhone = new CornerPhone();
+        addActor(cornerPhone);
     }
 
     private void initPlayer() {

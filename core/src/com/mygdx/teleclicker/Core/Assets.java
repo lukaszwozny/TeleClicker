@@ -40,6 +40,8 @@ public class Assets implements Disposable {
         // Textures
         manager.load(AssetsEnum.GAMEPLAY_BG.toString(), Texture.class);
         manager.load(AssetsEnum.PLAYER_TEX.toString(), Texture.class);
+        manager.load(AssetsEnum.PHONE_ON_TEX.toString(), Texture.class);
+        manager.load(AssetsEnum.PHONE_OFF_TEX.toString(), Texture.class);
 
         // Sounds
         manager.load(AssetsEnum.POP_SOUND.toString(), Sound.class);

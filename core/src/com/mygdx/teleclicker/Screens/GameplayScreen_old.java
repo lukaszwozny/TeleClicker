@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.teleclicker.Controllers.FlyingObjectsController;
 import com.mygdx.teleclicker.Controllers.RandomEventsController;
-import com.mygdx.teleclicker.Entities.CornerPhone;
+import com.mygdx.teleclicker.Entities.CornerPhone_old;
 import com.mygdx.teleclicker.Entities.Player_old;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.*;
@@ -16,7 +16,7 @@ public class GameplayScreen_old extends AbstractScreen_old {
     private Image bgImg;
     private Player_old player;
     private PlayerButton_old playerButton;
-    private CornerPhone cornerPhone;
+    private CornerPhone_old cornerPhone;
     private CornerPhoneButton cornerPhoneButton;
     private ResetScoreButton resetScoreButton;
     private FlyingObjectsController flyingObjectsController;
@@ -49,7 +49,7 @@ public class GameplayScreen_old extends AbstractScreen_old {
 
 
     private void initCornerPhone() {
-        cornerPhone = new CornerPhone(game);
+        cornerPhone = new CornerPhone_old(game);
         stage.addActor(cornerPhone);
     }
 
