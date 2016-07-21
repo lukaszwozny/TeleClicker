@@ -4,11 +4,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
+import com.mygdx.teleclicker.Enums.ScreenEnum;
+import com.mygdx.teleclicker.Service.ScreenManager;
+import com.mygdx.teleclicker.Service.SoundService;
+import com.mygdx.teleclicker.ui.CloseShopButton;
+import com.mygdx.teleclicker.ui.IClickCallback;
 
 /**
  * Created by Senpai on 21.07.2016.
  */
 public class ShopScreen extends AbstractScreen {
+
+    private CloseShopButton closeShopButton;
 
     public ShopScreen(){
         super();
@@ -17,6 +24,18 @@ public class ShopScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         initBgTexture();
+        initCloseShopButton();
+    }
+
+    private void initCloseShopButton() {
+        closeShopButton = new CloseShopButton(new IClickCallback() {
+            @Override
+            public void onClick() {
+                SoundService.getInstance().playClickSound();
+                ScreenManager.getInstance().SetScreen(ScreenEnum.GAMEPLAY);
+            }
+        });
+        addActor(closeShopButton);
     }
 
     @Override
