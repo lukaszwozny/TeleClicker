@@ -55,7 +55,7 @@ public class ScoreService {
     }
 
     public void printLabels(Stage stage) {
-        switch (game.getActualScreen()){
+        switch (TeleClicker.getActualScreen()){
             case SPLASH:
                 break;
             case GAMEPLAY:
@@ -78,15 +78,15 @@ public class ScoreService {
         scoreLabel = new GameLabel();
         passiveIncomeLabel = new GameLabel();
         pointsPerClickLabel = new GameLabel();
-        loadScore();
-        calculateGainedPassiveIncome();
+        //loadScore();
+        //calculateGainedPassiveIncome();
 
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                points += passiveIncome;
-            }
-        }, 1, 1);
+//        Timer.schedule(new Timer.Task() {
+//            @Override
+//            public void run() {
+//                points += passiveIncome;
+//            }
+//        }, 1, 1);
     }
 
     private void calculateGainedPassiveIncome() {

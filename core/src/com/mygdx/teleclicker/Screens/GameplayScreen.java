@@ -1,14 +1,20 @@
 package com.mygdx.teleclicker.Screens;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
+import com.mygdx.teleclicker.TeleClicker;
 
 /**
  * Created by Senpai on 21.07.2016.
  */
 public class GameplayScreen extends AbstractScreen {
+
+    private Label scoreLabel;
 
     public GameplayScreen(){
         super();
@@ -23,5 +29,35 @@ public class GameplayScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         initBgTexture();
+        initScoreLabel();
+    }
+
+    private void initScoreLabel() {
+        final float fontScale = 1.2f;
+        final int POS_X = 40;
+        final int POS_Y = TeleClicker.HEIGHT - 50;
+
+        BitmapFont font = new BitmapFont();
+        font.getData().setScale(fontScale);
+
+        scoreLabel = new Label("", new Label.LabelStyle(font, Color.BLUE));
+        scoreLabel.setPosition(POS_X,POS_Y);
+
+        addActor(scoreLabel);
+    }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+        update();
+    }
+
+    private void update() {
+        updateScoreLabel();
+    }
+
+    private void updateScoreLabel() {
+        scoreLabel.setText("Erlangi: " + 1 + "\n" +
+                "Per sec: " + 2);
     }
 }
