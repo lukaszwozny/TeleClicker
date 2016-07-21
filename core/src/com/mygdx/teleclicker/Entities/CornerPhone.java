@@ -40,14 +40,15 @@ public class CornerPhone extends Image {
     }
 
     private void changeTexture() {
+        Texture newTexture;
         if(isOff){
-            Texture newTexture = Assets.getInstance().manager.get(AssetsEnum.PHONE_ON_TEX.toString());
+            newTexture = Assets.getInstance().manager.get(AssetsEnum.PHONE_ON_TEX.toString());
             this.setWidth(WIDTH_ON);
             this.setHeight(HEIGHT_ON);
             this.setDrawable(new SpriteDrawable(new Sprite(newTexture)));
             isOff = false;
         } else {
-            Texture newTexture = Assets.getInstance().manager.get(AssetsEnum.PHONE_OFF_TEX.toString());
+            newTexture = Assets.getInstance().manager.get(AssetsEnum.PHONE_OFF_TEX.toString());
             this.setWidth(WIDTH_OFF);
             this.setHeight(HEIGHT_OFF);
             this.setDrawable(new SpriteDrawable(new Sprite(newTexture)));

@@ -17,7 +17,7 @@ public class GameplayScreen_old extends AbstractScreen_old {
     private Player_old player;
     private PlayerButton_old playerButton;
     private CornerPhone_old cornerPhone;
-    private CornerPhoneButton cornerPhoneButton;
+    private CornerPhoneButton_old cornerPhoneButton;
     private ResetScoreButton resetScoreButton;
     private FlyingObjectsController flyingObjectsController;
     private RandomEventsController randomEventsController;
@@ -54,7 +54,7 @@ public class GameplayScreen_old extends AbstractScreen_old {
     }
 
     private void initCornerPhoneButton() {
-        cornerPhoneButton = new CornerPhoneButton(new IClickCallback() {
+        cornerPhoneButton = new CornerPhoneButton_old(new IClickCallback() {
             @Override
             public void onClick() {
                 cornerPhone.reactOnClick();

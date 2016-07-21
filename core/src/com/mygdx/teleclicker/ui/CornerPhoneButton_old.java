@@ -5,10 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * Created by Senpai on 22.07.2016.
+ * Created by Senpai on 11.07.2016.
  */
-public class CornerPhoneButton extends Button {
-    public CornerPhoneButton(final IClickCallback callback){
+public class CornerPhoneButton_old extends Button {
+    public CornerPhoneButton_old(final IClickCallback callback) {
         super(new ButtonStyle());
         init(callback);
     }
@@ -26,6 +26,5 @@ public class CornerPhoneButton extends Button {
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
-
     }
 }
