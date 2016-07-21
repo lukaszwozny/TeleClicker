@@ -4,18 +4,17 @@ import com.badlogic.gdx.Screen;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.TeleClicker;
-import com.sun.javafx.animation.TickCalculation;
 
 /**
  * Created by Senpai on 21.07.2016.
  */
-public class ScreenManager {
+public class ScreenService {
 
-    private static ScreenManager instance;
+    private static ScreenService instance;
 
     private TeleClicker game;
 
-    private ScreenManager(){
+    private ScreenService(){
         super();
     }
 
@@ -39,9 +38,9 @@ public class ScreenManager {
         }
     }
 
-    public static ScreenManager getInstance() {
+    public static ScreenService getInstance() {
         if(instance == null){
-            instance = new ScreenManager();
+            instance = new ScreenService();
         }
         return instance;
     }
