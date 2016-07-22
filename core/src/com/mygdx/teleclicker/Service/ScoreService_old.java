@@ -54,7 +54,7 @@ public class ScoreService_old {
     }
 
     public void printLabels(Stage stage) {
-        switch (TeleClicker.getActualScreen()){
+        switch (ScreenService.getInstance().getActualScreenEnum()){
             case SPLASH:
                 break;
             case GAMEPLAY:
@@ -122,7 +122,7 @@ public class ScoreService_old {
     }
 
     public void updateScoreLabel() {
-        switch(game.getActualScreen()){
+        switch(ScreenService.getInstance().getActualScreenEnum()){
             case GAMEPLAY:
                 scoreLabel.setText("Erlangi: " + String.format("%.2f", points));
                 passiveIncomeLabel.setText("Erl/sec: " + passiveIncome);

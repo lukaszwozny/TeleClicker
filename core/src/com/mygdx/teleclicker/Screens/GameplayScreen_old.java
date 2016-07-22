@@ -6,6 +6,8 @@ import com.mygdx.teleclicker.Controllers.FlyingObjectsController_old;
 import com.mygdx.teleclicker.Controllers.RandomEventsController_old;
 import com.mygdx.teleclicker.Entities.CornerPhone_old;
 import com.mygdx.teleclicker.Entities.Player_old;
+import com.mygdx.teleclicker.Enums.ScreenEnum;
+import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.*;
 
@@ -145,7 +147,7 @@ public class GameplayScreen_old extends AbstractScreen_old {
     public void show() {
         super.show();
         System.out.println("Shoe gameplay");
-        game.setActualScreen(TeleClicker.ScreenType.GAMEPLAY);
+        ScreenService.getInstance().setActualScreenEnum(ScreenEnum.GAMEPLAY);
     }
 
     private void update() {

@@ -120,6 +120,7 @@ public class GameplayScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
+        ScreenService.getInstance().setActualScreenEnum(ScreenEnum.GAMEPLAY);
     }
 
     @Override

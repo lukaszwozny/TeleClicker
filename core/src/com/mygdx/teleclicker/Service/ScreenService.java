@@ -15,6 +15,8 @@ public class ScreenService {
     private AbstractScreen gameplayScreen;
     private AbstractScreen shopScreen;
 
+    private ScreenEnum actualScreenEnum;
+
     private TeleClicker game;
 
     private ScreenService(){
@@ -28,7 +30,7 @@ public class ScreenService {
     public void SetScreen(ScreenEnum screenEnum){
         // Get current screen to dispose it
         Screen curentScreen = game.getScreen();
-        ScreenEnum currentScreenEnum = TeleClicker.getActualScreen();
+        ScreenEnum currentScreenEnum = actualScreenEnum;
 
         AbstractScreen newScreen = null;
 
@@ -52,7 +54,6 @@ public class ScreenService {
                 newScreen.buildStage();
                 break;
         }
-        TeleClicker.setActualScreen(screenEnum);
         game.setScreen(newScreen);
 
         // Dispose old screen
@@ -66,5 +67,13 @@ public class ScreenService {
             instance = new ScreenService();
         }
         return instance;
+    }
+
+    public ScreenEnum getActualScreenEnum() {
+        return actualScreenEnum;
+    }
+
+    public void setActualScreenEnum(ScreenEnum actualScreenEnum) {
+        this.actualScreenEnum = actualScreenEnum;
     }
 }

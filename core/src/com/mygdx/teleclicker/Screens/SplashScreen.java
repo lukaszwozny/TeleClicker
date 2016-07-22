@@ -29,6 +29,12 @@ public class SplashScreen extends AbstractScreen {
     }
 
     @Override
+    public void show() {
+        super.show();
+        ScreenService.getInstance().setActualScreenEnum(ScreenEnum.SPLASH);
+    }
+
+    @Override
     public void initBgTexture() {
         bgTexture = Assets.getInstance().manager.get(AssetsEnum.SPLASH_BG.toString());
         addActor(new Image(bgTexture));

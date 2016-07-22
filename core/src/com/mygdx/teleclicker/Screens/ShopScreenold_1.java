@@ -2,6 +2,9 @@ package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.mygdx.teleclicker.Enums.ScreenEnum;
+import com.mygdx.teleclicker.Service.ScoreService;
+import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.BuyButton_old;
 import com.mygdx.teleclicker.ui.CloseShopButton;
@@ -26,7 +29,7 @@ public class ShopScreenold_1 extends AbstractScreen_old {
     @Override
     public void show() {
         super.show();
-        game.setActualScreen(TeleClicker.ScreenType.SHOP);
+        ScreenService.getInstance().setActualScreenEnum(ScreenEnum.SHOP);
     }
 
     @Override

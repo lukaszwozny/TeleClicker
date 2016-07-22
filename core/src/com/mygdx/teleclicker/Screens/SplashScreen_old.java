@@ -2,6 +2,8 @@ package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
+import com.mygdx.teleclicker.Enums.ScreenEnum;
+import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
@@ -25,7 +27,7 @@ public class SplashScreen_old extends AbstractScreen_old {
     @Override
     public void show() {
         super.show();
-        game.setActualScreen(TeleClicker.ScreenType.SPLASH);
+        ScreenService.getInstance().setActualScreenEnum(ScreenEnum.SPLASH);
     }
 
     @Override

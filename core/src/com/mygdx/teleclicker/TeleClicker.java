@@ -22,8 +22,6 @@ public class TeleClicker extends Game {
         SHOP
     }
 
-//    private ScreenType actualScreen;
-
     private SplashScreen_old splashScreen;
     private GameplayScreen_old gameplayScreen;
     private ShopScreenold_1 shopScreen;
@@ -37,8 +35,6 @@ public class TeleClicker extends Game {
     private ScoreService_old scoreService;
 
     private static Preferences prefs;
-
-    private static ScreenEnum actualScreen;
 
     @Override
     public void create() {
@@ -61,22 +57,6 @@ public class TeleClicker extends Game {
             prefs = Gdx.app.getPreferences(GAME_PREFS);
         }
         return prefs;
-    }
-
-    public static ScreenEnum getActualScreen() {
-        return actualScreen;
-    }
-
-    public static void setActualScreen(ScreenEnum actualScreen) {
-        TeleClicker.actualScreen = actualScreen;
-    }
-
-    public ScreenType getActualScreen2() {
-        return ScreenType.SPLASH;
-    }
-
-    public void setActualScreen(ScreenType actualScreen) {
-//        this.actualScreen = actualScreen;
     }
 
     public void setPaused(boolean paused) {

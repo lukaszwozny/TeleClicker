@@ -7,6 +7,8 @@ import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Entities.FlyingObject;
 import com.mygdx.teleclicker.Entities.FlyingObject_old;
 import com.mygdx.teleclicker.Enums.FlyingObjectTypeEnum;
+import com.mygdx.teleclicker.Enums.ScreenEnum;
+import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
@@ -22,11 +24,11 @@ public class FlyingObjectController {
 
     private AbstractScreen screen;
 
-    private FlyingObjectController(){
+    private FlyingObjectController() {
         initTimer();
     }
 
-    public void Initialize(AbstractScreen screen){
+    public void Initialize(AbstractScreen screen) {
         this.screen = screen;
     }
 
@@ -37,24 +39,26 @@ public class FlyingObjectController {
 
             @Override
             public void run() {
-
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-
-                        addRandomFlyingObjectToStage();
-                        randomizeSpawnTime();
-
+                boolean rand = MathUtils.randomBoolean();
+                if (rand && ScreenService.getInstance().getActualScreenEnum() == ScreenEnum.GAMEPLAY) {
+                    {
+                        Timer.schedule(new Timer.Task() {
+                            @Override
+                            public void run() {
+                                addRandomFlyingObjectToStage();
+                                randomizeSpawnTime();
+                            }
+                        }, spawnTime);
                     }
-                }, spawnTime);
+                }
             }
         }, 0, RANDOM_TICK_INTERVAL);
     }
 
-    private void addRandomFlyingObjectToStage(){
+    private void addRandomFlyingObjectToStage() {
         FlyingObject flyingObject = null;
 
-        switch (MathUtils.random(0,3)){
+        switch (MathUtils.random(0, 3)) {
             case 0:
                 flyingObject = new FlyingObject(FlyingObjectTypeEnum.MONEY);
                 break;
@@ -78,7 +82,7 @@ public class FlyingObjectController {
     }
 
     public static FlyingObjectController getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new FlyingObjectController();
         }
         return instance;

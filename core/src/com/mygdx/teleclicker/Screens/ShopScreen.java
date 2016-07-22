@@ -131,6 +131,12 @@ public class ShopScreen extends AbstractScreen {
 
     }
 
+    @Override
+    public void show() {
+        super.show();
+        ScreenService.getInstance().setActualScreenEnum(ScreenEnum.SHOP);
+    }
+
     private void updateScoreLabels() {
         scoreLabelUp.setText("Erlangi\n" + ScoreService.getInstance().getPoints());
 

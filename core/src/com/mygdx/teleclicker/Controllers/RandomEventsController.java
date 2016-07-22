@@ -1,12 +1,11 @@
 package com.mygdx.teleclicker.Controllers;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
+import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.ScoreService;
-import com.mygdx.teleclicker.TeleClicker;
-import com.mygdx.teleclicker.ui.BasicDialogold;
+import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.ui.EventDialog;
 
 /**
@@ -26,13 +25,13 @@ public class RandomEventsController {
     }
 
     public static RandomEventsController getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new RandomEventsController();
         }
         return instance;
     }
 
-    public void Initialize(AbstractScreen screen){
+    public void Initialize(AbstractScreen screen) {
         this.screen = screen;
     }
 
@@ -41,13 +40,18 @@ public class RandomEventsController {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        triggerRandomEvent();
-                        randomizeSpawnTime();
+                boolean rand = MathUtils.randomBoolean();
+                if (rand && ScreenService.getInstance().getActualScreenEnum() == ScreenEnum.GAMEPLAY) {
+                    {
+                        Timer.schedule(new Timer.Task() {
+                            @Override
+                            public void run() {
+                                triggerRandomEvent();
+                                randomizeSpawnTime();
+                            }
+                        }, spawnTime);
                     }
-                }, spawnTime);
+                }
             }
         }, 1, TICK_INTERVAL);
     }
@@ -57,7 +61,7 @@ public class RandomEventsController {
     }
 
     private void triggerRandomEvent() {
-        int randEvent = MathUtils.random(0,3);
+        int randEvent = MathUtils.random(0, 3);
         switch (randEvent) {
             case 0:
                 moneyMultiplierDownEvent();
@@ -106,7 +110,7 @@ public class RandomEventsController {
     private void moneyUpEvent() {
         int rand = MathUtils.random(1, 3) * 10;
         String content = "Zmieniasz taryfe na\n" +
-                "Telgam - standard " + rand*12 +"mc.\n"+
+                "Telgam - standard " + rand * 12 + "mc.\n" +
                 "Zyskujesz " + rand + " Erlangow.";
 
         EventDialog eventDialog = new EventDialog(content);
@@ -117,10 +121,10 @@ public class RandomEventsController {
 
     private void moneyMultiplierDownEvent() {
         float rand = MathUtils.random(1, 5);
-        float randMultiplier = 1 - rand/100;
+        float randMultiplier = 1 - rand / 100;
         String content = "Przewalutowales swoje\n" +
                 "Erlangi na Franki.\n" +
-                "Tracisz na tym "+rand+"%.";
+                "Tracisz na tym " + rand + "%.";
 
         EventDialog eventDialog = new EventDialog(content);
 
