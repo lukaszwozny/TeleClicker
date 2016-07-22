@@ -19,6 +19,9 @@ public enum AssetsEnum {
     BOMB_TEX("img/skins/flying_object/bomb_1.png"),
     JEW_TEX("img/skins/flying_object/jew_greedy.png"),
 
+    CHECKBOX_ON_TEX("img/checkbox_on.png"),
+    CHECKBOX_OFF_TEX("img/checkbox_off.png"),
+
     DIALOG_BOG_TEX("img/popups/dialog.png"),
 
     // Sounds and music

@@ -35,6 +35,8 @@ public class Assets implements Disposable {
 
     private void loadSettingsAssets() {
         manager.load(AssetsEnum.SETTINGS_BG.toString(),Texture.class);
+        manager.load(AssetsEnum.CHECKBOX_ON_TEX.toString(), Texture.class);
+        manager.load(AssetsEnum.CHECKBOX_OFF_TEX.toString(), Texture.class);
     }
 
 
