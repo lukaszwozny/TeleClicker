@@ -13,6 +13,7 @@ import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.FlyingObjectTypeEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
+import com.mygdx.teleclicker.Service.FontService;
 import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
@@ -89,10 +90,7 @@ public class GameplayScreen extends AbstractScreen {
         final int POS_X = 40;
         final int POS_Y = TeleClicker.HEIGHT - 50;
 
-        BitmapFont font = new BitmapFont();
-        font.getData().setScale(fontScale);
-
-        scoreLabel = new Label("", new Label.LabelStyle(font, Color.BLUE));
+        scoreLabel = new Label("", new Label.LabelStyle(FontService.getFont(fontScale), Color.BLUE));
         scoreLabel.setPosition(POS_X,POS_Y);
 
         addActor(scoreLabel);

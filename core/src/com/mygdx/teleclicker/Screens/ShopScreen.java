@@ -8,6 +8,7 @@ import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
+import com.mygdx.teleclicker.Service.FontService;
 import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
@@ -44,13 +45,10 @@ public class ShopScreen extends AbstractScreen {
         final int POS_X = 40;
         final int POS_Y = TeleClicker.HEIGHT - 50;
 
-        BitmapFont font = new BitmapFont();
-        font.getData().setScale(fontScale);
-
-        scoreLabelUp = new Label("Test UP", new Label.LabelStyle(font, Color.BLACK));
+        scoreLabelUp = new Label("Test UP", new Label.LabelStyle(FontService.getFont(fontScale), Color.BLACK));
         scoreLabelUp.setPosition(POS_X,POS_Y);
 
-        scoreLabelBottom = new Label("Test BOTTOM", new Label.LabelStyle(font, Color.BLACK));
+        scoreLabelBottom = new Label("Test BOTTOM", new Label.LabelStyle(FontService.getFont(fontScale), Color.BLACK));
         scoreLabelBottom.setPosition(POS_X,POS_Y-60);
 
         addActor(scoreLabelUp);
