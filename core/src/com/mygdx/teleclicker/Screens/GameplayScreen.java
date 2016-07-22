@@ -19,6 +19,7 @@ import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.CornerPhoneButton;
+import com.mygdx.teleclicker.ui.EventDialog;
 import com.mygdx.teleclicker.ui.IClickCallback;
 import com.mygdx.teleclicker.ui.PlayerButton;
 
@@ -33,7 +34,7 @@ public class GameplayScreen extends AbstractScreen {
     private CornerPhone cornerPhone;
     private CornerPhoneButton cornerPhoneButton;
 
-    private FlyingObject flyingObject;
+    private EventDialog eventDialog;
 
     public GameplayScreen(){
         super();
@@ -54,13 +55,12 @@ public class GameplayScreen extends AbstractScreen {
         initPlayerButton();
         initCornerPhone();
         initCornerPhoneButton();
-        initFlyingObject();
+        initEventDialog();
     }
 
-    private void initFlyingObject() {
-        flyingObject = new FlyingObject(FlyingObjectTypeEnum.MONEY);
-        addActor(flyingObject);
-        flyingObject.Fly();
+    private void initEventDialog() {
+        eventDialog = new EventDialog();
+        addActor(eventDialog);
     }
 
     private void initCornerPhoneButton() {
