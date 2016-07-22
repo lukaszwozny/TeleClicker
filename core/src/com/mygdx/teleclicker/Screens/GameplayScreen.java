@@ -1,7 +1,6 @@
 package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.teleclicker.Controllers.FlyingObjectController;
@@ -9,10 +8,8 @@ import com.mygdx.teleclicker.Controllers.RandomEventsController;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Entities.CornerPhone;
-import com.mygdx.teleclicker.Entities.FlyingObject;
 import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
-import com.mygdx.teleclicker.Enums.FlyingObjectTypeEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.FontService;
 import com.mygdx.teleclicker.Service.ScoreService;
@@ -60,7 +57,7 @@ public class GameplayScreen extends AbstractScreen {
         settingsButton = new SettingsButton(new IClickCallback() {
             @Override
             public void onClick() {
-                System.out.println("Settings");
+                ScreenService.getInstance().setScreen(ScreenEnum.SETTINGS);
             }
         });
         addActor(settingsButton);
@@ -72,7 +69,7 @@ public class GameplayScreen extends AbstractScreen {
             public void onClick() {
                 SoundService.getInstance().playClickSound();
                 cornerPhone.reactOnClick();
-                ScreenService.getInstance().SetScreen(ScreenEnum.SHOP);
+                ScreenService.getInstance().setScreen(ScreenEnum.SHOP);
             }
         });
         addActor(cornerPhoneButton);

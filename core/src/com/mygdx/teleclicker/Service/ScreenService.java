@@ -27,7 +27,7 @@ public class ScreenService {
         this.game = game;
     }
 
-    public void SetScreen(ScreenEnum screenEnum){
+    public void setScreen(ScreenEnum screenEnum){
         // Get current screen to dispose it
         Screen curentScreen = game.getScreen();
         ScreenEnum currentScreenEnum = actualScreenEnum;

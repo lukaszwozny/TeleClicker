@@ -86,7 +86,7 @@ public class ShopScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
-                ScreenService.getInstance().SetScreen(ScreenEnum.GAMEPLAY);
+                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
             }
         });
         addActor(closeShopButton);

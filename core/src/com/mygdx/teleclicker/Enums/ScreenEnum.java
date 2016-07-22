@@ -2,6 +2,7 @@ package com.mygdx.teleclicker.Enums;
 
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Screens.GameplayScreen;
+import com.mygdx.teleclicker.Screens.SettingsScreen;
 import com.mygdx.teleclicker.Screens.ShopScreen;
 import com.mygdx.teleclicker.Screens.SplashScreen;
 
@@ -25,6 +26,12 @@ public enum ScreenEnum {
         @Override
         public AbstractScreen getScreen() {
             return new ShopScreen();
+        }
+    },
+    SETTINGS {
+        @Override
+        public AbstractScreen getScreen() {
+            return new SettingsScreen();
         }
     };
 

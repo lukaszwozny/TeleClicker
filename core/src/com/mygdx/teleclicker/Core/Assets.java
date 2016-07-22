@@ -30,6 +30,11 @@ public class Assets implements Disposable {
         loadSplahAssets();
         loadGameplayAssets();
         loadShopAssets();
+        loadSettingsAssets();
+    }
+
+    private void loadSettingsAssets() {
+        manager.load(AssetsEnum.SETTINGS_BG.toString(),Texture.class);
     }
 
 

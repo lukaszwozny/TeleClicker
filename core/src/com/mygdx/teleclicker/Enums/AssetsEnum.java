@@ -7,6 +7,7 @@ public enum AssetsEnum {
     SPLASH_BG("img/bg/splash.png"),
     GAMEPLAY_BG("img/bg/basic_bg.png"),
     SHOP_BG("img/bg/shop_bg.png"),
+    SETTINGS_BG("img/bg/settings_bg.png"),
 
     PLAYER_TEX("img/skins/player/phone_old1.png"),
     PHONE_OFF_TEX("img/skins/phone_corner_off.png"),
