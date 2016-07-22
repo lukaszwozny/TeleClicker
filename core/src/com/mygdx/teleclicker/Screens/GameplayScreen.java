@@ -7,8 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Entities.CornerPhone;
+import com.mygdx.teleclicker.Entities.FlyingObject;
 import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
+import com.mygdx.teleclicker.Enums.FlyingObjectTypeEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
@@ -29,6 +31,8 @@ public class GameplayScreen extends AbstractScreen {
     private CornerPhone cornerPhone;
     private CornerPhoneButton cornerPhoneButton;
 
+    private FlyingObject flyingObject;
+
     public GameplayScreen(){
         super();
     }
@@ -47,6 +51,13 @@ public class GameplayScreen extends AbstractScreen {
         initPlayerButton();
         initCornerPhone();
         initCornerPhoneButton();
+        initFlyingObject();
+    }
+
+    private void initFlyingObject() {
+        flyingObject = new FlyingObject(FlyingObjectTypeEnum.MONEY);
+        addActor(flyingObject);
+        flyingObject.Fly();
     }
 
     private void initCornerPhoneButton() {

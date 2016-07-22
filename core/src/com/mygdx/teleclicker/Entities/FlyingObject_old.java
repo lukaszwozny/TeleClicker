@@ -8,14 +8,17 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.teleclicker.Enums.FlyingObjectTypeEnum;
-import com.mygdx.teleclicker.Service.ScoreService;
-import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
- * Created by Senpai on 22.07.2016.
+ * Created by Senpai on 10.07.2016.
  */
-public class FlyingObject extends Image{
+public class FlyingObject_old extends Image {
+
+    public final static String MONEY = "img/skins/flying_object/cash_1.png";
+    public final static String PASSIVE = "img/skins/flying_object/diamond_1.png";
+    public final static String MONEY_DOWN = "img/skins/flying_object/bomb_1.png";
+    public final static String PASSIVE_DOWN = "img/skins/flying_object/jew_greedy.png";
 
     private final static int WIDHT = 70;
     private final static int HEIGHT = 70;
@@ -27,12 +30,14 @@ public class FlyingObject extends Image{
     private int starting_x, ending_x;
     private int starting_y, ending_y;
 
+    private TeleClicker game;
     private FlyingObjectTypeEnum type;
 
-    public FlyingObject(FlyingObjectTypeEnum type) {
-        super(type.getTexture());
+    public FlyingObject_old(FlyingObjectTypeEnum type, TeleClicker game) {
+        super(new Texture(getTextureString(type)));
 
         this.type = type;
+        this.game = game;
 
         this.setOrigin(WIDHT / 2, HEIGHT / 2);
         this.setSize(WIDHT, HEIGHT);
@@ -45,9 +50,12 @@ public class FlyingObject extends Image{
             @Override
             public boolean touchDown(InputEvent event, float x, float y,
                                      int pointer, int button) {
+
                 reactOnClick();
                 return super.touchDown(event, x, y, pointer, button);
             }
+
+
         });
     }
 
@@ -68,25 +76,40 @@ public class FlyingObject extends Image{
     private void reactOnClick() {
         switch (type) {
             case MONEY:
-                ScoreService.getInstance().addPoints(50);
-                SoundService.getInstance().playCashRegisterSound();
+                game.getScoreService().addPoints(50);
+                game.getSoundService().playCashRegisterSound();
                 break;
             case MONEY_DOWN:
-                ScoreService.getInstance().addPoints(-50);
-                SoundService.getInstance().playBombExplosionSound();
+                game.getScoreService().addPoints(-50);
+                game.getSoundService().playBombExplosionSound();
                 break;
             case PASSIVE:
-                ScoreService.getInstance().addPointsPerSec(5);
-                SoundService.getInstance().playPopSound();
+                game.getScoreService().addPassiveIncome(5);
+                game.getSoundService().playPopSound();
                 break;
             case PASSIVE_DOWN:
-                ScoreService.getInstance().addPointsPerSec(-5);
-                SoundService.getInstance().playEvillaughJewSound();
+                game.getScoreService().addPassiveIncome(-5);
+                game.getSoundService().playEvillaughJewSound();
                 break;
         }
-        FlyingObject.this.remove();
+        FlyingObject_old.this.remove();
     }
-    public void Fly() {
+
+    private static String getTextureString(FlyingObjectTypeEnum type) {
+        switch (type) {
+            case MONEY:
+                return MONEY;
+            case MONEY_DOWN:
+                return MONEY_DOWN;
+            case PASSIVE:
+                return PASSIVE;
+            case PASSIVE_DOWN:
+                return PASSIVE_DOWN;
+        }
+        return "";
+    }
+
+    public void flyLikeHell() {
 
         final int MARGIN = 100;
         final int MAX_SPINS = 6;
@@ -114,12 +137,11 @@ public class FlyingObject extends Image{
 
             @Override
             public void run() {
-                FlyingObject.this.remove();
+                FlyingObject_old.this.remove();
             }
         });
 
 
         this.addAction(Actions.sequence(a, b, c));
     }
-
 }

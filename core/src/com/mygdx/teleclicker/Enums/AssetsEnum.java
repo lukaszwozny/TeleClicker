@@ -12,6 +12,11 @@ public enum AssetsEnum {
     PHONE_OFF_TEX("img/skins/phone_corner_off.png"),
     PHONE_ON_TEX("img/skins/phone_corner_on.png"),
 
+    MONEY_TEX("img/skins/flying_object/cash_1.png"),
+    DIAMOND_TEX("img/skins/flying_object/diamond_1.png"),
+    BOMB_TEX("img/skins/flying_object/bomb_1.png"),
+    JEW_TEX("img/skins/flying_object/jew_greedy.png"),
+
 
     // Sounds and music
     POP_SOUND("sounds/pop.mp3"),
