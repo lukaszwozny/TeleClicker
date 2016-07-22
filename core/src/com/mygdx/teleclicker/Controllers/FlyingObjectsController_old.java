@@ -10,13 +10,13 @@ import com.mygdx.teleclicker.TeleClicker;
 /**
  * Created by Senpai on 10.07.2016.
  */
-public class FlyingObjectsController {
+public class FlyingObjectsController_old {
     private static final int RANDOM_TICK_INTERVAL = 5;
     private int spawnTime;
     private final int MIN_SPAWN_TIME_INTERVAL = 0;
     private final int MAX_SPAWN_TIME_INTERVAL = 10;
 
-    public FlyingObjectsController(TeleClicker game, Stage stage){
+    public FlyingObjectsController_old(TeleClicker game, Stage stage){
         init(game, stage);
     }
 
@@ -32,6 +32,7 @@ public class FlyingObjectsController {
                     @Override
                     public void run() {
 
+                        System.out.println("time");
                         addRandomFlyingObjectToStage(game, stage);
                         randomizeSpawnTime();
 
@@ -46,6 +47,7 @@ public class FlyingObjectsController {
     }
 
     private void addRandomFlyingObjectToStage(TeleClicker game, Stage stage){
+        System.out.println("Flying");
         FlyingObject_old flyingObject = null;
 
         switch (MathUtils.random(0,3)){

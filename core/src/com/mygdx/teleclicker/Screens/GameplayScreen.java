@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygdx.teleclicker.Controllers.FlyingObjectController;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Entities.CornerPhone;
@@ -35,6 +36,7 @@ public class GameplayScreen extends AbstractScreen {
 
     public GameplayScreen(){
         super();
+        FlyingObjectController.getInstance().Initialize(this);
     }
 
     @Override
@@ -124,8 +126,14 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     @Override
+    public void show() {
+        super.show();
+    }
+
+    @Override
     public void pause() {
         super.pause();
+        System.out.println("Pause gameplayScreen");
         ScoreService.getInstance().saveCurrentGameState();
     }
 }

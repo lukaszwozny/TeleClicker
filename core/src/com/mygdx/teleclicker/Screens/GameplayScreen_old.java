@@ -2,7 +2,7 @@ package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.teleclicker.Controllers.FlyingObjectsController;
+import com.mygdx.teleclicker.Controllers.FlyingObjectsController_old;
 import com.mygdx.teleclicker.Controllers.RandomEventsController;
 import com.mygdx.teleclicker.Entities.CornerPhone_old;
 import com.mygdx.teleclicker.Entities.Player_old;
@@ -19,7 +19,7 @@ public class GameplayScreen_old extends AbstractScreen_old {
     private CornerPhone_old cornerPhone;
     private CornerPhoneButton_old cornerPhoneButton;
     private ResetScoreButton resetScoreButton;
-    private FlyingObjectsController flyingObjectsController;
+    private FlyingObjectsController_old flyingObjectsController;
     private RandomEventsController randomEventsController;
     static boolean backFromShop;
 
@@ -85,7 +85,7 @@ public class GameplayScreen_old extends AbstractScreen_old {
     }
 
     private void initFlyingObjectsController() {
-        flyingObjectsController = new FlyingObjectsController(game, stage);
+        flyingObjectsController = new FlyingObjectsController_old(game, stage);
     }
 
     private void initBg() {
