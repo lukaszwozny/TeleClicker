@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.teleclicker.Core.Assets;
+import com.mygdx.teleclicker.Enums.AssetsEnum;
 
 /**
  * Created by Senpai on 10.07.2016.
@@ -34,7 +36,7 @@ public class ResetScoreButton extends Button {
     }
 
     private static ButtonStyle prepareResetButtonStyle() {
-        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("img/atlas/ui-red.atlas"));
+        TextureAtlas atlas = Assets.getInstance().manager.get(AssetsEnum.RED_ATLAS.toString());
         Skin skin = new Skin(atlas);
         ButtonStyle buttonStyle = new ButtonStyle();
         buttonStyle.up = skin.getDrawable("button_01");

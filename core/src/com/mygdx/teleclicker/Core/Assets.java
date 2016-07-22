@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 
@@ -52,6 +53,9 @@ public class Assets implements Disposable {
 
         // Music
         manager.load(AssetsEnum.CAKETOWN_MUSIC.toString(), Music.class);
+
+        // Atlases
+        manager.load(AssetsEnum.RED_ATLAS.toString(), TextureAtlas.class);
     }
 
     private void loadFlyingObjectAssets() {

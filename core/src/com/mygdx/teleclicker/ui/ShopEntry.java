@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.teleclicker.Core.Assets;
+import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Service.FontService;
 
 /**
@@ -80,13 +82,13 @@ public class ShopEntry extends Group {
     }
 
     private static void prepareResetButtonStyle() {
-        TextureAtlas atlasRed = new TextureAtlas(Gdx.files.internal("img/atlas/ui-red.atlas"));
+        TextureAtlas atlasRed = Assets.getInstance().manager.get(AssetsEnum.RED_ATLAS.toString());
         Skin skinRed = new Skin(atlasRed);
         buttonStyleRed = new Button.ButtonStyle();
         buttonStyleRed.up = skinRed.getDrawable("button_04");
         buttonStyleRed.down = skinRed.getDrawable("button_02");
 
-        TextureAtlas atlasGreen = new TextureAtlas(Gdx.files.internal("img/atlas/ui-green.atlas"));
+        TextureAtlas atlasGreen = Assets.getInstance().manager.get(AssetsEnum.RED_ATLAS.toString());
         Skin skinGreen = new Skin(atlasGreen);
         buttonStyleGreen = new Button.ButtonStyle();
         buttonStyleGreen.up = skinGreen.getDrawable("button_04");

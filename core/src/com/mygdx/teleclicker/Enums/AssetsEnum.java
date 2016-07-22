@@ -26,7 +26,10 @@ public enum AssetsEnum {
     BOMP_EXPLOSION_SOUND("sounds/bomb_explosion.mp3"),
     CLICK_SOUND_1("sounds/click_1.mp3"),
 
-    CAKETOWN_MUSIC("music/caketown.mp3");
+    CAKETOWN_MUSIC("music/caketown.mp3"),
+
+    // Atlases
+    RED_ATLAS("img/atlas/ui-red.atlas");
 
     private String dir;
 
