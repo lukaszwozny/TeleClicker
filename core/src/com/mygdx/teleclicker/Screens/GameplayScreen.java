@@ -34,8 +34,6 @@ public class GameplayScreen extends AbstractScreen {
     private CornerPhone cornerPhone;
     private CornerPhoneButton cornerPhoneButton;
 
-    private EventDialog eventDialog;
-
     public GameplayScreen(){
         super();
         FlyingObjectController.getInstance().Initialize(this);
@@ -55,12 +53,6 @@ public class GameplayScreen extends AbstractScreen {
         initPlayerButton();
         initCornerPhone();
         initCornerPhoneButton();
-        initEventDialog();
-    }
-
-    private void initEventDialog() {
-        eventDialog = new EventDialog();
-        addActor(eventDialog);
     }
 
     private void initCornerPhoneButton() {

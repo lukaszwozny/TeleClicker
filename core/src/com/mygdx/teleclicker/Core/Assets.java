@@ -45,6 +45,8 @@ public class Assets implements Disposable {
 
         loadFlyingObjectAssets();
 
+        manager.load(AssetsEnum.DIALOG_BOG_TEX.toString(),Texture.class);
+
         // Sounds
         manager.load(AssetsEnum.POP_SOUND.toString(), Sound.class);
 

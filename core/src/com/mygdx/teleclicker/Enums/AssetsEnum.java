@@ -17,6 +17,7 @@ public enum AssetsEnum {
     BOMB_TEX("img/skins/flying_object/bomb_1.png"),
     JEW_TEX("img/skins/flying_object/jew_greedy.png"),
 
+    DIALOG_BOG_TEX("img/popups/dialog.png"),
 
     // Sounds and music
     POP_SOUND("sounds/pop.mp3"),
