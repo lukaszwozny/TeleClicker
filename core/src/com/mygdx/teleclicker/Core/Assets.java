@@ -43,6 +43,7 @@ public class Assets implements Disposable {
         manager.load(AssetsEnum.PLAYER_TEX.toString(), Texture.class);
         manager.load(AssetsEnum.PHONE_ON_TEX.toString(), Texture.class);
         manager.load(AssetsEnum.PHONE_OFF_TEX.toString(), Texture.class);
+        manager.load(AssetsEnum.SETTINGS_TEX.toString(), Texture.class);
 
         loadFlyingObjectAssets();
 
