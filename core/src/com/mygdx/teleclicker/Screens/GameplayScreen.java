@@ -19,10 +19,7 @@ import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
-import com.mygdx.teleclicker.ui.CornerPhoneButton;
-import com.mygdx.teleclicker.ui.EventDialog;
-import com.mygdx.teleclicker.ui.IClickCallback;
-import com.mygdx.teleclicker.ui.PlayerButton;
+import com.mygdx.teleclicker.ui.*;
 
 /**
  * Created by Senpai on 21.07.2016.
@@ -34,6 +31,7 @@ public class GameplayScreen extends AbstractScreen {
     private PlayerButton playerButton;
     private CornerPhone cornerPhone;
     private CornerPhoneButton cornerPhoneButton;
+    private SettingsButton settingsButton;
 
     public GameplayScreen(){
         super();
@@ -55,6 +53,17 @@ public class GameplayScreen extends AbstractScreen {
         initPlayerButton();
         initCornerPhone();
         initCornerPhoneButton();
+        initSettingsButton();
+    }
+
+    private void initSettingsButton() {
+        settingsButton = new SettingsButton(new IClickCallback() {
+            @Override
+            public void onClick() {
+                System.out.println("Settings");
+            }
+        });
+        addActor(settingsButton);
     }
 
     private void initCornerPhoneButton() {
