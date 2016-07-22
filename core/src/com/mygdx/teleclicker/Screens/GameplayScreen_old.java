@@ -71,7 +71,7 @@ public class GameplayScreen_old extends AbstractScreen_old {
     private void initPassiveIncomeDialog() {
         float pointsGained = game.getScoreService().getPointsToAdd();
         if (!backFromShop && (pointsGained > 0)) {
-            BasicDialog basicDialog = new BasicDialog();
+            BasicDialogold basicDialog = new BasicDialogold();
 
             stage.addActor(basicDialog);
             basicDialog.initContent("Podczas nieobecnosci \n" +

@@ -1,6 +1,5 @@
 package com.mygdx.teleclicker.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -12,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 /**
  * Created by Senpai on 10.07.2016.
  */
-public class BasicDialog extends Image {
+public class BasicDialogold extends Image {
 
     private GameLabel label;
 
@@ -20,11 +19,11 @@ public class BasicDialog extends Image {
     public final static int HEIGHT = 218;
 
 
-    public BasicDialog() {
+    public BasicDialogold() {
         this(GameLabel.FontType.TIMES_NEW_ROMAN);
     }
 
-    public BasicDialog(GameLabel.FontType fontType){
+    public BasicDialogold(GameLabel.FontType fontType){
         super(new Texture("img/popups/dialog.png"));
 
         this.setOrigin(WIDTH / 2, HEIGHT / 2);
@@ -59,7 +58,7 @@ public class BasicDialog extends Image {
             @Override
             public boolean act(float delta) {
                 label.remove();
-                BasicDialog.this.remove();
+                BasicDialogold.this.remove();
                 return false;
             }
         });

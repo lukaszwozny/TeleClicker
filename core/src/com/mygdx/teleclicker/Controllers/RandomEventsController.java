@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.TeleClicker;
-import com.mygdx.teleclicker.ui.BasicDialog;
+import com.mygdx.teleclicker.ui.BasicDialogold;
 
 /**
  * Created by Senpai on 11.07.2016.
@@ -61,7 +61,7 @@ public class RandomEventsController {
     }
 
     private void moneyMultiplierDownEvent() {
-        BasicDialog basicDialog = new BasicDialog();
+        BasicDialogold basicDialog = new BasicDialogold();
         stage.addActor(basicDialog);
         float randMultiplier = MathUtils.random(1, 10);
         basicDialog.initContent("Przewalutowales swoje\n" +
@@ -72,7 +72,7 @@ public class RandomEventsController {
     }
 
     private void moneyUpEvent() {
-        BasicDialog basicDialog = new BasicDialog();
+        BasicDialogold basicDialog = new BasicDialogold();
         stage.addActor(basicDialog);
         int randMoney = MathUtils.random(1, 3);
         basicDialog.initContent("Zmieniasz taryfe na\n" +
@@ -82,7 +82,7 @@ public class RandomEventsController {
     }
 
     private void moneyDownEvent() {
-        BasicDialog basicDialog = new BasicDialog();
+        BasicDialogold basicDialog = new BasicDialogold();
         stage.addActor(basicDialog);
         int randMoney = MathUtils.random(1, 10) * 100;
         basicDialog.initContent("Probujesz dodzwonic sie\n" +
@@ -93,7 +93,7 @@ public class RandomEventsController {
     }
 
     private void passiveUpEvent() {
-        BasicDialog basicDialog = new BasicDialog();
+        BasicDialogold basicDialog = new BasicDialogold();
         stage.addActor(basicDialog);
         int randPassive = MathUtils.random(1, 10) * 10;
         basicDialog.initContent("Bawiac sie w piaskownicy\n" +
