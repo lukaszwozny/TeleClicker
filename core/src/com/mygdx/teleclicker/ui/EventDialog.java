@@ -2,9 +2,14 @@ package com.mygdx.teleclicker.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Service.FontService;
@@ -24,6 +29,32 @@ public class EventDialog extends Group {
         super();
         initDialogBox();
         initTextLabel(text);
+
+
+        this.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                fadeOutDialog();
+
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+    }
+
+    private void fadeOutDialog() {
+        SequenceAction sequence = new SequenceAction();
+        sequence.addAction(Actions.fadeOut(1.5f));
+        sequence.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                texLabel.remove();
+                dialogBox.remove();
+                EventDialog.this.remove();
+                return false;
+            }
+        });
+        this.addAction(sequence);
+        this.addAction(Actions.fadeOut(1.5f));
     }
 
     private void initDialogBox() {

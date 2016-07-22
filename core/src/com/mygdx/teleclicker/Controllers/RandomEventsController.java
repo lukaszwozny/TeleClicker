@@ -3,45 +3,63 @@ package com.mygdx.teleclicker.Controllers;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
+import com.mygdx.teleclicker.Core.AbstractScreen;
+import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.BasicDialogold;
+import com.mygdx.teleclicker.ui.EventDialog;
 
 /**
- * Created by Senpai on 11.07.2016.
+ * Created by Senpai on 22.07.2016.
  */
 public class RandomEventsController {
 
-    private static final int TICK_INTERVAL = 5;
-    private int spawnTime;
-    private Stage stage;
-    private TeleClicker game;
+    private static RandomEventsController instance;
 
-    public RandomEventsController(TeleClicker game, Stage stage) {
-        this.game = game;
-        this.stage = stage;
-        init();
+    private static final int TICK_INTERVAL = 30;
+    private int spawnTime;
+
+    private AbstractScreen screen;
+
+    public RandomEventsController() {
+        initEventController();
     }
 
-    private void init() {
+    public static RandomEventsController getInstance() {
+        if(instance == null){
+            instance = new RandomEventsController();
+        }
+        return instance;
+    }
+
+    public void Initialize(AbstractScreen screen){
+        this.screen = screen;
+    }
+
+    private void initEventController() {
         randomizeSpawnTime();
         Timer.schedule(new Timer.Task() {
-
             @Override
             public void run() {
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
-                        System.out.println("Random event time! Can't touch this! ");
+                        System.out.println("New event!");
                         triggerRandomEvent();
                         randomizeSpawnTime();
                     }
-                }, 5);
+                }, spawnTime);
             }
         }, 1, TICK_INTERVAL);
     }
 
+    private void randomizeSpawnTime() {
+        spawnTime = MathUtils.random(10, 60);
+        System.out.println("SpawnTime: "+spawnTime);
+    }
+
     private void triggerRandomEvent() {
-        int randEvent = MathUtils.random(4);
+        int randEvent = MathUtils.random(0,3);
         switch (randEvent) {
             case 0:
                 moneyMultiplierDownEvent();
@@ -60,50 +78,55 @@ public class RandomEventsController {
         }
     }
 
-    private void moneyMultiplierDownEvent() {
-        BasicDialogold basicDialog = new BasicDialogold();
-        stage.addActor(basicDialog);
-        float randMultiplier = MathUtils.random(1, 10);
-        basicDialog.initContent("Przewalutowales swoje\n" +
-                "Erlangi na Franki.\n" +
-                "Tracisz na tym "+randMultiplier+"%.");
-        randMultiplier = 1 - randMultiplier/100;
-        game.getScoreService().multiplierPoints(randMultiplier);
-    }
+    private void passiveUpEvent() {
+        int rand = MathUtils.random(1, 3);
+        String content = "Bawiac sie w piaskownicy\n" +
+                "odkrywasz zrodlo \n" +
+                "natezenia ruchu.\n" +
+                "Zyskujesz " + rand + " Erl/sec.";
 
-    private void moneyUpEvent() {
-        BasicDialogold basicDialog = new BasicDialogold();
-        stage.addActor(basicDialog);
-        int randMoney = MathUtils.random(1, 3);
-        basicDialog.initContent("Zmieniasz taryfe na\n" +
-                "Telgam - standard " + randMoney*12 +"mc.\n"+
-                "Zyskujesz " + randMoney*100 + " Erlangow.");
-        game.getScoreService().addPoints(randMoney*100);
+        EventDialog eventDialog = new EventDialog(content);
+
+        screen.addActor(eventDialog);
+        ScoreService.getInstance().addPointsPerSec(-rand);
+
     }
 
     private void moneyDownEvent() {
-        BasicDialogold basicDialog = new BasicDialogold();
-        stage.addActor(basicDialog);
-        int randMoney = MathUtils.random(1, 10) * 100;
-        basicDialog.initContent("Probujesz dodzwonic sie\n" +
+        int rand = MathUtils.random(1, 3) * 100;
+        String content = "Probujesz dodzwonic sie\n" +
                 "na niebieska linie,\n" +
                 "niestety, nikt nie odbiera.\n" +
-                "Tracisz " + randMoney + " Erlangow.");
-        game.getScoreService().addPoints(-randMoney);
+                "Tracisz " + rand + " Erlangow.";
+
+        EventDialog eventDialog = new EventDialog(content);
+
+        screen.addActor(eventDialog);
+        ScoreService.getInstance().addPoints(-rand);
     }
 
-    private void passiveUpEvent() {
-        BasicDialogold basicDialog = new BasicDialogold();
-        stage.addActor(basicDialog);
-        int randPassive = MathUtils.random(1, 10) * 10;
-        basicDialog.initContent("Bawiac sie w piaskownicy\n" +
-                "odkrywasz zrodlo \n" +
-                "natezenia ruchu.\n" +
-                "Zyskujesz " + randPassive + " Erl/sec.");
-        game.getScoreService().addPassiveIncome(randPassive);
+    private void moneyUpEvent() {
+        int rand = MathUtils.random(1, 3) * 10;
+        String content = "Zmieniasz taryfe na\n" +
+                "Telgam - standard " + rand*12 +"mc.\n"+
+                "Zyskujesz " + rand + " Erlangow.";
+
+        EventDialog eventDialog = new EventDialog(content);
+
+        screen.addActor(eventDialog);
+        ScoreService.getInstance().addPoints(rand);
     }
 
-    private void randomizeSpawnTime() {
-        spawnTime = MathUtils.random(30, 60);
+    private void moneyMultiplierDownEvent() {
+        float rand = MathUtils.random(1, 5);
+        float randMultiplier = 1 - rand/100;
+        String content = "Przewalutowales swoje\n" +
+                "Erlangi na Franki.\n" +
+                "Tracisz na tym "+rand+"%.";
+
+        EventDialog eventDialog = new EventDialog(content);
+
+        screen.addActor(eventDialog);
+        ScoreService.getInstance().multiplierPoints(randMultiplier);
     }
 }
