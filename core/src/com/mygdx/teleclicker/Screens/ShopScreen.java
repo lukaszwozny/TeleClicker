@@ -1,7 +1,6 @@
 package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.teleclicker.Core.AbstractScreen;
@@ -13,7 +12,7 @@ import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
-import com.mygdx.teleclicker.ui.BuyButton;
+import com.mygdx.teleclicker.ui.ShopEntry;
 import com.mygdx.teleclicker.ui.CloseShopButton;
 import com.mygdx.teleclicker.ui.IClickCallback;
 
@@ -25,8 +24,9 @@ public class ShopScreen extends AbstractScreen {
     private Label scoreLabelUp, scoreLabelBottom;
 
     private CloseShopButton closeShopButton;
-    private BuyButton buyPointsPerSecButton;
-    private BuyButton buyPointsPerClickButton;
+
+    private ShopEntry buyPointsPerSecEntry;
+    private ShopEntry buyPointsPerClickEntry;
 
     public ShopScreen() {
         super();
@@ -37,7 +37,33 @@ public class ShopScreen extends AbstractScreen {
         initBgTexture();
         initScoreLabels();
         initCloseShopButton();
-        initBuyButtons();
+        initShopEntrys();
+    }
+
+    // ToDo Move to shop entry manager
+    private void initShopEntrys() {
+        final int START_Y = 545;
+        final int INTERVAL_Y = 51;
+        buyPointsPerSecEntry = new ShopEntry(new IClickCallback() {
+            @Override
+            public void onClick() {
+                ScoreService.getInstance().addPointsPerSec(1);
+                ScoreService.getInstance().addPoints(-10000);
+                ScoreService.getInstance().increseNumberOfPointsPerSecBuys();
+            }
+        },START_Y);
+
+        buyPointsPerClickEntry = new ShopEntry(new IClickCallback() {
+            @Override
+            public void onClick() {
+                ScoreService.getInstance().addPointsPerClick(1);
+                ScoreService.getInstance().addPoints(-15000);
+                ScoreService.getInstance().increseNumberOfPointsPerClickBuys();
+            }
+        },START_Y + INTERVAL_Y);
+
+        addActor(buyPointsPerSecEntry);
+        addActor(buyPointsPerClickEntry);
     }
 
     private void initScoreLabels() {
@@ -53,31 +79,6 @@ public class ShopScreen extends AbstractScreen {
 
         addActor(scoreLabelUp);
         addActor(scoreLabelBottom);
-    }
-
-    private void initBuyButtons() {
-        final int START_X = 330;
-        final int START_Y = 545;
-        final int INTERVAL_Y = 51;
-        buyPointsPerSecButton = new BuyButton(new IClickCallback() {
-            @Override
-            public void onClick() {
-                SoundService.getInstance().playClickSound();
-                ScoreService.getInstance().increseNumberOfPointsPerSecBuys();
-                ScoreService.getInstance().addPointsPerSec(1);
-            }
-        }, START_X, START_Y);
-        addActor(buyPointsPerSecButton);
-
-        buyPointsPerClickButton = new BuyButton(new IClickCallback() {
-            @Override
-            public void onClick() {
-                SoundService.getInstance().playClickSound();
-                ScoreService.getInstance().increseNumberOfPointsPerClickBuys();
-                ScoreService.getInstance().addPointsPerClick(1);
-            }
-        }, START_X, START_Y - INTERVAL_Y);
-        addActor(buyPointsPerClickButton);
     }
 
     private void initCloseShopButton() {
@@ -105,6 +106,29 @@ public class ShopScreen extends AbstractScreen {
 
     private void update() {
         updateScoreLabels();
+        updateButtonsColor();
+        updateShopEntrysLabels();
+    }
+
+    private void updateShopEntrysLabels() {
+        buyPointsPerSecEntry.setText("Buy Passive Income (" + ScoreService.getInstance().getNumberOfPointsPerSecBuys()+")");
+        buyPointsPerClickEntry.setText("Buy Click Power (" + ScoreService.getInstance().getNumberOfPointsPerClickBuys()+")");
+    }
+
+    // ToDo Move to ShopEntryManager
+    private void updateButtonsColor() {
+        float points = ScoreService.getInstance().getPoints();
+        if(points > 10000){
+            buyPointsPerSecEntry.updateColor(true);
+        } else {
+            buyPointsPerSecEntry.updateColor(false);
+        }
+        if(points > 15000){
+            buyPointsPerClickEntry.updateColor(true);
+        } else {
+            buyPointsPerClickEntry.updateColor(false);
+        }
+
     }
 
     private void updateScoreLabels() {

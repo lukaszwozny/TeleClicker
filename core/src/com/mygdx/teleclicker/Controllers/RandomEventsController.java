@@ -44,7 +44,6 @@ public class RandomEventsController {
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
-                        System.out.println("New event!");
                         triggerRandomEvent();
                         randomizeSpawnTime();
                     }
@@ -55,7 +54,6 @@ public class RandomEventsController {
 
     private void randomizeSpawnTime() {
         spawnTime = MathUtils.random(10, 60);
-        System.out.println("SpawnTime: "+spawnTime);
     }
 
     private void triggerRandomEvent() {
