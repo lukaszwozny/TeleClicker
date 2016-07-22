@@ -1,15 +1,12 @@
 package com.mygdx.teleclicker.Controllers;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Entities.FlyingObject;
-import com.mygdx.teleclicker.Entities.FlyingObject_old;
 import com.mygdx.teleclicker.Enums.FlyingObjectTypeEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.ScreenService;
-import com.mygdx.teleclicker.TeleClicker;
 
 /**
  * Created by Senpai on 22.07.2016.

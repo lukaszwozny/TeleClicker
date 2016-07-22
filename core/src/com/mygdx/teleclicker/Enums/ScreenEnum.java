@@ -1,7 +1,6 @@
 package com.mygdx.teleclicker.Enums;
 
 import com.mygdx.teleclicker.Core.AbstractScreen;
-import com.mygdx.teleclicker.Screens.AbstractScreen_old;
 import com.mygdx.teleclicker.Screens.GameplayScreen;
 import com.mygdx.teleclicker.Screens.ShopScreen;
 import com.mygdx.teleclicker.Screens.SplashScreen;
