@@ -25,10 +25,11 @@ public class ScoreService {
     private float points;
     private float pointsPerSec;
     private float pointsPerClick = 1.0f;
-    private float pointsToAdd;
     private float passiveIncomeTimeInHour;
 
-    private int numberOfPointsPerClickPBuys = 2;
+    private long delayTime;
+
+    private int numberOfPointsPerClickPBuys;
     private int numberOfPointsPerSecBuys;
 
     private Preferences prefs;
@@ -36,6 +37,7 @@ public class ScoreService {
     private ScoreService() {
         this.prefs = TeleClicker.getPrefs();
         loadScore();
+        calculateGainedPassiveIncome();
         initTimer();
     }
 
@@ -56,18 +58,18 @@ public class ScoreService {
     }
 
     private void calculateGainedPassiveIncome() {
-        if (getSavedTimeStamp() > 0) {
-            final float multiplier = 0.1f;
-            long delayTime = TimeUtils.millis() - getSavedTimeStamp();
+        final float multiplier = 0.1f;
 
-            long delayTimeInSec = TimeUnit.MILLISECONDS.toSeconds(delayTime);
-            long passiveIncomeTimeInSec = TimeUnit.HOURS.toSeconds((long)passiveIncomeTimeInHour);
-            if (delayTimeInSec > passiveIncomeTimeInSec)
-                delayTimeInSec = passiveIncomeTimeInSec;
+        long delayTimeInSec = TimeUnit.MILLISECONDS.toSeconds(delayTime);
+        long passiveIncomeTimeInSec = TimeUnit.HOURS.toSeconds((long) passiveIncomeTimeInHour);
+        if (delayTimeInSec > passiveIncomeTimeInSec)
+            delayTimeInSec = passiveIncomeTimeInSec;
 
-            pointsToAdd = delayTimeInSec * multiplier * pointsPerSec;
-            points += pointsToAdd;
-        }
+        float pointsToAdd = delayTimeInSec * multiplier * pointsPerSec;
+        System.out.println("Before: "+points);
+        System.out.println("PontToAdd: "+pointsToAdd);
+        points += pointsToAdd;
+        System.out.println("After: "+points);
     }
 
     public void addPoints(float pointsToAdd) {
@@ -88,6 +90,7 @@ public class ScoreService {
         points = 0.0f;
         pointsPerSec = 0.0f;
         pointsPerClick = 1.0f;
+        passiveIncomeTimeInHour = 1.0f;
 
         numberOfPointsPerClickPBuys = 0;
         numberOfPointsPerSecBuys = 0;
@@ -113,8 +116,10 @@ public class ScoreService {
     private void loadScore() {
         pointsPerSec = prefs.getFloat(GAME_PASSIVE_INCOME);
         points = prefs.getFloat(GAME_SCORE);
-        pointsPerClick = prefs.getFloat(GAME_POINTS_PER_CLICK);
-        passiveIncomeTimeInHour = prefs.getFloat(GAME_PASSIVE_INCOME_TIME);
+        pointsPerClick = prefs.getFloat(GAME_POINTS_PER_CLICK, 1);
+        passiveIncomeTimeInHour = prefs.getFloat(GAME_PASSIVE_INCOME_TIME, 1);
+
+        delayTime = TimeUtils.millis() - prefs.getLong(GAME_SAVED_TIMESTAMP);
 
         numberOfPointsPerClickPBuys = prefs.getInteger(GAME_NO_POINTS_PER_CLICK_BUYS);
         numberOfPointsPerSecBuys = prefs.getInteger(GAME_NO_POINTS_PER_SEC_BUYS);
@@ -139,10 +144,6 @@ public class ScoreService {
      * getters and setters
      */
 
-    private Long getSavedTimeStamp() {
-        return prefs.getLong(GAME_SAVED_TIMESTAMP);
-    }
-
     public float getPoints() {
         return points;
     }
@@ -161,10 +162,6 @@ public class ScoreService {
 
     public int getNumberOfPointsPerSecBuys() {
         return numberOfPointsPerSecBuys;
-    }
-
-    public float getPointsToAdd() {
-        return pointsToAdd;
     }
 
     public void multiplierPoints(float multiplier) {
