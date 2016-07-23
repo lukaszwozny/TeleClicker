@@ -48,7 +48,7 @@ public class CheckboxLabel extends Group {
         checkboxOn = Assets.getInstance().manager.get(AssetsEnum.CHECKBOX_ON_TEX.toString());
         checkboxOff = Assets.getInstance().manager.get(AssetsEnum.CHECKBOX_OFF_TEX.toString());
 
-        checkBoxImage = new Image(checkboxOff);
+        checkBoxImage = new Image(checkboxOn);
         checkBoxImage.setX(270);
 
         checkBoxImage.addListener(new ClickListener(){

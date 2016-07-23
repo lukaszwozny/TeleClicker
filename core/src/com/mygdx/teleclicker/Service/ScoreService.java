@@ -11,12 +11,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class ScoreService {
     public final static String GAME_SCORE = "com.mygdx.clicker.prefs.score";
-    public final static String GAME_PASSIVE_INCOME = "com.mygdx.clicker.prefs.passive";
+    public final static String GAME_PASSIVE_INCOME = "com.mygdx.clicker.prefs.pointspersec";
     public final static String GAME_SAVED_TIMESTAMP = "com.mygdx.clicker.prefs.timestamp";
     public final static String GAME_POINTS_PER_CLICK = "com.mygdx.clicker.prefs.pointsperclick";
 
     public final static String GAME_NO_POINTS_PER_CLICK_BUYS = "com.mygdx.clicker.prefs.pointsperclickbuys";
-    public final static String GAME_NO_PASSIVE_POINTS_BUYS = "com.mygdx.clicker.prefs.passivepointsbuys";
+    public final static String GAME_NO_PASSIVE_POINTS_BUYS = "com.mygdx.clicker.prefs.pointsperclickbuys";
 
     private static ScoreService instance;
 

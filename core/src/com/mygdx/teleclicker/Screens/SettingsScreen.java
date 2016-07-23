@@ -41,12 +41,12 @@ public class SettingsScreen extends AbstractScreen {
         checkboxMusic = new CheckboxLabel(new ICheckboxCallback() {
             @Override
             public void Check() {
-
+                SoundService.getInstance().playCaketownMusic(true);
             }
 
             @Override
             public void Uncheck() {
-
+                SoundService.getInstance().stopCaketownMusic();
             }
         });
         checkboxMusic.setPosition(START_X,START_Y);
@@ -55,12 +55,10 @@ public class SettingsScreen extends AbstractScreen {
         checkboxSound = new CheckboxLabel(new ICheckboxCallback() {
             @Override
             public void Check() {
-                
             }
 
             @Override
             public void Uncheck() {
-
             }
         });
         checkboxSound.setPosition(START_X,START_Y-INTERVAL);

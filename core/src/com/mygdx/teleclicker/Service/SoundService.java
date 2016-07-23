@@ -66,4 +66,8 @@ public class SoundService {
         caketownMusic.setLooping(looped);
     }
 
+    public void stopCaketownMusic(){
+        caketownMusic.stop();
+    }
+
 }
