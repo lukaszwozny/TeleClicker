@@ -15,9 +15,10 @@ public class ScoreService {
     public final static String GAME_PASSIVE_INCOME = "com.mygdx.clicker.prefs.pointspersec";
     public final static String GAME_SAVED_TIMESTAMP = "com.mygdx.clicker.prefs.timestamp";
     public final static String GAME_POINTS_PER_CLICK = "com.mygdx.clicker.prefs.pointsperclick";
+    public final static String GAME_PASSIVE_INCOME_TIME = "com.mygdx.clicker.prefs.passiveincometime";
 
     public final static String GAME_NO_POINTS_PER_CLICK_BUYS = "com.mygdx.clicker.prefs.pointsperclickbuys";
-    public final static String GAME_NO_PASSIVE_POINTS_BUYS = "com.mygdx.clicker.prefs.pointsperclickbuys";
+    public final static String GAME_NO_POINTS_PER_SEC_BUYS = "com.mygdx.clicker.prefs.pointspersecbuys";
 
     private static ScoreService instance;
 
@@ -25,6 +26,7 @@ public class ScoreService {
     private float pointsPerSec;
     private float pointsPerClick = 1.0f;
     private float pointsToAdd;
+    private float passiveIncomeTimeInHour;
 
     private int numberOfPointsPerClickPBuys = 2;
     private int numberOfPointsPerSecBuys;
@@ -41,7 +43,7 @@ public class ScoreService {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                points += pointsPerSec/10;
+                points += pointsPerSec / 10;
             }
         }, 1, 0.1f);
     }
@@ -56,9 +58,14 @@ public class ScoreService {
     private void calculateGainedPassiveIncome() {
         if (getSavedTimeStamp() > 0) {
             final float multiplier = 0.1f;
-            long deleyTime = TimeUtils.millis() - getSavedTimeStamp();
+            long delayTime = TimeUtils.millis() - getSavedTimeStamp();
 
-            pointsToAdd = TimeUnit.MILLISECONDS.toSeconds(deleyTime) * multiplier * pointsPerSec;
+            long delayTimeInSec = TimeUnit.MILLISECONDS.toSeconds(delayTime);
+            long passiveIncomeTimeInSec = TimeUnit.HOURS.toSeconds((long)passiveIncomeTimeInHour);
+            if (delayTimeInSec > passiveIncomeTimeInSec)
+                delayTimeInSec = passiveIncomeTimeInSec;
+
+            pointsToAdd = delayTimeInSec * multiplier * pointsPerSec;
             points += pointsToAdd;
         }
     }
@@ -107,20 +114,22 @@ public class ScoreService {
         pointsPerSec = prefs.getFloat(GAME_PASSIVE_INCOME);
         points = prefs.getFloat(GAME_SCORE);
         pointsPerClick = prefs.getFloat(GAME_POINTS_PER_CLICK);
+        passiveIncomeTimeInHour = prefs.getFloat(GAME_PASSIVE_INCOME_TIME);
 
         numberOfPointsPerClickPBuys = prefs.getInteger(GAME_NO_POINTS_PER_CLICK_BUYS);
-        numberOfPointsPerSecBuys = prefs.getInteger(GAME_NO_PASSIVE_POINTS_BUYS);
+        numberOfPointsPerSecBuys = prefs.getInteger(GAME_NO_POINTS_PER_SEC_BUYS);
     }
 
     public void saveCurrentGameState() {
         prefs.putFloat(GAME_SCORE, points);
         prefs.putFloat(GAME_PASSIVE_INCOME, pointsPerSec);
         prefs.putFloat(GAME_POINTS_PER_CLICK, pointsPerClick);
+        prefs.putFloat(GAME_PASSIVE_INCOME_TIME, passiveIncomeTimeInHour);
         prefs.putLong(GAME_SAVED_TIMESTAMP, TimeUtils.millis());
 
         // Shop values
         prefs.putInteger(GAME_NO_POINTS_PER_CLICK_BUYS, numberOfPointsPerClickPBuys);
-        prefs.putInteger(GAME_NO_PASSIVE_POINTS_BUYS, numberOfPointsPerSecBuys);
+        prefs.putInteger(GAME_NO_POINTS_PER_SEC_BUYS, numberOfPointsPerSecBuys);
 
         prefs.flush();
     }
