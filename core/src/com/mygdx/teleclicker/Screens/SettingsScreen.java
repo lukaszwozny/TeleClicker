@@ -8,6 +8,7 @@ import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.ui.CloseSettingsButton;
+import com.mygdx.teleclicker.ui.ICheckboxCallback;
 import com.mygdx.teleclicker.ui.IClickCallback;
 import com.mygdx.teleclicker.ui.CheckboxLabel;
 
@@ -37,11 +38,31 @@ public class SettingsScreen extends AbstractScreen {
         String soundText = "SOUND";
         float fontScale = 2.0f;
 
-        checkboxMusic = new CheckboxLabel();
+        checkboxMusic = new CheckboxLabel(new ICheckboxCallback() {
+            @Override
+            public void Check() {
+
+            }
+
+            @Override
+            public void Uncheck() {
+
+            }
+        });
         checkboxMusic.setPosition(START_X,START_Y);
         checkboxMusic.setText(musicText);
 
-        checkboxSound = new CheckboxLabel();
+        checkboxSound = new CheckboxLabel(new ICheckboxCallback() {
+            @Override
+            public void Check() {
+                
+            }
+
+            @Override
+            public void Uncheck() {
+
+            }
+        });
         checkboxSound.setPosition(START_X,START_Y-INTERVAL);
         checkboxSound.setText(soundText);
 

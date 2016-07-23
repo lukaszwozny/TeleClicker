@@ -2,9 +2,13 @@ package com.mygdx.teleclicker.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Service.FontService;
@@ -19,25 +23,49 @@ public class CheckboxLabel extends Group {
     private Texture checkboxOff;
     private Image checkBoxImage;
 
-    private boolean isOn;
+    private boolean checked;
 
-    public CheckboxLabel() {
+    public CheckboxLabel(final ICheckboxCallback chackboxCallback) {
         initLabel();
-        initCheckbox();
-        gropu();
+        initCheckbox(chackboxCallback);
+        group();
     }
 
-    private void gropu() {
+    private void ChangeCheckboxTexture(){
+        if(checked){
+            checkBoxImage.setDrawable(new SpriteDrawable(new Sprite(checkboxOff)));
+        } else {
+            checkBoxImage.setDrawable(new SpriteDrawable(new Sprite(checkboxOn)));
+        }
+    }
+
+    private void group() {
         addActor(label);
         addActor(checkBoxImage);
     }
 
-    private void initCheckbox() {
+    private void initCheckbox(final ICheckboxCallback chackboxCallback) {
         checkboxOn = Assets.getInstance().manager.get(AssetsEnum.CHECKBOX_ON_TEX.toString());
         checkboxOff = Assets.getInstance().manager.get(AssetsEnum.CHECKBOX_OFF_TEX.toString());
 
-        checkBoxImage = new Image(checkboxOn);
+        checkBoxImage = new Image(checkboxOff);
         checkBoxImage.setX(270);
+
+        checkBoxImage.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(checked){
+                    chackboxCallback.Uncheck();
+                    ChangeCheckboxTexture();
+                    checked = false;
+                } else {
+                    chackboxCallback.Check();
+                    ChangeCheckboxTexture();
+                    checked = true;
+                }
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
     }
 
     private void initLabel() {
@@ -49,7 +77,7 @@ public class CheckboxLabel extends Group {
         label.setText(text);
     }
 
-    public boolean isOn() {
-        return isOn;
+    public boolean isChecked() {
+        return checked;
     }
 }
