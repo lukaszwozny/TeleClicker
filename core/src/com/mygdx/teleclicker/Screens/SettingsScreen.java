@@ -8,10 +8,8 @@ import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SettingsService;
 import com.mygdx.teleclicker.Service.SoundService;
-import com.mygdx.teleclicker.ui.CloseSettingsButton;
-import com.mygdx.teleclicker.ui.ICheckboxCallback;
-import com.mygdx.teleclicker.ui.IClickCallback;
-import com.mygdx.teleclicker.ui.CheckboxLabel;
+import com.mygdx.teleclicker.TeleClicker;
+import com.mygdx.teleclicker.ui.*;
 
 /**
  * Created by Senpai on 22.07.2016.
@@ -22,12 +20,22 @@ public class SettingsScreen extends AbstractScreen {
     private CheckboxLabel checkboxMusic;
     private CheckboxLabel checkboxSound;
 
+    private ResetScoreButton resetScoreButton;
+
 
     @Override
     public void buildStage() {
         initBgTexture();
         initCloseButton();
         initCheckboxes();
+        initResetScoreButton();
+    }
+
+    private void initResetScoreButton() {
+        resetScoreButton = new ResetScoreButton();
+        resetScoreButton.setPosition(TeleClicker.WIDTH / 2 - resetScoreButton.getWidth() / 2, 50);
+
+        addActor(resetScoreButton);
     }
 
     private void initCheckboxes() {
@@ -41,34 +49,34 @@ public class SettingsScreen extends AbstractScreen {
 
         checkboxMusic = new CheckboxLabel(SettingsService.getInstance().isMusic(),
                 new ICheckboxCallback() {
-            @Override
-            public void Check() {
-                SettingsService.getInstance().setMusic(true);
-                SoundService.getInstance().playCaketownMusic(true);
-            }
+                    @Override
+                    public void Check() {
+                        SettingsService.getInstance().setMusic(true);
+                        SoundService.getInstance().playCaketownMusic(true);
+                    }
 
-            @Override
-            public void Uncheck() {
-                SettingsService.getInstance().setMusic(false);
-                SoundService.getInstance().stopCaketownMusic();
-            }
-        });
-        checkboxMusic.setPosition(START_X,START_Y);
+                    @Override
+                    public void Uncheck() {
+                        SettingsService.getInstance().setMusic(false);
+                        SoundService.getInstance().stopCaketownMusic();
+                    }
+                });
+        checkboxMusic.setPosition(START_X, START_Y);
         checkboxMusic.setText(musicText);
 
         checkboxSound = new CheckboxLabel(SettingsService.getInstance().isSounds(),
                 new ICheckboxCallback() {
-            @Override
-            public void Check() {
-                SettingsService.getInstance().setSounds(true);
-            }
+                    @Override
+                    public void Check() {
+                        SettingsService.getInstance().setSounds(true);
+                    }
 
-            @Override
-            public void Uncheck() {
-                SettingsService.getInstance().setSounds(false);
-            }
-        });
-        checkboxSound.setPosition(START_X,START_Y-INTERVAL);
+                    @Override
+                    public void Uncheck() {
+                        SettingsService.getInstance().setSounds(false);
+                    }
+                });
+        checkboxSound.setPosition(START_X, START_Y - INTERVAL);
         checkboxSound.setText(soundText);
 
         addActor(checkboxMusic);

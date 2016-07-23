@@ -73,6 +73,8 @@ public class ScoreService {
 
         numberOfPointsPerClickPBuys = 0;
         numberOfPointsPerSecBuys = 0;
+
+        saveCurrentGameState();
     }
 
     public void addPointsPerSec(int value) {

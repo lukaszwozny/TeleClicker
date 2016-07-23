@@ -8,28 +8,32 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
+import com.mygdx.teleclicker.Service.ScoreService;
+import com.mygdx.teleclicker.Service.ScreenService;
 
 /**
  * Created by Senpai on 10.07.2016.
  */
 public class ResetScoreButton extends Button {
-    public ResetScoreButton(final IClickCallback callback){
+
+    final int WIDTH = 100;
+    final int HEIGHT = 100;
+
+    public ResetScoreButton(){
         super(prepareResetButtonStyle());
 
-        init(callback);
+        init();
     }
 
-    private void init(final IClickCallback callback) {
-        this.setWidth(100);
-        this.setHeight(100);
-        this.setX(330);
-        this.setY(560);
+    private void init() {
+        this.setWidth(WIDTH);
+        this.setHeight(HEIGHT);
 
         this.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y,
                                      int pointer, int button) {
-                callback.onClick();
+                ScoreService.getInstance().resetGameScore();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
