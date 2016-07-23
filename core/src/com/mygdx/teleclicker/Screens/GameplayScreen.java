@@ -132,7 +132,5 @@ public class GameplayScreen extends AbstractScreen {
     @Override
     public void pause() {
         super.pause();
-        System.out.println("Pause gameplayScreen");
-        ScoreService.getInstance().saveCurrentGameState();
     }
 }

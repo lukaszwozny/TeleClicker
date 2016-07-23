@@ -2,6 +2,7 @@ package com.mygdx.teleclicker.Service;
 
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.TeleClicker;
 
 import java.util.concurrent.TimeUnit;
@@ -33,10 +34,20 @@ public class ScoreService {
     private ScoreService() {
         this.prefs = TeleClicker.getPrefs();
         loadScore();
+        initTimer();
+    }
+
+    private void initTimer() {
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                points += pointsPerSec/10;
+            }
+        }, 1, 0.1f);
     }
 
     public static ScoreService getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new ScoreService();
         }
         return instance;
@@ -127,11 +138,11 @@ public class ScoreService {
         return points;
     }
 
-    public float getPointsPerSec(){
+    public float getPointsPerSec() {
         return pointsPerSec;
     }
 
-    public float getPointsPerClick(){
+    public float getPointsPerClick() {
         return pointsPerClick;
     }
 

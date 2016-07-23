@@ -4,6 +4,7 @@ import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SettingsService;
 import com.mygdx.teleclicker.Service.SoundService;
@@ -22,6 +23,17 @@ public class TeleClicker extends Game {
         SoundService.getInstance().playCaketownMusic(true);
         ScreenService.getInstance().initialize(this);
         ScreenService.getInstance().setScreen(ScreenEnum.SPLASH);
+    }
+
+    @Override
+    public void pause() {
+        super.pause();
+        ScoreService.getInstance().saveCurrentGameState();
+    }
+
+    @Override
+    public void resume() {
+        super.resume();
     }
 
     /**
