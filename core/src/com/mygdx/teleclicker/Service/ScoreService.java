@@ -33,7 +33,6 @@ public class ScoreService {
     private ScoreService() {
         this.prefs = TeleClicker.getPrefs();
         loadScore();
-        init();
     }
 
     public static ScoreService getInstance() {
@@ -41,9 +40,6 @@ public class ScoreService {
             instance = new ScoreService();
         }
         return instance;
-    }
-
-    public void init() {
     }
 
     private void calculateGainedPassiveIncome() {

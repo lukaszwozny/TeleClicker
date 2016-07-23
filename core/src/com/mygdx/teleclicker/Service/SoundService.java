@@ -20,16 +20,25 @@ public class SoundService {
 
     private Music caketownMusic;
 
-    private SoundService(){
+    private SoundService() {
         init();
     }
 
     public static SoundService getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new SoundService();
         }
         return instance;
     }
+
+    private boolean isSounds(){
+        return SettingsService.getInstance().isSounds();
+    }
+
+    private boolean isMusic(){
+        return SettingsService.getInstance().isMusic();
+    }
+
 
     private void init() {
         popSound = Assets.getInstance().manager.get(AssetsEnum.POP_SOUND.toString());
@@ -41,32 +50,39 @@ public class SoundService {
         caketownMusic = Assets.getInstance().manager.get(AssetsEnum.CAKETOWN_MUSIC.toString());
     }
 
-    public void playPopSound(){
-        popSound.play();
+    public void playPopSound() {
+        if (isSounds())
+            popSound.play();
     }
 
-    public void playCashRegisterSound(){
-        cashRegisterSound.play();
+    public void playCashRegisterSound() {
+        if (isSounds())
+            cashRegisterSound.play();
     }
 
-    public void playEvillaughJewSound(){
-        evilLaughJewSound.play();
+    public void playEvillaughJewSound() {
+        if (isSounds())
+            evilLaughJewSound.play();
     }
 
-    public void playBombExplosionSound(){
-        bombExplosionSound.play();
+    public void playBombExplosionSound() {
+        if (isSounds())
+            bombExplosionSound.play();
     }
 
-    public void playClickSound(){
-        clickSound.play();
+    public void playClickSound() {
+        if (isSounds())
+            clickSound.play();
     }
 
-    public void playCaketownMusic(boolean looped){
-        caketownMusic.play();
-        caketownMusic.setLooping(looped);
+    public void playCaketownMusic(boolean looped) {
+        if (isMusic()){
+            caketownMusic.play();
+            caketownMusic.setLooping(looped);
+        }
     }
 
-    public void stopCaketownMusic(){
+    public void stopCaketownMusic() {
         caketownMusic.stop();
     }
 

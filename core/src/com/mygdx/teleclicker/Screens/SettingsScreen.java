@@ -6,6 +6,7 @@ import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.ScreenService;
+import com.mygdx.teleclicker.Service.SettingsService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.ui.CloseSettingsButton;
 import com.mygdx.teleclicker.ui.ICheckboxCallback;
@@ -38,27 +39,33 @@ public class SettingsScreen extends AbstractScreen {
         String soundText = "SOUND";
         float fontScale = 2.0f;
 
-        checkboxMusic = new CheckboxLabel(new ICheckboxCallback() {
+        checkboxMusic = new CheckboxLabel(SettingsService.getInstance().isMusic(),
+                new ICheckboxCallback() {
             @Override
             public void Check() {
+                SettingsService.getInstance().setMusic(true);
                 SoundService.getInstance().playCaketownMusic(true);
             }
 
             @Override
             public void Uncheck() {
+                SettingsService.getInstance().setMusic(false);
                 SoundService.getInstance().stopCaketownMusic();
             }
         });
         checkboxMusic.setPosition(START_X,START_Y);
         checkboxMusic.setText(musicText);
 
-        checkboxSound = new CheckboxLabel(new ICheckboxCallback() {
+        checkboxSound = new CheckboxLabel(SettingsService.getInstance().isSounds(),
+                new ICheckboxCallback() {
             @Override
             public void Check() {
+                SettingsService.getInstance().setSounds(true);
             }
 
             @Override
             public void Uncheck() {
+                SettingsService.getInstance().setSounds(false);
             }
         });
         checkboxSound.setPosition(START_X,START_Y-INTERVAL);
@@ -89,5 +96,11 @@ public class SettingsScreen extends AbstractScreen {
     public void show() {
         super.show();
         ScreenService.getInstance().setActualScreenEnum(ScreenEnum.SETTINGS);
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+        SettingsService.getInstance().saveCurrentSettingsState();
     }
 }

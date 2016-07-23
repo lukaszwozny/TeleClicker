@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.mygdx.teleclicker.Service.ScreenService;
+import com.mygdx.teleclicker.Service.SettingsService;
 import com.mygdx.teleclicker.Service.SoundService;
 
 public class TeleClicker extends Game {
@@ -29,7 +30,7 @@ public class TeleClicker extends Game {
      */
 
     public static Preferences getPrefs() {
-        if(prefs == null){
+        if (prefs == null) {
             prefs = Gdx.app.getPreferences(GAME_PREFS);
         }
         return prefs;

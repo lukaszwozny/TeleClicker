@@ -25,14 +25,15 @@ public class CheckboxLabel extends Group {
 
     private boolean checked;
 
-    public CheckboxLabel(final ICheckboxCallback chackboxCallback) {
+    public CheckboxLabel(boolean defValue, final ICheckboxCallback chackboxCallback) {
+        checked = defValue;
         initLabel();
         initCheckbox(chackboxCallback);
         group();
     }
 
-    private void ChangeCheckboxTexture(){
-        if(checked){
+    private void ChangeCheckboxTexture() {
+        if (checked) {
             checkBoxImage.setDrawable(new SpriteDrawable(new Sprite(checkboxOff)));
         } else {
             checkBoxImage.setDrawable(new SpriteDrawable(new Sprite(checkboxOn)));
@@ -48,13 +49,17 @@ public class CheckboxLabel extends Group {
         checkboxOn = Assets.getInstance().manager.get(AssetsEnum.CHECKBOX_ON_TEX.toString());
         checkboxOff = Assets.getInstance().manager.get(AssetsEnum.CHECKBOX_OFF_TEX.toString());
 
-        checkBoxImage = new Image(checkboxOn);
+        if (checked)
+            checkBoxImage = new Image(checkboxOn);
+        else
+            checkBoxImage = new Image(checkboxOff);
+
         checkBoxImage.setX(270);
 
-        checkBoxImage.addListener(new ClickListener(){
+        checkBoxImage.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if(checked){
+                if (checked) {
                     chackboxCallback.Uncheck();
                     ChangeCheckboxTexture();
                     checked = false;
