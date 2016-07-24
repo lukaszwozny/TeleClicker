@@ -67,6 +67,7 @@ public class Assets implements Disposable {
 
         // Atlases
         manager.load(AssetsEnum.RED_ATLAS.toString(), TextureAtlas.class);
+        manager.load(AssetsEnum.GREEN_ATLAS.toString(), TextureAtlas.class);
     }
 
     private void loadFlyingObjectAssets() {

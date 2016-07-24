@@ -17,6 +17,8 @@ public class ScoreService {
     public final static String GAME_POINTS_PER_CLICK = "com.mygdx.clicker.prefs.pointsperclick";
     public final static String GAME_PASSIVE_INCOME_TIME = "com.mygdx.clicker.prefs.passiveincometime";
 
+    public final static String GAME_NO_CLICKS = "com.mygdx.clicker.prefs.numberofclicks";
+
     public final static String GAME_NO_POINTS_PER_CLICK_BUYS = "com.mygdx.clicker.prefs.pointsperclickbuys";
     public final static String GAME_NO_POINTS_PER_SEC_BUYS = "com.mygdx.clicker.prefs.pointspersecbuys";
 
@@ -28,6 +30,8 @@ public class ScoreService {
     private float passiveIncomeTimeInHour;
 
     private long delayTime;
+
+    private long numberOfClicks;
 
     private int numberOfPointsPerClickPBuys;
     private int numberOfPointsPerSecBuys;
@@ -104,6 +108,10 @@ public class ScoreService {
             pointsPerSec = 0;
     }
 
+    public void increseNumberOfClick(){
+        numberOfClicks++;
+    }
+
     public void increseNumberOfPointsPerClickBuys() {
         System.out.println("Points per click++");
         numberOfPointsPerClickPBuys++;
@@ -121,6 +129,8 @@ public class ScoreService {
 
         delayTime = TimeUtils.millis() - prefs.getLong(GAME_SAVED_TIMESTAMP);
 
+        numberOfClicks = prefs.getLong(GAME_NO_CLICKS);
+
         numberOfPointsPerClickPBuys = prefs.getInteger(GAME_NO_POINTS_PER_CLICK_BUYS);
         numberOfPointsPerSecBuys = prefs.getInteger(GAME_NO_POINTS_PER_SEC_BUYS);
     }
@@ -131,6 +141,8 @@ public class ScoreService {
         prefs.putFloat(GAME_POINTS_PER_CLICK, pointsPerClick);
         prefs.putFloat(GAME_PASSIVE_INCOME_TIME, passiveIncomeTimeInHour);
         prefs.putLong(GAME_SAVED_TIMESTAMP, TimeUtils.millis());
+
+        prefs.putLong(GAME_NO_CLICKS, numberOfClicks);
 
         // Shop values
         prefs.putInteger(GAME_NO_POINTS_PER_CLICK_BUYS, numberOfPointsPerClickPBuys);
@@ -143,6 +155,10 @@ public class ScoreService {
      * ---------------------
      * getters and setters
      */
+
+    public long getNumberOfClicks() {
+        return numberOfClicks;
+    }
 
     public float getPoints() {
         return points;

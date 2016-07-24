@@ -103,6 +103,7 @@ public class GameplayScreen extends AbstractScreen {
                 SoundService.getInstance().playClickSound();
                 player.reactOnClick();
                 ScoreService.getInstance().addPoint();
+                ScoreService.getInstance().increseNumberOfClick();
             }
         });
         addActor(playerButton);

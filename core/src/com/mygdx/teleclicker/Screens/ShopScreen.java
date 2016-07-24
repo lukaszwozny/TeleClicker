@@ -44,13 +44,13 @@ public class ShopScreen extends AbstractScreen {
 
     // ToDo Move to shop entry manager
     private void initShopEntrys() {
-        final int START_Y = 545;
+        final int START_Y = 596;
         final int INTERVAL_Y = 51;
         buyPointsPerSecEntry = new ShopEntry(new IClickCallback() {
             @Override
             public void onClick() {
                 ScoreService.getInstance().addPointsPerSec(1);
-                ScoreService.getInstance().addPoints(-10000);
+                ScoreService.getInstance().addPoints(-100);
                 ScoreService.getInstance().increseNumberOfPointsPerSecBuys();
             }
         },START_Y);
@@ -59,10 +59,10 @@ public class ShopScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 ScoreService.getInstance().addPointsPerClick(1);
-                ScoreService.getInstance().addPoints(-15000);
+                ScoreService.getInstance().addPoints(-200);
                 ScoreService.getInstance().increseNumberOfPointsPerClickBuys();
             }
-        },START_Y + INTERVAL_Y);
+        },START_Y - INTERVAL_Y);
 
         addActor(buyPointsPerSecEntry);
         addActor(buyPointsPerClickEntry);
@@ -125,12 +125,13 @@ public class ShopScreen extends AbstractScreen {
     // ToDo Move to ShopEntryManager
     private void updateButtonsColor() {
         float points = ScoreService.getInstance().getPoints();
-        if(points > 10000){
+        if(points > 100){
+            System.out.println("TRUE");
             buyPointsPerSecEntry.updateColor(true);
         } else {
             buyPointsPerSecEntry.updateColor(false);
         }
-        if(points > 15000){
+        if(points > 200){
             buyPointsPerClickEntry.updateColor(true);
         } else {
             buyPointsPerClickEntry.updateColor(false);

@@ -37,7 +37,8 @@ public enum AssetsEnum {
     CAKETOWN_MUSIC("music/caketown.mp3"),
 
     // Atlases
-    RED_ATLAS("img/atlas/ui-red.atlas");
+    RED_ATLAS("img/atlas/ui-red.atlas"),
+    GREEN_ATLAS("img/atlas/ui-green.atlas");
 
     private String dir;
 

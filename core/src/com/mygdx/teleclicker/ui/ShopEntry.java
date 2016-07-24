@@ -88,7 +88,7 @@ public class ShopEntry extends Group {
         buttonStyleRed.up = skinRed.getDrawable("button_04");
         buttonStyleRed.down = skinRed.getDrawable("button_02");
 
-        TextureAtlas atlasGreen = Assets.getInstance().manager.get(AssetsEnum.RED_ATLAS.toString());
+        TextureAtlas atlasGreen = Assets.getInstance().manager.get(AssetsEnum.GREEN_ATLAS.toString());
         Skin skinGreen = new Skin(atlasGreen);
         buttonStyleGreen = new Button.ButtonStyle();
         buttonStyleGreen.up = skinGreen.getDrawable("button_04");
