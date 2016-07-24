@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Service.FontService;
@@ -31,11 +32,17 @@ public class EventDialog extends Group {
         initTextLabel(text);
 
 
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                fadeOutDialog();
+            }
+        },7);
+
         this.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 fadeOutDialog();
-
                 return super.touchDown(event, x, y, pointer, button);
             }
         });

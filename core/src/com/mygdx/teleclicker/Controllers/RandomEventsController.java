@@ -15,7 +15,7 @@ public class RandomEventsController {
 
     private static RandomEventsController instance;
 
-    private static final int TICK_INTERVAL = 30;
+    private static final int TICK_INTERVAL = 15;
     private int spawnTime;
 
     private AbstractScreen screen;
