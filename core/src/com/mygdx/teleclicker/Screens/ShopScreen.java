@@ -21,7 +21,9 @@ import com.mygdx.teleclicker.ui.IClickCallback;
  */
 public class ShopScreen extends AbstractScreen {
 
-    private Label scoreLabelUp, scoreLabelBottom;
+    private Label scoreLabelPoints;
+    private Label scoreLabelPointsPerClick;
+    private Label scoreLabelPointsPerSec;
 
     private CloseShopButton closeShopButton;
 
@@ -70,15 +72,20 @@ public class ShopScreen extends AbstractScreen {
         final float fontScale = 1.2f;
         final int POS_X = 40;
         final int POS_Y = TeleClicker.HEIGHT - 50;
+        final int INTERVAL = 100;
 
-        scoreLabelUp = new Label("Test UP", new Label.LabelStyle(FontService.getFont(fontScale), Color.BLACK));
-        scoreLabelUp.setPosition(POS_X,POS_Y);
+        scoreLabelPoints = new Label("Test", new Label.LabelStyle(FontService.getFont(fontScale), Color.BLACK));
+        scoreLabelPoints.setPosition(POS_X,POS_Y);
 
-        scoreLabelBottom = new Label("Test BOTTOM", new Label.LabelStyle(FontService.getFont(fontScale), Color.BLACK));
-        scoreLabelBottom.setPosition(POS_X,POS_Y-60);
+        scoreLabelPointsPerClick = new Label("Test", new Label.LabelStyle(FontService.getFont(fontScale), Color.BLACK));
+        scoreLabelPointsPerClick.setPosition(POS_X+INTERVAL,POS_Y);
 
-        addActor(scoreLabelUp);
-        addActor(scoreLabelBottom);
+        scoreLabelPointsPerSec = new Label("Test", new Label.LabelStyle(FontService.getFont(fontScale), Color.BLACK));
+        scoreLabelPointsPerSec.setPosition(POS_X+INTERVAL*2,POS_Y);
+
+        addActor(scoreLabelPoints);
+        addActor(scoreLabelPointsPerClick);
+        addActor(scoreLabelPointsPerSec);
     }
 
     private void initCloseShopButton() {
@@ -138,8 +145,10 @@ public class ShopScreen extends AbstractScreen {
     }
 
     private void updateScoreLabels() {
-        scoreLabelUp.setText("Erlangi\n" + ScoreService.getInstance().getPoints());
+        scoreLabelPoints.setText("Erlangi\n" + ScoreService.getInstance().getPoints());
 
-        scoreLabelBottom.setText("Click power\n" + ScoreService.getInstance().getPointsPerClick());
+        scoreLabelPointsPerClick.setText("Per click\n" + ScoreService.getInstance().getPointsPerClick());
+
+        scoreLabelPointsPerSec.setText("Per sec\n" + ScoreService.getInstance().getPointsPerSec());
     }
 }
