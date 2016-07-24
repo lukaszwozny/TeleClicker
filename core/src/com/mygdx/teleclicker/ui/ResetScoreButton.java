@@ -43,8 +43,8 @@ public class ResetScoreButton extends Button {
         TextureAtlas atlas = Assets.getInstance().manager.get(AssetsEnum.RED_ATLAS.toString());
         Skin skin = new Skin(atlas);
         ButtonStyle buttonStyle = new ButtonStyle();
-        buttonStyle.up = skin.getDrawable("button_01");
-        buttonStyle.down = skin.getDrawable("button_02");
+        buttonStyle.up = skin.getDrawable("button_03");
+        buttonStyle.down = skin.getDrawable("button_01");
 
         return buttonStyle;
     }

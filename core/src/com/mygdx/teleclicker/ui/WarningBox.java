@@ -87,8 +87,8 @@ public class WarningBox extends Group {
     private void initLabel() {
         textLabel = new Label("TEST", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
 
-        final int POSX = 30;
-        final float POSY = bgImage.getWidth() / 2 - textLabel.getHeight() / 2 - 50;
+        final int POSX = 25;
+        final float POSY = bgImage.getWidth() / 2 - textLabel.getHeight() / 2 - 55;
 
         textLabel.setPosition(POSX, POSY);
     }

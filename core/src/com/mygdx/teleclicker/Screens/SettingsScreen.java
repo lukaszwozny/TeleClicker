@@ -55,6 +55,9 @@ public class SettingsScreen extends AbstractScreen {
 
         resetScoreWarningBox.setPosition(POSX, POSY);
 
+        resetScoreWarningBox.setText("Your progress will be lost.\n" +
+                "Are you sure?");
+
         addActor(resetScoreWarningBox);
     }
 
