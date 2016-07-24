@@ -26,11 +26,15 @@ public class EventDialog extends Group {
     public final static int WIDTH = 365;
     public final static int HEIGHT = 218;
 
+    public final static int X = 20;
+    public final static int Y = 30;
+
     public EventDialog(String text) {
         super();
         initDialogBox();
         initTextLabel(text);
 
+        this.setPosition(X,Y);
 
         Timer.schedule(new Timer.Task() {
             @Override
