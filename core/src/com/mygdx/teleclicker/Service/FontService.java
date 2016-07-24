@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
  */
 public class FontService {
 
+    public static BitmapFont getFont() {
+        return getFont(1.6f);
+    }
+
     public static BitmapFont getFont(float fontScale){
         BitmapFont font = new BitmapFont();
         font.getData().setScale(fontScale);

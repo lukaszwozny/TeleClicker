@@ -5,6 +5,7 @@ import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
+import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SettingsService;
 import com.mygdx.teleclicker.Service.SoundService;
@@ -21,6 +22,7 @@ public class SettingsScreen extends AbstractScreen {
     private CheckboxLabel checkboxSound;
 
     private ResetScoreButton resetScoreButton;
+    private WarningBox resetScoreWarningBox;
 
 
     @Override
@@ -31,8 +33,38 @@ public class SettingsScreen extends AbstractScreen {
         initResetScoreButton();
     }
 
+    private void initResetScoreWarningBox() {
+        if(resetScoreWarningBox != null){
+            System.out.println("Nie null");
+            resetScoreWarningBox.removeAll();
+            resetScoreWarningBox = null;
+        }
+        resetScoreWarningBox = new WarningBox(new IWarningCallback() {
+            @Override
+            public void Yes() {
+                ScoreService.getInstance().resetGameScore();
+            }
+
+            @Override
+            public void No() {
+            }
+        });
+
+        final float POSX = TeleClicker.WIDTH / 2 - resetScoreWarningBox.getWidth() / 2;
+        final float POSY = TeleClicker.HEIGHT / 2 - resetScoreWarningBox.getHeight() / 2;
+
+        resetScoreWarningBox.setPosition(POSX, POSY);
+
+        addActor(resetScoreWarningBox);
+    }
+
     private void initResetScoreButton() {
-        resetScoreButton = new ResetScoreButton();
+        resetScoreButton = new ResetScoreButton(new IClickCallback() {
+            @Override
+            public void onClick() {
+                initResetScoreWarningBox();
+            }
+        });
         resetScoreButton.setPosition(TeleClicker.WIDTH / 2 - resetScoreButton.getWidth() / 2, 50);
 
         addActor(resetScoreButton);

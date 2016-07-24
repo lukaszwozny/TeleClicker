@@ -19,13 +19,13 @@ public class ResetScoreButton extends Button {
     final int WIDTH = 100;
     final int HEIGHT = 100;
 
-    public ResetScoreButton(){
+    public ResetScoreButton(IClickCallback callback){
         super(prepareResetButtonStyle());
 
-        init();
+        init(callback);
     }
 
-    private void init() {
+    private void init(final IClickCallback callback) {
         this.setWidth(WIDTH);
         this.setHeight(HEIGHT);
 
@@ -33,7 +33,7 @@ public class ResetScoreButton extends Button {
             @Override
             public boolean touchDown(InputEvent event, float x, float y,
                                      int pointer, int button) {
-                ScoreService.getInstance().resetGameScore();
+                callback.onClick();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });

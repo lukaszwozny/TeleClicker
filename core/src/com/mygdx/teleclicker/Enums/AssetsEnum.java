@@ -8,6 +8,7 @@ public enum AssetsEnum {
     GAMEPLAY_BG("img/bg/basic_bg.png"),
     SHOP_BG("img/bg/shop_bg.png"),
     SETTINGS_BG("img/bg/settings_bg.png"),
+    WARNING_BG("img/bg/warning_bg.png"),
 
     PLAYER_TEX("img/skins/player/phone_old1.png"),
     PHONE_OFF_TEX("img/skins/phone_corner_off.png"),
@@ -19,6 +20,8 @@ public enum AssetsEnum {
     BOMB_TEX("img/skins/flying_object/bomb_1.png"),
     JEW_TEX("img/skins/flying_object/jew_greedy.png"),
 
+    BUTTON_YES_TEX("img/button_yes.png"),
+    BUTTON_NO_TEX("img/button_no.png"),
     CHECKBOX_ON_TEX("img/checkbox_on.png"),
     CHECKBOX_OFF_TEX("img/checkbox_off.png"),
 
@@ -40,6 +43,12 @@ public enum AssetsEnum {
 
     private AssetsEnum(String dir){
         this.dir = dir;
+    }
+
+    // ToDo implements
+    private AssetsEnum(String dir, String type){
+        this.dir = dir;
+        // ToDo Load asset to assetManager
     }
 
     @Override
