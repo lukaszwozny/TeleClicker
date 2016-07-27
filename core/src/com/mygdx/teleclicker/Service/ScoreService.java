@@ -70,10 +70,7 @@ public class ScoreService {
             delayTimeInSec = passiveIncomeTimeInSec;
 
         float pointsToAdd = delayTimeInSec * multiplier * pointsPerSec;
-        System.out.println("Before: "+points);
-        System.out.println("PontToAdd: "+pointsToAdd);
         points += pointsToAdd;
-        System.out.println("After: "+points);
     }
 
     public void addPoints(float pointsToAdd) {
@@ -113,7 +110,6 @@ public class ScoreService {
     }
 
     public void increseNumberOfPointsPerClickBuys() {
-        System.out.println("Points per click++");
         numberOfPointsPerClickPBuys++;
     }
 

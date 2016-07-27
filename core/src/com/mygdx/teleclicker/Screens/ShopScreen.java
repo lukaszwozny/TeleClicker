@@ -126,7 +126,6 @@ public class ShopScreen extends AbstractScreen {
     private void updateButtonsColor() {
         float points = ScoreService.getInstance().getPoints();
         if(points > 100){
-            System.out.println("TRUE");
             buyPointsPerSecEntry.updateColor(true);
         } else {
             buyPointsPerSecEntry.updateColor(false);

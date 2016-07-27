@@ -35,7 +35,6 @@ public class SettingsScreen extends AbstractScreen {
 
     private void initResetScoreWarningBox() {
         if(resetScoreWarningBox != null){
-            System.out.println("Nie null");
             resetScoreWarningBox.removeAll();
             resetScoreWarningBox = null;
         }
