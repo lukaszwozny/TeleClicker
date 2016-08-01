@@ -24,33 +24,12 @@ public class SettingsScreen extends AbstractScreen {
     private ResetScoreButton resetScoreButton;
     private WarningBox resetScoreWarningBox;
 
-    private ResetScoreButton httpButton;
-
     @Override
     public void buildStage() {
         initBgTexture();
         initCloseButton();
         initCheckboxes();
         initResetScoreButton();
-
-        initHttpButton();
-    }
-
-    private void initHttpButton() {
-        httpButton = new ResetScoreButton(new IClickCallback() {
-            @Override
-            public void onClick() {
-                SoundService.getInstance().playClickSound();
-                ScreenService.getInstance().setScreen(ScreenEnum.HTTP);
-            }
-        });
-        httpButton.setSize(50,40);
-
-        final float X =TeleClicker.WIDTH - httpButton.getWidth() - 10;
-        final int Y = 10;
-        httpButton.setPosition(X,Y);
-
-        addActor(httpButton);
     }
 
     private void initResetScoreWarningBox() {

@@ -19,6 +19,12 @@ public enum ScreenEnum {
             return new LoginScreen();
         }
     },
+    NEW_PLAYER {
+        @Override
+        public AbstractScreen getScreen() {
+            return new NewPlayerScreen();
+        }
+    },
     GAMEPLAY {
         @Override
         public AbstractScreen getScreen() {
@@ -35,12 +41,6 @@ public enum ScreenEnum {
         @Override
         public AbstractScreen getScreen() {
             return new SettingsScreen();
-        }
-    },
-    HTTP {
-        @Override
-        public AbstractScreen getScreen() {
-            return new HttpScreen();
         }
     };
 

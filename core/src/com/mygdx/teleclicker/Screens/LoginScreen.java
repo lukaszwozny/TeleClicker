@@ -26,6 +26,7 @@ public class LoginScreen extends AbstractScreen {
     private CloseSettingsButton closeButton;
     private Label requestLabel;
     private ResetScoreButton requestButton;
+    private ResetScoreButton newPlayerButton;
 
     private HttpService httpService;
 
@@ -44,6 +45,18 @@ public class LoginScreen extends AbstractScreen {
         initCloseButton();
         initRequestLabel();
         initRequestButton();
+        initNewPlayerButton();
+    }
+
+    private void initNewPlayerButton() {
+        newPlayerButton = new ResetScoreButton(new IClickCallback() {
+            @Override
+            public void onClick() {
+                SoundService.getInstance().playClickSound();
+                ScreenService.getInstance().setScreen(ScreenEnum.NEW_PLAYER);
+            }
+        });
+        addActor(newPlayerButton);
     }
 
     private void initTextFields() {

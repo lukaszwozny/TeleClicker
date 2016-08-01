@@ -22,7 +22,7 @@ import com.mygdx.teleclicker.ui.ResetScoreButton;
 /**
  * Created by Senpai on 01/08/2016.
  */
-public class HttpScreen extends AbstractScreen {
+public class NewPlayerScreen extends AbstractScreen {
     private CloseSettingsButton closeButton;
     private Label requestLabel;
     private ResetScoreButton requestButton;
@@ -30,6 +30,7 @@ public class HttpScreen extends AbstractScreen {
     private HttpService httpService;
 
     private TextField loginTextField;
+    private TextField emailTextField;
     private TextField passwordTextField;
 
     private Skin skin;
@@ -48,6 +49,7 @@ public class HttpScreen extends AbstractScreen {
 
     private void initTextFields() {
         loginTextField = new TextField("Login", skin);
+        emailTextField = new TextField("E-mail", skin);
         passwordTextField = new TextField("Password", skin);
 
         final float X = TeleClicker.WIDTH / 2 - loginTextField.getWidth() / 2;
@@ -55,9 +57,11 @@ public class HttpScreen extends AbstractScreen {
         final float INTERVAL = loginTextField.getHeight() + 20;
 
         loginTextField.setPosition(X, START_Y);
-        passwordTextField.setPosition(X, START_Y - INTERVAL);
+        emailTextField.setPosition(X, START_Y - INTERVAL);
+        passwordTextField.setPosition(X, START_Y - 2 * INTERVAL);
 
         addActor(loginTextField);
+        addActor(emailTextField);
         addActor(passwordTextField);
     }
 
@@ -75,7 +79,7 @@ public class HttpScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
-                ScreenService.getInstance().setScreen(ScreenEnum.SETTINGS);
+                ScreenService.getInstance().setScreen(ScreenEnum.LOGIN);
             }
         });
         addActor(closeButton);
@@ -88,6 +92,7 @@ public class HttpScreen extends AbstractScreen {
                 SoundService.getInstance().playClickSound();
                 httpService.addPlayerRequest(
                         loginTextField.getText(),
+                        emailTextField.getText(),
                         passwordTextField.getText()
                 );
             }
@@ -100,9 +105,14 @@ public class HttpScreen extends AbstractScreen {
     }
 
     private void initRequestLabel() {
+
+        Label titleLabel = new Label("New Player Screen", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
+        titleLabel.setPosition(10, 600);
+
         requestLabel = new Label("Test", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
         requestLabel.setPosition(10, 550);
 
+        addActor(titleLabel);
         addActor(requestLabel);
     }
 
@@ -116,7 +126,7 @@ public class HttpScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
-        ScreenService.getInstance().setActualScreenEnum(ScreenEnum.HTTP);
+        ScreenService.getInstance().setActualScreenEnum(ScreenEnum.NEW_PLAYER);
     }
 
     @Override
