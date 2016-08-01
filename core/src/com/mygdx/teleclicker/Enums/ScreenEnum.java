@@ -1,10 +1,7 @@
 package com.mygdx.teleclicker.Enums;
 
 import com.mygdx.teleclicker.Core.AbstractScreen;
-import com.mygdx.teleclicker.Screens.GameplayScreen;
-import com.mygdx.teleclicker.Screens.SettingsScreen;
-import com.mygdx.teleclicker.Screens.ShopScreen;
-import com.mygdx.teleclicker.Screens.SplashScreen;
+import com.mygdx.teleclicker.Screens.*;
 
 /**
  * Created by Senpai on 21.07.2016.
@@ -32,6 +29,12 @@ public enum ScreenEnum {
         @Override
         public AbstractScreen getScreen() {
             return new SettingsScreen();
+        }
+    },
+    HTTP {
+        @Override
+        public AbstractScreen getScreen() {
+            return new HttpScreen();
         }
     };
 
