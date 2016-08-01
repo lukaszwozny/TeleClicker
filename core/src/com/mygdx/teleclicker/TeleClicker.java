@@ -22,7 +22,7 @@ public class TeleClicker extends Game {
     public void create() {
         SoundService.getInstance().playCaketownMusic(true);
         ScreenService.getInstance().initialize(this);
-        ScreenService.getInstance().setScreen(ScreenEnum.SPLASH);
+        ScreenService.getInstance().setScreen(ScreenEnum.LOGIN);
     }
 
     @Override

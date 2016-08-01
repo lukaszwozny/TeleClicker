@@ -13,6 +13,12 @@ public enum ScreenEnum {
             return new SplashScreen();
         }
     },
+    LOGIN {
+        @Override
+        public AbstractScreen getScreen() {
+            return new LoginScreen();
+        }
+    },
     GAMEPLAY {
         @Override
         public AbstractScreen getScreen() {
