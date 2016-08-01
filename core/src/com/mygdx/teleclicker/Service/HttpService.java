@@ -2,7 +2,11 @@ package com.mygdx.teleclicker.Service;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.net.HttpRequestBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Senpai on 01/08/2016.
@@ -25,12 +29,18 @@ public class HttpService implements Net.HttpResponseListener{
     public void addPlayerRequest(String login, String password){
         final String SERVLET_NAME = "/addplayer";
 
+        Map parameters = new HashMap();
+        parameters.put("admin_key", "key");
+        parameters.put("login", "Android");
+        parameters.put("pass", "testowe haslo");
+
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
         Net.HttpRequest request = requestBuilder.newRequest()
                 .method(Net.HttpMethods.POST)
                 .url(getUrl() + SERVLET_NAME)
-                .content("login=Marta&pass=B")
+                .content(HttpParametersUtils.convertHttpParameters(parameters))
                 .build();
+
         Gdx.net.sendHttpRequest(request,this);
     }
 
