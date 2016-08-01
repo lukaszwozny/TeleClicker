@@ -15,7 +15,7 @@ public class HttpService implements Net.HttpResponseListener{
     final String EXTERNAL_URL = "http://tomcat-tamburyniarz.rhcloud.com/";
     final String LOCAL_URL = "http://tomcat-tamburyniarz.rhcloud.com/";
 
-    final boolean IS_LOCAL = true;
+    final boolean IS_LOCAL = false;
 
     private String responsStr = "NOT CONNECTED";
 
@@ -31,8 +31,8 @@ public class HttpService implements Net.HttpResponseListener{
 
         Map parameters = new HashMap();
         parameters.put("admin_key", "key");
-        parameters.put("login", "Android");
-        parameters.put("pass", "testowe haslo");
+        parameters.put("login", login);
+        parameters.put("pass", password);
 
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
         Net.HttpRequest request = requestBuilder.newRequest()

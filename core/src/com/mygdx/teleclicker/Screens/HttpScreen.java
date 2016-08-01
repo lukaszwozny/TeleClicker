@@ -1,8 +1,11 @@
 package com.mygdx.teleclicker.Screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
@@ -26,15 +29,42 @@ public class HttpScreen extends AbstractScreen {
 
     private HttpService httpService;
 
+    private TextField loginTextField;
+    private TextField passwordTextField;
+
+    private Skin skin;
+
     @Override
     public void buildStage() {
         initBgTexture();
+        initSkin();
+        initTextFields();
 
         initHttpService();
         initCloseButton();
         initRequestLabel();
         initRequestButton();
     }
+
+    private void initTextFields() {
+        loginTextField = new TextField("Login", skin);
+        passwordTextField = new TextField("Password", skin);
+
+        final float X = TeleClicker.WIDTH / 2 - loginTextField.getWidth() / 2;
+        final float START_Y = 450f;
+        final float INTERVAL = loginTextField.getHeight() + 20;
+
+        loginTextField.setPosition(X, START_Y);
+        passwordTextField.setPosition(X, START_Y - INTERVAL);
+
+        addActor(loginTextField);
+        addActor(passwordTextField);
+    }
+
+    private void initSkin() {
+        skin = new Skin(Gdx.files.internal("libgdx/uiskin.json"));
+    }
+
 
     private void initHttpService() {
         httpService = new HttpService();
@@ -56,19 +86,22 @@ public class HttpScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
-                httpService.addPlayerRequest("Android","Test");
+                httpService.addPlayerRequest(
+                        loginTextField.getText(),
+                        passwordTextField.getText()
+                );
             }
         });
-        final float X = TeleClicker.WIDTH/2 - requestButton.getWidth()/2;
+        final float X = TeleClicker.WIDTH / 2 - requestButton.getWidth() / 2;
         final int Y = 10;
-        requestButton.setPosition(X,Y);
+        requestButton.setPosition(X, Y);
 
         addActor(requestButton);
     }
 
     private void initRequestLabel() {
         requestLabel = new Label("Test", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
-        requestLabel.setPosition(10,550);
+        requestLabel.setPosition(10, 550);
 
         addActor(requestLabel);
     }
