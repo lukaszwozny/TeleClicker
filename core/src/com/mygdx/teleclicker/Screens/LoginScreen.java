@@ -6,8 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Json;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
+import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.LoginStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
@@ -36,6 +38,8 @@ public class LoginScreen extends AbstractScreen {
 
     private Skin skin;
 
+    private PlayerStats playerStats;
+
     @Override
     public void buildStage() {
         initBgTexture();
@@ -47,6 +51,21 @@ public class LoginScreen extends AbstractScreen {
         initRequestLabel();
         initRequestButton();
         initNewPlayerButton();
+
+        initPlayerStats();
+    }
+
+    private void initPlayerStats() {
+        playerStats = new PlayerStats.Builder()
+                .points(10)
+                .pointsPerSec(50)
+                .pointsPerClick(4)
+                .numberOfClicks(0)
+                .numberOfPointsPerClickPBuys(1)
+                .numberOfPointsPerSecBuys(5)
+                .build();
+        Json json = new Json();
+        System.out.println(json.prettyPrint(playerStats));
     }
 
     private void initNewPlayerButton() {
