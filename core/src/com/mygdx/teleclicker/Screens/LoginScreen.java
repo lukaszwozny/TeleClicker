@@ -86,7 +86,7 @@ public class LoginScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
-                httpService.addPlayerRequest(
+                httpService.loginRequest(
                         loginTextField.getText(),
                         passwordTextField.getText()
                 );

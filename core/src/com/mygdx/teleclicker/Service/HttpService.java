@@ -15,7 +15,7 @@ public class HttpService implements Net.HttpResponseListener{
     final String EXTERNAL_URL = "http://tomcat-tamburyniarz.rhcloud.com/";
     final String LOCAL_URL = "http://tomcat-tamburyniarz.rhcloud.com/";
 
-    final boolean IS_LOCAL = false;
+    final boolean IS_LOCAL = true;
 
     private String responsStr = "NOT CONNECTED";
 
@@ -24,6 +24,23 @@ public class HttpService implements Net.HttpResponseListener{
             return LOCAL_URL;
         else
             return EXTERNAL_URL;
+    }
+
+    public void loginRequest(String login, String password){
+        final String SERVLET_NAME = "/login";
+
+        Map parameters = new HashMap();
+        parameters.put("login", login);
+        parameters.put("pass", password);
+
+        HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
+        Net.HttpRequest request = requestBuilder.newRequest()
+                .method(Net.HttpMethods.POST)
+                .url(getUrl() + SERVLET_NAME)
+                .content(HttpParametersUtils.convertHttpParameters(parameters))
+                .build();
+
+        Gdx.net.sendHttpRequest(request,this);
     }
 
     public void addPlayerRequest(String login, String password){
