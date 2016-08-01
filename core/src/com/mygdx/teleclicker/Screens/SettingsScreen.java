@@ -45,7 +45,7 @@ public class SettingsScreen extends AbstractScreen {
             }
         });
         httpButton.setSize(50,40);
-        
+
         final float X =TeleClicker.WIDTH - httpButton.getWidth() - 10;
         final int Y = 10;
         httpButton.setPosition(X,Y);

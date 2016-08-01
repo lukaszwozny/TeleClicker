@@ -8,6 +8,7 @@ import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.FontService;
+import com.mygdx.teleclicker.Service.HttpService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
@@ -23,13 +24,20 @@ public class HttpScreen extends AbstractScreen {
     private Label requestLabel;
     private ResetScoreButton requestButton;
 
+    private HttpService httpService;
+
     @Override
     public void buildStage() {
         initBgTexture();
 
+        initHttpService();
         initCloseButton();
         initRequestLabel();
         initRequestButton();
+    }
+
+    private void initHttpService() {
+        httpService = new HttpService();
     }
 
     private void initCloseButton() {
@@ -47,7 +55,8 @@ public class HttpScreen extends AbstractScreen {
         requestButton = new ResetScoreButton(new IClickCallback() {
             @Override
             public void onClick() {
-                System.out.println("Request");
+                SoundService.getInstance().playClickSound();
+                httpService.addPlayerRequest("Android","Test");
             }
         });
         final float X = TeleClicker.WIDTH/2 - requestButton.getWidth()/2;
@@ -75,5 +84,15 @@ public class HttpScreen extends AbstractScreen {
     public void show() {
         super.show();
         ScreenService.getInstance().setActualScreenEnum(ScreenEnum.HTTP);
+    }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+        update();
+    }
+
+    private void update() {
+        requestLabel.setText(httpService.getResponsStr());
     }
 }
