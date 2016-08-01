@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
+import com.mygdx.teleclicker.Enums.LoginStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.FontService;
 import com.mygdx.teleclicker.Service.HttpService;
@@ -140,5 +141,8 @@ public class LoginScreen extends AbstractScreen {
 
     private void update() {
         requestLabel.setText(httpService.getResponsStr());
+        if(httpService.getResponsStr().equals(LoginStatusEnum.SUCCES.toString())){
+            ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
+        }
     }
 }
