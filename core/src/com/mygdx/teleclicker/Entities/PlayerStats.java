@@ -78,4 +78,58 @@ public class PlayerStats {
                 ", numberOfPointsPerSecBuys=" + numberOfPointsPerSecBuys +
                 '}';
     }
+
+    /*
+    *
+    * Getters and setters
+    *
+    */
+
+    public float getPoints() {
+        return points;
+    }
+
+    public void setPoints(float points) {
+        this.points = points;
+    }
+
+    public float getPointsPerSec() {
+        return pointsPerSec;
+    }
+
+    public void setPointsPerSec(float pointsPerSec) {
+        this.pointsPerSec = pointsPerSec;
+    }
+
+    public float getPointsPerClick() {
+        return pointsPerClick;
+    }
+
+    public void setPointsPerClick(float pointsPerClick) {
+        this.pointsPerClick = pointsPerClick;
+    }
+
+    public int getNumberOfClicks() {
+        return numberOfClicks;
+    }
+
+    public void setNumberOfClicks(int numberOfClicks) {
+        this.numberOfClicks = numberOfClicks;
+    }
+
+    public int getNumberOfPointsPerClickPBuys() {
+        return numberOfPointsPerClickPBuys;
+    }
+
+    public void setNumberOfPointsPerClickPBuys(int numberOfPointsPerClickPBuys) {
+        this.numberOfPointsPerClickPBuys = numberOfPointsPerClickPBuys;
+    }
+
+    public int getNumberOfPointsPerSecBuys() {
+        return numberOfPointsPerSecBuys;
+    }
+
+    public void setNumberOfPointsPerSecBuys(int numberOfPointsPerSecBuys) {
+        this.numberOfPointsPerSecBuys = numberOfPointsPerSecBuys;
+    }
 }
