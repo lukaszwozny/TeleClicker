@@ -3,14 +3,15 @@ package com.mygdx.teleclicker.Enums;
 /**
  * Created by Senpai on 01/08/2016.
  */
-public enum LoginStatusEnum {
+public enum StatusEnum {
     AUTHORIZATION_FAILED,
     SUCCES,
+    ERROR,
+
     PLAYER_ADDED,
     PLAYER_DOESNT_EXIST,
     PLAYER_ALREADY_EXIST,
-    LOGIN_NULL,
-    PASSWORD_NULL,
+    LOGIN_IS_NULL,
+    PASSWORD_IS_NULL,
     INCORRECT_PASSWORD,
-    ERROR
 }

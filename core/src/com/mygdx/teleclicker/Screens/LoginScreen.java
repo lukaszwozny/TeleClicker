@@ -6,12 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.Json;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
-import com.mygdx.teleclicker.Enums.LoginStatusEnum;
+import com.mygdx.teleclicker.Enums.StatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.FontService;
 import com.mygdx.teleclicker.Service.HttpService;
@@ -57,6 +56,7 @@ public class LoginScreen extends AbstractScreen {
 
     private void initPlayerStats() {
         playerStats = new PlayerStats.Builder()
+                .id(1)
                 .points(10)
                 .pointsPerSec(50)
                 .pointsPerClick(4)
@@ -64,8 +64,6 @@ public class LoginScreen extends AbstractScreen {
                 .numberOfPointsPerClickPBuys(1)
                 .numberOfPointsPerSecBuys(5)
                 .build();
-        Json json = new Json();
-        System.out.println(json.prettyPrint(playerStats));
     }
 
     private void initNewPlayerButton() {
@@ -119,10 +117,11 @@ public class LoginScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
-                httpService.loginRequest(
-                        loginTextField.getText(),
-                        passwordTextField.getText()
-                );
+                httpService.saveStatsRequest(playerStats);
+//                httpService.loginRequest(
+//                        loginTextField.getText(),
+//                        passwordTextField.getText()
+//                );
             }
         });
         final float X = TeleClicker.WIDTH / 2 - requestButton.getWidth() / 2;
@@ -160,7 +159,7 @@ public class LoginScreen extends AbstractScreen {
 
     private void update() {
         requestLabel.setText(httpService.getResponsStr());
-        if(httpService.getResponsStr().equals(LoginStatusEnum.SUCCES.toString())){
+        if(httpService.getResponsStr().equals(StatusEnum.SUCCES.toString())){
             ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
         }
     }

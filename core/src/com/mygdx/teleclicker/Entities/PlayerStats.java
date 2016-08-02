@@ -4,6 +4,7 @@ package com.mygdx.teleclicker.Entities;
  * Created by Senpai on 01/08/2016.
  */
 public class PlayerStats {
+    private int id;
     private float points;
     private float pointsPerSec;
     private float pointsPerClick;
@@ -14,6 +15,7 @@ public class PlayerStats {
     private int numberOfPointsPerSecBuys;
 
     public PlayerStats(final Builder builder){
+        id = builder.id;
         points = builder.points;
         pointsPerSec = builder.pointsPerSec;
         pointsPerClick = builder.pointsPerClick;
@@ -23,6 +25,7 @@ public class PlayerStats {
     }
 
     public static class Builder{
+        private int id;
         private float points;
         private float pointsPerSec;
         private float pointsPerClick;
@@ -34,6 +37,11 @@ public class PlayerStats {
 
         public Builder points(float points){
             this.points = points;
+            return this;
+        }
+
+        public Builder id(int id){
+            this.id = id;
             return this;
         }
 
@@ -70,7 +78,8 @@ public class PlayerStats {
     @Override
     public String toString() {
         return "PlayerStats{" +
-                "points=" + points +
+                "id=" + id +
+                ", points=" + points +
                 ", pointsPerSec=" + pointsPerSec +
                 ", pointsPerClick=" + pointsPerClick +
                 ", numberOfClicks=" + numberOfClicks +
@@ -78,12 +87,19 @@ public class PlayerStats {
                 ", numberOfPointsPerSecBuys=" + numberOfPointsPerSecBuys +
                 '}';
     }
-
-    /*
+/*
     *
     * Getters and setters
     *
     */
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public float getPoints() {
         return points;
