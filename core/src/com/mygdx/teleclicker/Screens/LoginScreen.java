@@ -10,7 +10,7 @@ import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
-import com.mygdx.teleclicker.Enums.StatusEnum;
+import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.FontService;
 import com.mygdx.teleclicker.Service.HttpService;
@@ -56,11 +56,11 @@ public class LoginScreen extends AbstractScreen {
 
     private void initPlayerStats() {
         playerStats = new PlayerStats.Builder()
-                .id(1)
+                .id(21)
                 .points(10)
-                .pointsPerSec(50)
+                .pointsPerSec(500)
                 .pointsPerClick(4)
-                .numberOfClicks(0)
+                .numberOfClicks(2220)
                 .numberOfPointsPerClickPBuys(1)
                 .numberOfPointsPerSecBuys(5)
                 .build();
@@ -159,7 +159,7 @@ public class LoginScreen extends AbstractScreen {
 
     private void update() {
         requestLabel.setText(httpService.getResponsStr());
-        if(httpService.getResponsStr().equals(StatusEnum.SUCCES.toString())){
+        if(httpService.getResponsStr().equals(DBStatusEnum.SUCCES.toString())){
             ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
         }
     }

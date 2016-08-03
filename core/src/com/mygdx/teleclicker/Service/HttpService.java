@@ -15,10 +15,10 @@ import java.util.Map;
  * Created by Senpai on 01/08/2016.
  */
 public class HttpService implements Net.HttpResponseListener {
-    final String EXTERNAL_URL = "http://tomcat-tamburyniarz.rhcloud.com/";
+    final String EXTERNAL_URL = "http://demo-tamburyniarz.rhcloud.com/";
     final String LOCAL_URL = "http://localhost/";
 
-    final boolean IS_LOCAL = true;
+    final boolean IS_LOCAL = false;
 
     private String responsStr = "NOT CONNECTED";
 
