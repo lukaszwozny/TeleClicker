@@ -1,12 +1,15 @@
 package com.mygdx.teleclicker.Service;
 
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.Entities.PlayerStats;
+import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.TeleClicker;
 
+import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,6 +43,8 @@ public class ScoreService {
 
     private Preferences prefs;
 
+    public String connectionStatus;
+
     private ScoreService() {
         this.prefs = TeleClicker.getPrefs();
         loadScore();
@@ -47,15 +52,51 @@ public class ScoreService {
         initTimer();
     }
 
-    public void saveStatsOnServer(){
+    public void saveStatsOnServer() {
         System.out.println(Player.ID);
     }
 
-    public void loadScoreFromServer(String login, String password){
-        HttpService httpService = new HttpService();
+    public void loadScoreFromServer(String id) {
+        connectionStatus = "CONNECTING";
 
+        final HttpService httpService = new HttpService();
+        httpService.loadStatsRequest(id);
 
-        System.out.println(Player.ID);
+        final int tries = 0;
+
+        final Timer timer = new Timer();
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                String jsonString = httpService.getResponsStr();
+
+                if (jsonString.equals("FAILED") || jsonString.equals("CANCELLED")) {
+                    connectionStatus = DBStatusEnum.FAILED.toString();
+                    timer.clear();
+                } else {
+                    if(!jsonString.equals(DBStatusEnum.NOT_CONNECTED.toString())){
+                        Json json = new Json();
+                        PlayerStats loadedStats = json.fromJson(PlayerStats.class, jsonString);
+
+                        System.out.println(loadedStats.toString());
+                        connectionStatus = "SUCCES";
+                        timer.clear();
+                    }
+                }
+            }
+        }, 0.5f, 1);
+
+        Timer timeStop = new Timer();
+        timeStop.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                if (!timer.isEmpty()) {
+                    connectionStatus = "CONNECTION TIMEOUT";
+                    timer.clear();
+                }
+            }
+        }, 5);
+
     }
 
     private void initTimer() {
@@ -118,7 +159,7 @@ public class ScoreService {
             pointsPerSec = 0;
     }
 
-    public void increseNumberOfClick(){
+    public void increseNumberOfClick() {
         numberOfClicks++;
     }
 

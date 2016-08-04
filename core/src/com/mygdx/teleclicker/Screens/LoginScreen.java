@@ -49,20 +49,17 @@ public class LoginScreen extends AbstractScreen {
         initNewPlayerButton();
 
         initPlayerStats();
-
-        ScoreService.getInstance().saveStatsOnServer();
     }
 
     private void initPlayerStats() {
-        playerStats = new PlayerStats.Builder()
-                .id(21)
-                .points(10)
-                .pointsPerSec(500)
-                .pointsPerClick(4)
-                .numberOfClicks(2220)
-                .numberOfPointsPerClickPBuys(1)
-                .numberOfPointsPerSecBuys(5)
-                .build();
+        playerStats = new PlayerStats();
+        playerStats.setId(21);
+        playerStats.setPoints(11);
+        playerStats.setPointsPerSec(2);
+        playerStats.setPointsPerClick(4);
+        playerStats.setNumberOfClicks(13);
+        playerStats.setNumberOfPointsPerClickPBuys(2);
+        playerStats.setNumberOfPointsPerSecBuys(11);
     }
 
     private void initNewPlayerButton() {
@@ -117,6 +114,8 @@ public class LoginScreen extends AbstractScreen {
             public void onClick() {
                 SoundService.getInstance().playClickSound();
                 httpService.saveStatsRequest(playerStats);
+
+                ScoreService.getInstance().loadScoreFromServer("21");
 //                httpService.loginRequest(
 //                        loginTextField.getText(),
 //                        passwordTextField.getText()
@@ -157,7 +156,7 @@ public class LoginScreen extends AbstractScreen {
     }
 
     private void update() {
-        requestLabel.setText(httpService.getResponsStr());
+        requestLabel.setText(ScoreService.getInstance().connectionStatus);
         if(httpService.getResponsStr().equals(DBStatusEnum.SUCCES.toString())){
             ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
         }

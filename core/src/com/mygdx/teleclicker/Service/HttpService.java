@@ -7,6 +7,7 @@ import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.mygdx.teleclicker.Entities.PlayerStats;
+import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.TeleClicker;
 
 import java.util.HashMap;
@@ -21,14 +22,14 @@ public class HttpService implements Net.HttpResponseListener {
 
     final boolean IS_LOCAL = false;
 
-    private String responsStr = "NOT CONNECTED";
+    private String responsStr = DBStatusEnum.NOT_CONNECTED.toString();
 
-    public void loadStatsRequest(String login) {
+    public void loadStatsRequest(String id) {
         final String SERVLET_NAME = "/loadstats";
 
         Map parameters = new HashMap();
         parameters.put("admin_key", TeleClicker.KEY);
-        parameters.put("login", login);
+        parameters.put("id", id);
 
         postRequest(SERVLET_NAME, parameters);
     }
@@ -76,7 +77,7 @@ public class HttpService implements Net.HttpResponseListener {
                 .url(getUrl() + SERVLET_NAME)
                 .content(HttpParametersUtils.convertHttpParameters(parameters))
                 .build();
-
+        request.setTimeOut(1000);
         Gdx.net.sendHttpRequest(request, this);
     }
 
@@ -87,12 +88,12 @@ public class HttpService implements Net.HttpResponseListener {
 
     @Override
     public void failed(Throwable t) {
-        responsStr = "FAILED'";
+        responsStr = DBStatusEnum.FAILED.toString();
     }
 
     @Override
     public void cancelled() {
-        responsStr = "CANCELLED";
+        responsStr = DBStatusEnum.CANCELLED.toString();
     }
 
     public String getResponsStr() {
