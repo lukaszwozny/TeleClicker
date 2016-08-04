@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Entities.Player;
 import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.Enums.DBStatusEnum;
+import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.TeleClicker;
 
 import java.util.concurrent.TimeUnit;
@@ -44,12 +45,13 @@ public class ScoreService {
 
     private Preferences prefs;
 
+    private DBStatusEnum loginStatus;
     private boolean isLoaded = false;
+    private PlayerStats playerStats;
 
     private ScoreService() {
-        this. httpService = new HttpService();
+        this.httpService = new HttpService();
         this.prefs = TeleClicker.getPrefs();
-        loadScore();
         calculateGainedPassiveIncome();
         initTimer();
     }
@@ -58,8 +60,9 @@ public class ScoreService {
         System.out.println(Player.ID);
     }
 
-    public void loadPlayerStatsFromServer(String id) {
+    private void loadPlayerStatsFromServer(String id) {
         httpService.loadStatsRequest(id);
+        System.out.println(httpService.getStatus().toString());
 
         final Timer timer = new Timer();
         timer.scheduleTask(new Timer.Task() {
@@ -67,13 +70,16 @@ public class ScoreService {
             public void run() {
                 System.out.println(httpService.getStatus().toString());
                 if (httpService.getStatus() == DBStatusEnum.FAILED || httpService.getStatus() == DBStatusEnum.CANCELLED) {
+                    loginStatus = httpService.getStatus();
                     timer.clear();
                 } else {
                     if (httpService.getStatus() == DBStatusEnum.SUCCES) {
                         Json json = new Json();
-                        PlayerStats loadedStats = json.fromJson(PlayerStats.class, httpService.getResponsStr());
+                        playerStats = json.fromJson(PlayerStats.class, httpService.getResponsStr());
 
-                        loadStatsFromPlayerStats(loadedStats);
+                        System.out.println(playerStats.toString());
+
+                        loadStatsFromPlayerStats(playerStats);
                         isLoaded = true;
 
                         timer.clear();
@@ -83,7 +89,7 @@ public class ScoreService {
         }, 0.5f, 1, 5);
     }
 
-    public void loadStatsFromPlayerStats(PlayerStats pStats) {
+    private void loadStatsFromPlayerStats(PlayerStats pStats) {
         points = pStats.getPointsPerSec();
         pointsPerSec = pStats.getPointsPerSec();
         pointsPerClick = pStats.getPointsPerClick();
@@ -94,51 +100,55 @@ public class ScoreService {
         numberOfPointsPerSecBuys = pStats.getNumberOfPointsPerSecBuys();
     }
 
-    private void loadScore() {
-        final String sta = "NONE";
-        loadPlayerStatsFromServer("21");
-        final Timer connectionTimer = new Timer();
-        connectionTimer.scheduleTask(new Timer.Task() {
+    public void loadScore(String login, String password) {
+        final HttpService loadHttp = new HttpService();
+        loadHttp.loginRequest(login, password);
+
+        final Timer logintimer = new Timer();
+        logintimer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                if(httpService.getStatus() == DBStatusEnum.SUCCES){
-                    System.out.println("Server OK");
-                    connectionTimer.clear();
-                }
-                if(httpService.getStatus() == DBStatusEnum.FAILED || httpService.getStatus() == DBStatusEnum.CANCELLED){
-                    System.out.println("Local OK");
-                    loadPlayerStatsFromLocal();
-                    isLoaded = true;
-                    connectionTimer.clear();
+                switch (loadHttp.getStatus()){
+                    case SUCCES:
+                        //Get player "id"
+                        Json json = new Json();
+                        PlayerStats pStat = json.fromJson(PlayerStats.class, loadHttp.getResponsStr());
+
+                        DBStatusEnum statusEnum = DBStatusEnum.valueOf(pStat.getStatus());
+                        System.out.println(statusEnum.toString());
+
+                        switch (statusEnum){
+                            case SUCCES:
+                                loadStatsFromPlayerStats(pStat);
+                                loginStatus = statusEnum;
+                                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
+                                logintimer.clear();
+                                break;
+                            default:
+                                loginStatus = statusEnum;
+                                logintimer.clear();
+                                break;
+                        }
+                        break;
+                    default:
+                        loginStatus = loadHttp.getStatus();
+                        System.out.println(loadHttp.getStatus().toString());
+                        break;
                 }
             }
-        }, 0.7f, 1, 6);
-
-        final Timer test = new Timer();
-        test.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                System.out.println("isLoaded: " + isLoaded);
-                if(isLoaded)
-                    test.clear();
-            }
-        },0,1,10);
-
-        loadPlayerStatsFromLocal();
+        }, 0, 1);
     }
 
     private void loadPlayerStatsFromLocal() {
-        PlayerStats loadedStats = new PlayerStats();
+        playerStats.setId(-1);
+        playerStats.setPoints(prefs.getFloat(GAME_SCORE));
+        playerStats.setPointsPerSec(prefs.getFloat(GAME_PASSIVE_INCOME));
+        playerStats.setPointsPerClick(prefs.getFloat(GAME_POINTS_PER_CLICK, 1));
+        playerStats.setNumberOfClicks(prefs.getLong(GAME_NO_CLICKS));
+        playerStats.setNumberOfPointsPerSecBuys(prefs.getInteger(GAME_NO_POINTS_PER_SEC_BUYS));
+        playerStats.setNumberOfPointsPerClickPBuys(prefs.getInteger(GAME_NO_POINTS_PER_CLICK_BUYS));
 
-        loadedStats.setId(-1);
-        loadedStats.setPoints(prefs.getFloat(GAME_SCORE));
-        loadedStats.setPointsPerSec(prefs.getFloat(GAME_PASSIVE_INCOME));
-        loadedStats.setPointsPerClick(prefs.getFloat(GAME_POINTS_PER_CLICK, 1));
-        loadedStats.setNumberOfClicks(prefs.getLong(GAME_NO_CLICKS));
-        loadedStats.setNumberOfPointsPerSecBuys(prefs.getInteger(GAME_NO_POINTS_PER_SEC_BUYS));
-        loadedStats.setNumberOfPointsPerClickPBuys(prefs.getInteger(GAME_NO_POINTS_PER_CLICK_BUYS));
-
-        loadStatsFromPlayerStats(loadedStats);
+        loadStatsFromPlayerStats(playerStats);
     }
 
     private void initTimer() {
@@ -201,6 +211,10 @@ public class ScoreService {
             pointsPerSec = 0;
     }
 
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
     public void increseNumberOfClick() {
         numberOfClicks++;
     }
@@ -234,6 +248,10 @@ public class ScoreService {
      * ---------------------
      * getters and setters
      */
+
+    public DBStatusEnum getLoginStatus() {
+        return loginStatus;
+    }
 
     public long getNumberOfClicks() {
         return numberOfClicks;

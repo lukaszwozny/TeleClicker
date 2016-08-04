@@ -2,10 +2,12 @@ package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
@@ -61,7 +63,7 @@ public class LoginScreen extends AbstractScreen {
         loadStatsButton = new ResetScoreButton(new IClickCallback() {
             @Override
             public void onClick() {
-                ScoreService.getInstance().loadPlayerStatsFromServer("21");
+//                ScoreService.getInstance().loadPlayerStatsFromServer("21");
             }
         });
         loadStatsButton.setSize(60, 60);
@@ -135,22 +137,7 @@ public class LoginScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
-                httpService.loginRequest(
-                        loginTextField.getText(),
-                        passwordTextField.getText()
-                );
-                final Timer timer = new Timer();
-                timer.scheduleTask(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        responseLabel.setText("Response: " + httpService.getStatus().toString());
-
-                        if (httpService.getStatus() == DBStatusEnum.SUCCES) {
-                            statusLabel.setText("Status: " + httpService.getResponsStr());
-                            timer.clear();
-                        }
-                    }
-                }, 0, 1);
+                ScoreService.getInstance().loadScore(loginTextField.getText(), passwordTextField.getText());
             }
         });
         final float X = TeleClicker.WIDTH / 2 - loginButton.getWidth() / 2;
@@ -191,8 +178,11 @@ public class LoginScreen extends AbstractScreen {
     }
 
     private void update() {
-        if (httpService.getStatus() == DBStatusEnum.SUCCES) {
-            //ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
+        if (ScoreService.getInstance().getLoginStatus() != null)
+            statusLabel.setText(ScoreService.getInstance().getLoginStatus().toString());
+
+        if (ScoreService.getInstance().isLoaded()) {
+            ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
         }
     }
 }

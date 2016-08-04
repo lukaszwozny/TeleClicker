@@ -15,6 +15,8 @@ public class PlayerStats {
     private int numberOfPointsPerSecBuys;
     private float passiveIncomeTimeInHour;
 
+    private String status;
+
     @Override
     public String toString() {
         return "PlayerStats{" +
@@ -26,7 +28,16 @@ public class PlayerStats {
                 ", numberOfPointsPerClickPBuys=" + numberOfPointsPerClickPBuys +
                 ", numberOfPointsPerSecBuys=" + numberOfPointsPerSecBuys +
                 ", passiveIncomeTimeInHour=" + passiveIncomeTimeInHour +
+                ", status='" + status + '\'' +
                 '}';
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getId() {
