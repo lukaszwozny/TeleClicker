@@ -32,14 +32,6 @@ public class PlayerStats {
                 '}';
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public int getId() {
         return id;
     }
@@ -102,5 +94,13 @@ public class PlayerStats {
 
     public void setPassiveIncomeTimeInHour(float passiveIncomeTimeInHour) {
         this.passiveIncomeTimeInHour = passiveIncomeTimeInHour;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

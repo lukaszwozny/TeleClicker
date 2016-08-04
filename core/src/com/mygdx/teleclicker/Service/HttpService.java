@@ -20,7 +20,7 @@ public class HttpService implements Net.HttpResponseListener {
     final String EXTERNAL_URL = "http://demo-tamburyniarz.rhcloud.com/";
     final String LOCAL_URL = "http://localhost/";
 
-    final boolean IS_LOCAL = true;
+    final boolean IS_LOCAL = false;
 
     private DBStatusEnum status = DBStatusEnum.NOT_CONNECTED;
     private String responsStr;
@@ -41,13 +41,14 @@ public class HttpService implements Net.HttpResponseListener {
         final String SERVLET_NAME = "/savestats";
 
         Json json = new Json();
+        json.setUsePrototypes(false);
         json.setOutputType(JsonWriter.OutputType.json);
 
         Map parameters = new HashMap();
         parameters.put("admin_key", TeleClicker.KEY);
         parameters.put("player_stats", json.toJson(playerStats));
 
-
+        System.out.println(json.toJson(playerStats));
         postRequest(SERVLET_NAME, parameters);
     }
 

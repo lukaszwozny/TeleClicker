@@ -60,37 +60,51 @@ public class ScoreService {
         System.out.println(Player.ID);
     }
 
-    private void loadPlayerStatsFromServer(String id) {
-        httpService.loadStatsRequest(id);
-        System.out.println(httpService.getStatus().toString());
-
-        final Timer timer = new Timer();
-        timer.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                System.out.println(httpService.getStatus().toString());
-                if (httpService.getStatus() == DBStatusEnum.FAILED || httpService.getStatus() == DBStatusEnum.CANCELLED) {
-                    loginStatus = httpService.getStatus();
-                    timer.clear();
-                } else {
-                    if (httpService.getStatus() == DBStatusEnum.SUCCES) {
-                        Json json = new Json();
-                        playerStats = json.fromJson(PlayerStats.class, httpService.getResponsStr());
-
-                        System.out.println(playerStats.toString());
-
-                        loadStatsFromPlayerStats(playerStats);
-                        isLoaded = true;
-
-                        timer.clear();
-                    }
-                }
-            }
-        }, 0.5f, 1, 5);
+    public void saveStats(){
+        putStatsToObject();
+        putStatsOnServer();
     }
 
+    private void putStatsOnServer() {
+        final HttpService saveHttp = new HttpService();
+
+        saveHttp.saveStatsRequest(playerStats);
+        System.out.println("Save");
+
+        final Timer saveTimer = new Timer();
+        saveTimer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                System.out.println(saveHttp.getStatus().toString());
+                switch (saveHttp.getStatus()){
+                    case CONNECTING:
+                        loginStatus = saveHttp.getStatus();
+                        break;
+                    case SUCCES:
+                        loginStatus = saveHttp.getStatus();
+                        saveTimer.clear();
+                        break;
+                    default:
+                        loginStatus = saveHttp.getStatus();
+                        saveTimer.clear();
+                        break;
+                }
+            }
+        }, 0, 1);
+    }
+
+    private void putStatsToObject() {
+        playerStats.setPoints(points);
+        playerStats.setPointsPerSec(pointsPerSec);
+        playerStats.setPointsPerClick(pointsPerClick);
+        playerStats.setNumberOfClicks(numberOfClicks);
+        playerStats.setNumberOfPointsPerClickPBuys(numberOfPointsPerClickPBuys);
+        playerStats.setNumberOfPointsPerSecBuys(numberOfPointsPerSecBuys);
+    }
+
+
     private void loadStatsFromPlayerStats(PlayerStats pStats) {
-        points = pStats.getPointsPerSec();
+        points = pStats.getPoints();
         pointsPerSec = pStats.getPointsPerSec();
         pointsPerClick = pStats.getPointsPerClick();
         passiveIncomeTimeInHour = pStats.getPassiveIncomeTimeInHour();
@@ -100,7 +114,7 @@ public class ScoreService {
         numberOfPointsPerSecBuys = pStats.getNumberOfPointsPerSecBuys();
     }
 
-    public void loadScore(String login, String password) {
+    public void loadScore(final String login, String password) {
         final HttpService loadHttp = new HttpService();
         loadHttp.loginRequest(login, password);
 
@@ -114,25 +128,39 @@ public class ScoreService {
                         Json json = new Json();
                         PlayerStats pStat = json.fromJson(PlayerStats.class, loadHttp.getResponsStr());
 
-                        DBStatusEnum statusEnum = DBStatusEnum.valueOf(pStat.getStatus());
-                        System.out.println(statusEnum.toString());
+                        //Get full stats
+                        final HttpService statsdHttp = new HttpService();
+                        statsdHttp.loadStatsRequest(Integer.toString(pStat.getId()));
+                        final Timer statsTimer = new Timer();
+                        statsTimer.scheduleTask(new Timer.Task() {
+                            @Override
+                            public void run() {
+                                if(statsdHttp.getStatus() == DBStatusEnum.SUCCES){
+                                    Json json = new Json();
+                                    PlayerStats pStat = json.fromJson(PlayerStats.class, statsdHttp.getResponsStr());
 
-                        switch (statusEnum){
-                            case SUCCES:
-                                loadStatsFromPlayerStats(pStat);
-                                loginStatus = statusEnum;
-                                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
-                                logintimer.clear();
-                                break;
-                            default:
-                                loginStatus = statusEnum;
-                                logintimer.clear();
-                                break;
-                        }
+                                    DBStatusEnum statusEnum = DBStatusEnum.valueOf(pStat.getStatus());
+
+                                    switch (statusEnum){
+                                        case SUCCES:
+                                            playerStats = pStat;
+                                            loadStatsFromPlayerStats(playerStats);
+                                            loginStatus = statusEnum;
+                                            ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
+                                            statsTimer.clear();
+                                            break;
+                                        default:
+                                            loginStatus = statusEnum;
+                                            statsTimer.clear();
+                                            break;
+                                    }
+                                    logintimer.clear();
+                                }
+                            }
+                        },0.2f,4);
                         break;
                     default:
                         loginStatus = loadHttp.getStatus();
-                        System.out.println(loadHttp.getStatus().toString());
                         break;
                 }
             }
@@ -251,6 +279,10 @@ public class ScoreService {
 
     public DBStatusEnum getLoginStatus() {
         return loginStatus;
+    }
+
+    public PlayerStats getPlayerStats() {
+        return playerStats;
     }
 
     public long getNumberOfClicks() {
