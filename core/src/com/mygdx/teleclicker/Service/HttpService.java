@@ -20,7 +20,7 @@ public class HttpService implements Net.HttpResponseListener {
     final String EXTERNAL_URL = "http://demo-tamburyniarz.rhcloud.com/";
     final String LOCAL_URL = "http://localhost/";
 
-    final boolean IS_LOCAL = false;
+    final boolean IS_LOCAL = true;
 
     private DBStatusEnum status = DBStatusEnum.NOT_CONNECTED;
     private String responsStr;

@@ -26,6 +26,8 @@ public class ScoreService {
     public final static String GAME_NO_POINTS_PER_CLICK_BUYS = "com.mygdx.clicker.prefs.pointsperclickbuys";
     public final static String GAME_NO_POINTS_PER_SEC_BUYS = "com.mygdx.clicker.prefs.pointspersecbuys";
 
+    final HttpService httpService;
+
     private static ScoreService instance;
 
     private float points;
@@ -42,11 +44,10 @@ public class ScoreService {
 
     private Preferences prefs;
 
-    public DBStatusEnum connectionStatus;
-
-    public static PlayerStats playerStats;
+    private boolean isLoaded = false;
 
     private ScoreService() {
+        this. httpService = new HttpService();
         this.prefs = TeleClicker.getPrefs();
         loadScore();
         calculateGainedPassiveIncome();
@@ -58,7 +59,6 @@ public class ScoreService {
     }
 
     public void loadPlayerStatsFromServer(String id) {
-        final HttpService httpService = new HttpService();
         httpService.loadStatsRequest(id);
 
         final Timer timer = new Timer();
@@ -72,44 +72,59 @@ public class ScoreService {
                     if (httpService.getStatus() == DBStatusEnum.SUCCES) {
                         Json json = new Json();
                         PlayerStats loadedStats = json.fromJson(PlayerStats.class, httpService.getResponsStr());
-                        ScoreService.playerStats = loadedStats;
 
-                        System.out.println(loadedStats.toString());
+                        loadStatsFromPlayerStats(loadedStats);
+                        isLoaded = true;
+
                         timer.clear();
                     }
                 }
             }
-        }, 0, 1);
+        }, 0.5f, 1, 5);
+    }
 
-        Timer timeStop = new Timer();
-        timeStop.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                if (!timer.isEmpty()) {
-                    System.out.println("Conn TIMEOUt");
-                    timer.clear();
-                }
-            }
-        }, 5);
+    public void loadStatsFromPlayerStats(PlayerStats pStats) {
+        points = pStats.getPointsPerSec();
+        pointsPerSec = pStats.getPointsPerSec();
+        pointsPerClick = pStats.getPointsPerClick();
+        passiveIncomeTimeInHour = pStats.getPassiveIncomeTimeInHour();
+
+        numberOfClicks = pStats.getNumberOfClicks();
+        numberOfPointsPerClickPBuys = pStats.getNumberOfPointsPerClickPBuys();
+        numberOfPointsPerSecBuys = pStats.getNumberOfPointsPerSecBuys();
     }
 
     private void loadScore() {
+        final String sta = "NONE";
+        loadPlayerStatsFromServer("21");
+        final Timer connectionTimer = new Timer();
+        connectionTimer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                if(httpService.getStatus() == DBStatusEnum.SUCCES){
+                    System.out.println("Server OK");
+                    connectionTimer.clear();
+                }
+                if(httpService.getStatus() == DBStatusEnum.FAILED || httpService.getStatus() == DBStatusEnum.CANCELLED){
+                    System.out.println("Local OK");
+                    loadPlayerStatsFromLocal();
+                    isLoaded = true;
+                    connectionTimer.clear();
+                }
+            }
+        }, 0.7f, 1, 6);
+
+        final Timer test = new Timer();
+        test.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                System.out.println("isLoaded: " + isLoaded);
+                if(isLoaded)
+                    test.clear();
+            }
+        },0,1,10);
+
         loadPlayerStatsFromLocal();
-
-        PlayerStats loadedStats = ScoreService.playerStats;
-
-        points = loadedStats.getPointsPerSec();
-        pointsPerSec = loadedStats.getPointsPerSec();
-        pointsPerClick = loadedStats.getPointsPerClick();
-        passiveIncomeTimeInHour = loadedStats.getPassiveIncomeTimeInHour();
-
-        numberOfClicks = loadedStats.getNumberOfClicks();
-        numberOfPointsPerClickPBuys = loadedStats.getNumberOfPointsPerClickPBuys();
-        numberOfPointsPerSecBuys = loadedStats.getNumberOfPointsPerSecBuys();
-
-        delayTime = TimeUtils.millis() - prefs.getLong(GAME_SAVED_TIMESTAMP);
-
-
     }
 
     private void loadPlayerStatsFromLocal() {
@@ -123,7 +138,7 @@ public class ScoreService {
         loadedStats.setNumberOfPointsPerSecBuys(prefs.getInteger(GAME_NO_POINTS_PER_SEC_BUYS));
         loadedStats.setNumberOfPointsPerClickPBuys(prefs.getInteger(GAME_NO_POINTS_PER_CLICK_BUYS));
 
-        ScoreService.playerStats = loadedStats;
+        loadStatsFromPlayerStats(loadedStats);
     }
 
     private void initTimer() {
