@@ -10,6 +10,8 @@ import com.mygdx.teleclicker.Service.SettingsService;
 import com.mygdx.teleclicker.Service.SoundService;
 
 public class TeleClicker extends Game {
+    public final static String KEY = "key";
+
     public final static String GAME_PREFS = "com.mygdx.clicker.prefs";
     public final static String GAME_NAME = "Tele Clicker";
 

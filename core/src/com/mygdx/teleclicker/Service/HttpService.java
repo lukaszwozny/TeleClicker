@@ -7,6 +7,7 @@ import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.mygdx.teleclicker.Entities.PlayerStats;
+import com.mygdx.teleclicker.TeleClicker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,11 +23,14 @@ public class HttpService implements Net.HttpResponseListener {
 
     private String responsStr = "NOT CONNECTED";
 
-    private String getUrl() {
-        if (IS_LOCAL)
-            return LOCAL_URL;
-        else
-            return EXTERNAL_URL;
+    public void loadStatsRequest(String login) {
+        final String SERVLET_NAME = "/loadstats";
+
+        Map parameters = new HashMap();
+        parameters.put("admin_key", TeleClicker.KEY);
+        parameters.put("login", login);
+
+        postRequest(SERVLET_NAME, parameters);
     }
 
     public void saveStatsRequest(PlayerStats playerStats) {
@@ -35,20 +39,12 @@ public class HttpService implements Net.HttpResponseListener {
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
 
-        System.out.println(json.toJson(playerStats));
-
         Map parameters = new HashMap();
-        parameters.put("admin_key", "key");
+        parameters.put("admin_key", TeleClicker.KEY);
         parameters.put("player_stats", json.toJson(playerStats));
 
-        HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        Net.HttpRequest request = requestBuilder.newRequest()
-                .method(Net.HttpMethods.POST)
-                .url(getUrl() + SERVLET_NAME)
-                .content(HttpParametersUtils.convertHttpParameters(parameters))
-                .build();
 
-        Gdx.net.sendHttpRequest(request, this);
+        postRequest(SERVLET_NAME, parameters);
     }
 
     public void loginRequest(String login, String password) {
@@ -58,14 +54,7 @@ public class HttpService implements Net.HttpResponseListener {
         parameters.put("login", login);
         parameters.put("pass", password);
 
-        HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
-        Net.HttpRequest request = requestBuilder.newRequest()
-                .method(Net.HttpMethods.POST)
-                .url(getUrl() + SERVLET_NAME)
-                .content(HttpParametersUtils.convertHttpParameters(parameters))
-                .build();
-
-        Gdx.net.sendHttpRequest(request, this);
+        postRequest(SERVLET_NAME, parameters);
     }
 
     public void addPlayerRequest(String login, String email, String password) {
@@ -77,6 +66,10 @@ public class HttpService implements Net.HttpResponseListener {
         parameters.put("email", email);
         parameters.put("pass", password);
 
+        postRequest(SERVLET_NAME, parameters);
+    }
+
+    private void postRequest(final String SERVLET_NAME, Map parameters) {
         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
         Net.HttpRequest request = requestBuilder.newRequest()
                 .method(Net.HttpMethods.POST)
@@ -86,7 +79,6 @@ public class HttpService implements Net.HttpResponseListener {
 
         Gdx.net.sendHttpRequest(request, this);
     }
-
 
     @Override
     public void handleHttpResponse(Net.HttpResponse httpResponse) {
@@ -105,5 +97,12 @@ public class HttpService implements Net.HttpResponseListener {
 
     public String getResponsStr() {
         return responsStr;
+    }
+
+    private String getUrl() {
+        if (IS_LOCAL)
+            return LOCAL_URL;
+        else
+            return EXTERNAL_URL;
     }
 }

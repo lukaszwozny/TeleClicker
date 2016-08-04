@@ -12,10 +12,7 @@ import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
-import com.mygdx.teleclicker.Service.FontService;
-import com.mygdx.teleclicker.Service.HttpService;
-import com.mygdx.teleclicker.Service.ScreenService;
-import com.mygdx.teleclicker.Service.SoundService;
+import com.mygdx.teleclicker.Service.*;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.CloseSettingsButton;
 import com.mygdx.teleclicker.ui.IClickCallback;
@@ -52,6 +49,8 @@ public class LoginScreen extends AbstractScreen {
         initNewPlayerButton();
 
         initPlayerStats();
+
+        ScoreService.getInstance().saveStatsOnServer();
     }
 
     private void initPlayerStats() {

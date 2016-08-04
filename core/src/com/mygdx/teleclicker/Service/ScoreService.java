@@ -3,6 +3,8 @@ package com.mygdx.teleclicker.Service;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
+import com.mygdx.teleclicker.Entities.Player;
+import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.TeleClicker;
 
 import java.util.concurrent.TimeUnit;
@@ -43,6 +45,17 @@ public class ScoreService {
         loadScore();
         calculateGainedPassiveIncome();
         initTimer();
+    }
+
+    public void saveStatsOnServer(){
+        System.out.println(Player.ID);
+    }
+
+    public void loadScoreFromServer(String login, String password){
+        HttpService httpService = new HttpService();
+
+
+        System.out.println(Player.ID);
     }
 
     private void initTimer() {

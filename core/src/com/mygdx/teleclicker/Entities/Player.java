@@ -14,6 +14,8 @@ import com.mygdx.teleclicker.TeleClicker;
  * Created by Senpai on 21.07.2016.
  */
 public class Player extends Image {
+    public static int ID = -1;
+
     private final static int WIDTH = 180;
     private final static int HEIGHT = 200;
 
