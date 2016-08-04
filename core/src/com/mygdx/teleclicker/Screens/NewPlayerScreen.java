@@ -6,9 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
+import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.FontService;
 import com.mygdx.teleclicker.Service.HttpService;
@@ -24,8 +26,9 @@ import com.mygdx.teleclicker.ui.ResetScoreButton;
  */
 public class NewPlayerScreen extends AbstractScreen {
     private CloseSettingsButton closeButton;
-    private Label requestLabel;
-    private ResetScoreButton requestButton;
+    private Label addPlayerResponseLabel;
+    private Label addPlayerStatusLabel;
+    private ResetScoreButton addPlayerButton;
 
     private HttpService httpService;
 
@@ -42,9 +45,11 @@ public class NewPlayerScreen extends AbstractScreen {
         initTextFields();
 
         initHttpService();
+
+        initAddPlayerButton();
         initCloseButton();
-        initRequestLabel();
-        initRequestButton();
+
+        initLabels();
     }
 
     private void initTextFields() {
@@ -85,8 +90,8 @@ public class NewPlayerScreen extends AbstractScreen {
         addActor(closeButton);
     }
 
-    private void initRequestButton() {
-        requestButton = new ResetScoreButton(new IClickCallback() {
+    private void initAddPlayerButton() {
+        addPlayerButton = new ResetScoreButton(new IClickCallback() {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
@@ -95,25 +100,40 @@ public class NewPlayerScreen extends AbstractScreen {
                         emailTextField.getText(),
                         passwordTextField.getText()
                 );
+                final Timer timer = new Timer();
+                timer.scheduleTask(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        addPlayerStatusLabel.setText("Status: " + httpService.getStatus().toString());
+                        if (httpService.getStatus() == DBStatusEnum.SUCCES) {
+                            addPlayerResponseLabel.setText("Response:" + httpService.getResponsStr());
+                            timer.clear();
+                        }
+                    }
+                }, 0, 1);
             }
         });
-        final float X = TeleClicker.WIDTH / 2 - requestButton.getWidth() / 2;
+        final float X = TeleClicker.WIDTH / 2 - addPlayerButton.getWidth() / 2;
         final int Y = 10;
-        requestButton.setPosition(X, Y);
+        addPlayerButton.setPosition(X, Y);
 
-        addActor(requestButton);
+        addActor(addPlayerButton);
     }
 
-    private void initRequestLabel() {
+    private void initLabels() {
 
         Label titleLabel = new Label("New Player Screen", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
         titleLabel.setPosition(10, 600);
 
-        requestLabel = new Label("Test", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
-        requestLabel.setPosition(10, 550);
+        addPlayerResponseLabel = new Label("Response: ", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
+        addPlayerResponseLabel.setPosition(10, 550);
+
+        addPlayerStatusLabel = new Label("Status: ", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
+        addPlayerStatusLabel.setPosition(10, 500);
 
         addActor(titleLabel);
-        addActor(requestLabel);
+        addActor(addPlayerResponseLabel);
+        addActor(addPlayerStatusLabel);
     }
 
     @Override
@@ -136,6 +156,5 @@ public class NewPlayerScreen extends AbstractScreen {
     }
 
     private void update() {
-        requestLabel.setText(httpService.getResponsStr());
     }
 }

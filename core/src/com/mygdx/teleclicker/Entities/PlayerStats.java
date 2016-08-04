@@ -9,10 +9,11 @@ public class PlayerStats {
     private float pointsPerSec;
     private float pointsPerClick;
 
-    private int numberOfClicks;
+    private long numberOfClicks;
 
     private int numberOfPointsPerClickPBuys;
     private int numberOfPointsPerSecBuys;
+    private float passiveIncomeTimeInHour;
 
     @Override
     public String toString() {
@@ -24,6 +25,7 @@ public class PlayerStats {
                 ", numberOfClicks=" + numberOfClicks +
                 ", numberOfPointsPerClickPBuys=" + numberOfPointsPerClickPBuys +
                 ", numberOfPointsPerSecBuys=" + numberOfPointsPerSecBuys +
+                ", passiveIncomeTimeInHour=" + passiveIncomeTimeInHour +
                 '}';
     }
 
@@ -59,11 +61,11 @@ public class PlayerStats {
         this.pointsPerClick = pointsPerClick;
     }
 
-    public int getNumberOfClicks() {
+    public long getNumberOfClicks() {
         return numberOfClicks;
     }
 
-    public void setNumberOfClicks(int numberOfClicks) {
+    public void setNumberOfClicks(long numberOfClicks) {
         this.numberOfClicks = numberOfClicks;
     }
 
@@ -81,5 +83,13 @@ public class PlayerStats {
 
     public void setNumberOfPointsPerSecBuys(int numberOfPointsPerSecBuys) {
         this.numberOfPointsPerSecBuys = numberOfPointsPerSecBuys;
+    }
+
+    public float getPassiveIncomeTimeInHour() {
+        return passiveIncomeTimeInHour;
+    }
+
+    public void setPassiveIncomeTimeInHour(float passiveIncomeTimeInHour) {
+        this.passiveIncomeTimeInHour = passiveIncomeTimeInHour;
     }
 }

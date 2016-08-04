@@ -22,9 +22,11 @@ public class HttpService implements Net.HttpResponseListener {
 
     final boolean IS_LOCAL = false;
 
-    private String responsStr = DBStatusEnum.NOT_CONNECTED.toString();
+    private DBStatusEnum status = DBStatusEnum.NOT_CONNECTED;
+    private String responsStr;
 
     public void loadStatsRequest(String id) {
+        status = DBStatusEnum.CONNECTING;
         final String SERVLET_NAME = "/loadstats";
 
         Map parameters = new HashMap();
@@ -35,6 +37,7 @@ public class HttpService implements Net.HttpResponseListener {
     }
 
     public void saveStatsRequest(PlayerStats playerStats) {
+        status = DBStatusEnum.CONNECTING;
         final String SERVLET_NAME = "/savestats";
 
         Json json = new Json();
@@ -49,6 +52,7 @@ public class HttpService implements Net.HttpResponseListener {
     }
 
     public void loginRequest(String login, String password) {
+        status = DBStatusEnum.CONNECTING;
         final String SERVLET_NAME = "/login";
 
         Map parameters = new HashMap();
@@ -59,6 +63,7 @@ public class HttpService implements Net.HttpResponseListener {
     }
 
     public void addPlayerRequest(String login, String email, String password) {
+        status = DBStatusEnum.CONNECTING;
         final String SERVLET_NAME = "/addplayer";
 
         Map parameters = new HashMap();
@@ -83,17 +88,18 @@ public class HttpService implements Net.HttpResponseListener {
 
     @Override
     public void handleHttpResponse(Net.HttpResponse httpResponse) {
+        status = DBStatusEnum.SUCCES;
         responsStr = new String(httpResponse.getResult());
     }
 
     @Override
     public void failed(Throwable t) {
-        responsStr = DBStatusEnum.FAILED.toString();
+        status = DBStatusEnum.FAILED;
     }
 
     @Override
     public void cancelled() {
-        responsStr = DBStatusEnum.CANCELLED.toString();
+        status = DBStatusEnum.CANCELLED;
     }
 
     public String getResponsStr() {
@@ -105,5 +111,9 @@ public class HttpService implements Net.HttpResponseListener {
             return LOCAL_URL;
         else
             return EXTERNAL_URL;
+    }
+
+    public DBStatusEnum getStatus() {
+        return status;
     }
 }

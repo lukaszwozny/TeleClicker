@@ -9,7 +9,6 @@ import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.TeleClicker;
 
-import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,7 +42,9 @@ public class ScoreService {
 
     private Preferences prefs;
 
-    public String connectionStatus;
+    public DBStatusEnum connectionStatus;
+
+    public static PlayerStats playerStats;
 
     private ScoreService() {
         this.prefs = TeleClicker.getPrefs();
@@ -56,47 +57,73 @@ public class ScoreService {
         System.out.println(Player.ID);
     }
 
-    public void loadScoreFromServer(String id) {
-        connectionStatus = "CONNECTING";
-
+    public void loadPlayerStatsFromServer(String id) {
         final HttpService httpService = new HttpService();
         httpService.loadStatsRequest(id);
-
-        final int tries = 0;
 
         final Timer timer = new Timer();
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                String jsonString = httpService.getResponsStr();
-
-                if (jsonString.equals("FAILED") || jsonString.equals("CANCELLED")) {
-                    connectionStatus = DBStatusEnum.FAILED.toString();
+                System.out.println(httpService.getStatus().toString());
+                if (httpService.getStatus() == DBStatusEnum.FAILED || httpService.getStatus() == DBStatusEnum.CANCELLED) {
                     timer.clear();
                 } else {
-                    if(!jsonString.equals(DBStatusEnum.NOT_CONNECTED.toString())){
+                    if (httpService.getStatus() == DBStatusEnum.SUCCES) {
                         Json json = new Json();
-                        PlayerStats loadedStats = json.fromJson(PlayerStats.class, jsonString);
+                        PlayerStats loadedStats = json.fromJson(PlayerStats.class, httpService.getResponsStr());
+                        ScoreService.playerStats = loadedStats;
 
                         System.out.println(loadedStats.toString());
-                        connectionStatus = "SUCCES";
                         timer.clear();
                     }
                 }
             }
-        }, 0.5f, 1);
+        }, 0, 1);
 
         Timer timeStop = new Timer();
         timeStop.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
                 if (!timer.isEmpty()) {
-                    connectionStatus = "CONNECTION TIMEOUT";
+                    System.out.println("Conn TIMEOUt");
                     timer.clear();
                 }
             }
         }, 5);
+    }
 
+    private void loadScore() {
+        loadPlayerStatsFromLocal();
+
+        PlayerStats loadedStats = ScoreService.playerStats;
+
+        points = loadedStats.getPointsPerSec();
+        pointsPerSec = loadedStats.getPointsPerSec();
+        pointsPerClick = loadedStats.getPointsPerClick();
+        passiveIncomeTimeInHour = loadedStats.getPassiveIncomeTimeInHour();
+
+        numberOfClicks = loadedStats.getNumberOfClicks();
+        numberOfPointsPerClickPBuys = loadedStats.getNumberOfPointsPerClickPBuys();
+        numberOfPointsPerSecBuys = loadedStats.getNumberOfPointsPerSecBuys();
+
+        delayTime = TimeUtils.millis() - prefs.getLong(GAME_SAVED_TIMESTAMP);
+
+
+    }
+
+    private void loadPlayerStatsFromLocal() {
+        PlayerStats loadedStats = new PlayerStats();
+
+        loadedStats.setId(-1);
+        loadedStats.setPoints(prefs.getFloat(GAME_SCORE));
+        loadedStats.setPointsPerSec(prefs.getFloat(GAME_PASSIVE_INCOME));
+        loadedStats.setPointsPerClick(prefs.getFloat(GAME_POINTS_PER_CLICK, 1));
+        loadedStats.setNumberOfClicks(prefs.getLong(GAME_NO_CLICKS));
+        loadedStats.setNumberOfPointsPerSecBuys(prefs.getInteger(GAME_NO_POINTS_PER_SEC_BUYS));
+        loadedStats.setNumberOfPointsPerClickPBuys(prefs.getInteger(GAME_NO_POINTS_PER_CLICK_BUYS));
+
+        ScoreService.playerStats = loadedStats;
     }
 
     private void initTimer() {
@@ -171,19 +198,6 @@ public class ScoreService {
         numberOfPointsPerSecBuys++;
     }
 
-    private void loadScore() {
-        pointsPerSec = prefs.getFloat(GAME_PASSIVE_INCOME);
-        points = prefs.getFloat(GAME_SCORE);
-        pointsPerClick = prefs.getFloat(GAME_POINTS_PER_CLICK, 1);
-        passiveIncomeTimeInHour = prefs.getFloat(GAME_PASSIVE_INCOME_TIME, 1);
-
-        delayTime = TimeUtils.millis() - prefs.getLong(GAME_SAVED_TIMESTAMP);
-
-        numberOfClicks = prefs.getLong(GAME_NO_CLICKS);
-
-        numberOfPointsPerClickPBuys = prefs.getInteger(GAME_NO_POINTS_PER_CLICK_BUYS);
-        numberOfPointsPerSecBuys = prefs.getInteger(GAME_NO_POINTS_PER_SEC_BUYS);
-    }
 
     public void saveCurrentGameState() {
         prefs.putFloat(GAME_SCORE, points);

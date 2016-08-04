@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Entities.PlayerStats;
@@ -23,9 +24,11 @@ import com.mygdx.teleclicker.ui.ResetScoreButton;
  */
 public class LoginScreen extends AbstractScreen {
     private CloseSettingsButton closeButton;
-    private Label requestLabel;
-    private ResetScoreButton requestButton;
+    private Label responseLabel;
+    private Label statusLabel;
+    private ResetScoreButton loginButton;
     private ResetScoreButton newPlayerButton;
+    private ResetScoreButton loadStatsButton;
 
     private HttpService httpService;
 
@@ -43,12 +46,30 @@ public class LoginScreen extends AbstractScreen {
         initTextFields();
 
         initHttpService();
+
+        initLabels();
+
         initCloseButton();
-        initRequestLabel();
-        initRequestButton();
+        initLoginButton();
         initNewPlayerButton();
+        initLoadStatsButton();
 
         initPlayerStats();
+    }
+
+    private void initLoadStatsButton() {
+        loadStatsButton = new ResetScoreButton(new IClickCallback() {
+            @Override
+            public void onClick() {
+                ScoreService.getInstance().loadPlayerStatsFromServer("21");
+            }
+        });
+        loadStatsButton.setSize(60, 60);
+        final float X = TeleClicker.WIDTH - loginButton.getWidth();
+        final int Y = 10;
+        loadStatsButton.setPosition(X, Y);
+
+        addActor(loadStatsButton);
     }
 
     private void initPlayerStats() {
@@ -60,6 +81,7 @@ public class LoginScreen extends AbstractScreen {
         playerStats.setNumberOfClicks(13);
         playerStats.setNumberOfPointsPerClickPBuys(2);
         playerStats.setNumberOfPointsPerSecBuys(11);
+        playerStats.setPassiveIncomeTimeInHour(0.5f);
     }
 
     private void initNewPlayerButton() {
@@ -108,32 +130,45 @@ public class LoginScreen extends AbstractScreen {
         addActor(closeButton);
     }
 
-    private void initRequestButton() {
-        requestButton = new ResetScoreButton(new IClickCallback() {
+    private void initLoginButton() {
+        loginButton = new ResetScoreButton(new IClickCallback() {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
-                httpService.saveStatsRequest(playerStats);
+                httpService.loginRequest(
+                        loginTextField.getText(),
+                        passwordTextField.getText()
+                );
+                final Timer timer = new Timer();
+                timer.scheduleTask(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        responseLabel.setText("Response: " + httpService.getStatus().toString());
 
-                ScoreService.getInstance().loadScoreFromServer("21");
-//                httpService.loginRequest(
-//                        loginTextField.getText(),
-//                        passwordTextField.getText()
-//                );
+                        if (httpService.getStatus() == DBStatusEnum.SUCCES) {
+                            statusLabel.setText("Status: " + httpService.getResponsStr());
+                            timer.clear();
+                        }
+                    }
+                }, 0, 1);
             }
         });
-        final float X = TeleClicker.WIDTH / 2 - requestButton.getWidth() / 2;
+        final float X = TeleClicker.WIDTH / 2 - loginButton.getWidth() / 2;
         final int Y = 10;
-        requestButton.setPosition(X, Y);
+        loginButton.setPosition(X, Y);
 
-        addActor(requestButton);
+        addActor(loginButton);
     }
 
-    private void initRequestLabel() {
-        requestLabel = new Label("Test", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
-        requestLabel.setPosition(10, 550);
+    private void initLabels() {
+        responseLabel = new Label("Response", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
+        responseLabel.setPosition(10, 550);
 
-        addActor(requestLabel);
+        statusLabel = new Label("Status", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
+        statusLabel.setPosition(10, 500);
+
+        addActor(responseLabel);
+        addActor(statusLabel);
     }
 
     @Override
@@ -156,9 +191,8 @@ public class LoginScreen extends AbstractScreen {
     }
 
     private void update() {
-        requestLabel.setText(ScoreService.getInstance().connectionStatus);
-        if(httpService.getResponsStr().equals(DBStatusEnum.SUCCES.toString())){
-            ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
+        if (httpService.getStatus() == DBStatusEnum.SUCCES) {
+            //ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
         }
     }
 }
