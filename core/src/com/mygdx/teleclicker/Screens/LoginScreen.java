@@ -63,15 +63,22 @@ public class LoginScreen extends AbstractScreen {
         loadStatsButton = new ResetScoreButton(new IClickCallback() {
             @Override
             public void onClick() {
-//                ScoreService.getInstance().loadPlayerStatsFromServer("21");
+                SoundService.getInstance().playClickSound();
+                setFocus();
             }
         });
         loadStatsButton.setSize(60, 60);
         final float X = TeleClicker.WIDTH - loginButton.getWidth();
-        final int Y = 10;
+        final int Y = 500;
         loadStatsButton.setPosition(X, Y);
 
         addActor(loadStatsButton);
+    }
+
+    private void setFocus() {
+        this.setKeyboardFocus(loginTextField);
+//show the keyboard
+        loginTextField.isDisabled();
     }
 
     private void initPlayerStats() {

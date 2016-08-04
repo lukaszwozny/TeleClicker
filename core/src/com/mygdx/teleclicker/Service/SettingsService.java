@@ -1,7 +1,6 @@
 package com.mygdx.teleclicker.Service;
 
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.teleclicker.TeleClicker;
 
 /**
@@ -10,13 +9,16 @@ import com.mygdx.teleclicker.TeleClicker;
 public class SettingsService {
     private final static String SETTING_MUSIC = "com.mygdx.clicker.prefs.setting.music";
     private final static String SETTING_SOUNDS = "com.mygdx.clicker.prefs.setting.sounds";
+    private final static String SETTING_REMEMBER = "com.mygdx.clicker.prefs.setting.remember";
 
     private static SettingsService instance;
 
     private Preferences prefs;
 
-    private boolean isMusic;
-    private boolean isSounds;
+    private boolean music;
+    private boolean sounds;
+
+    private boolean remember;
 
     private SettingsService(){
         this.prefs = TeleClicker.getPrefs();
@@ -24,14 +26,16 @@ public class SettingsService {
     }
 
     public void saveCurrentSettingsState() {
-        prefs.putBoolean(SETTING_MUSIC, isMusic);
-        prefs.putBoolean(SETTING_SOUNDS, isSounds);
+        prefs.putBoolean(SETTING_MUSIC, music);
+        prefs.putBoolean(SETTING_SOUNDS, sounds);
+        prefs.putBoolean(SETTING_REMEMBER, remember);
         prefs.flush();
     }
 
     private void load() {
-        isMusic = prefs.getBoolean(SETTING_MUSIC, false);
-        isSounds = prefs.getBoolean(SETTING_SOUNDS, false);
+        music = prefs.getBoolean(SETTING_MUSIC, false);
+        sounds = prefs.getBoolean(SETTING_SOUNDS, false);
+        remember = prefs.getBoolean(SETTING_REMEMBER, false);
     }
 
     /*
@@ -48,18 +52,26 @@ public class SettingsService {
     }
 
     public boolean isMusic() {
-        return isMusic;
-    }
-
-    public boolean isSounds() {
-        return isSounds;
+        return music;
     }
 
     public void setMusic(boolean music) {
-        isMusic = music;
+        this.music = music;
+    }
+
+    public boolean isSounds() {
+        return sounds;
     }
 
     public void setSounds(boolean sounds) {
-        isSounds = sounds;
+        this.sounds = sounds;
+    }
+
+    public boolean isRemember() {
+        return remember;
+    }
+
+    public void setRemember(boolean remember) {
+        this.remember = remember;
     }
 }
