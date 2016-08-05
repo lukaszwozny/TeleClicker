@@ -142,6 +142,5 @@ public class SettingsScreen extends AbstractScreen {
     @Override
     public void hide() {
         super.hide();
-        SettingsService.getInstance().saveCurrentSettingsState();
     }
 }

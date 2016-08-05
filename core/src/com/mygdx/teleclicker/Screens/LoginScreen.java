@@ -2,11 +2,14 @@ package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
@@ -17,25 +20,24 @@ import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.*;
 import com.mygdx.teleclicker.TeleClicker;
-import com.mygdx.teleclicker.ui.CloseSettingsButton;
-import com.mygdx.teleclicker.ui.IClickCallback;
-import com.mygdx.teleclicker.ui.ResetScoreButton;
+import com.mygdx.teleclicker.ui.*;
 
 /**
  * Created by Senpai on 01/08/2016.
  */
 public class LoginScreen extends AbstractScreen {
-    private CloseSettingsButton closeButton;
     private Label responseLabel;
     private Label statusLabel;
-    private ResetScoreButton loginButton;
-    private ResetScoreButton newPlayerButton;
-    private ResetScoreButton loadStatsButton;
+
+    private MyTextButton loginButton;
+    private MyTextButton newPlayerButton;
 
     private HttpService httpService;
 
     private TextField loginTextField;
     private TextField passwordTextField;
+
+    private CheckBox rememberCheckbox;
 
     private Skin skin;
 
@@ -45,68 +47,124 @@ public class LoginScreen extends AbstractScreen {
     public void buildStage() {
         initBgTexture();
         initSkin();
-        initTextFields();
 
         initHttpService();
 
+        initRememberCheckbox();
+        initTextFields();
         initLabels();
+        initButtons();
+    }
 
-        initCloseButton();
+    private void initButtons() {
         initLoginButton();
         initNewPlayerButton();
-        initLoadStatsButton();
 
-        initPlayerStats();
-    }
+        final float BUTTON_WIDTH = 180.0f;
+        final float BUTTON_HEIGHT = 50.0f;
 
-    private void initLoadStatsButton() {
-        loadStatsButton = new ResetScoreButton(new IClickCallback() {
-            @Override
-            public void onClick() {
-                SoundService.getInstance().playClickSound();
-                setFocus();
-            }
-        });
-        loadStatsButton.setSize(60, 60);
-        final float X = TeleClicker.WIDTH - loginButton.getWidth();
-        final int Y = 500;
-        loadStatsButton.setPosition(X, Y);
+        loginButton.setSize(BUTTON_WIDTH,BUTTON_HEIGHT);
+        newPlayerButton.setSize(BUTTON_WIDTH,BUTTON_HEIGHT);
 
-        addActor(loadStatsButton);
-    }
 
-    private void setFocus() {
-        this.setKeyboardFocus(loginTextField);
-//show the keyboard
-        loginTextField.isDisabled();
-    }
+        final float X = TeleClicker.WIDTH/2 - BUTTON_WIDTH/2;
+        final float Y = 300.0f;
+        final float INTERVAL = BUTTON_HEIGHT + 10;
 
-    private void initPlayerStats() {
-        playerStats = new PlayerStats();
-        playerStats.setId(21);
-        playerStats.setPoints(11);
-        playerStats.setPointsPerSec(2);
-        playerStats.setPointsPerClick(4);
-        playerStats.setNumberOfClicks(13);
-        playerStats.setNumberOfPointsPerClickPBuys(2);
-        playerStats.setNumberOfPointsPerSecBuys(11);
-        playerStats.setPassiveIncomeTimeInHour(0.5f);
+        loginButton.setPosition(X,Y);
+        newPlayerButton.setPosition(X,Y-INTERVAL);
+
+        addActor(loginButton);
+        addActor(newPlayerButton);
     }
 
     private void initNewPlayerButton() {
-        newPlayerButton = new ResetScoreButton(new IClickCallback() {
+        newPlayerButton = new RedTextButton("Create new account", new IClickCallback() {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
                 ScreenService.getInstance().setScreen(ScreenEnum.NEW_PLAYER);
             }
         });
-        addActor(newPlayerButton);
+    }
+
+    private void initRememberCheckbox() {
+        rememberCheckbox = new CheckBox(" Remember me", skin);
+
+        System.out.println(SettingsService.getInstance().isRemember());
+        rememberCheckbox.setChecked(SettingsService.getInstance().isRemember());
+        rememberCheckbox.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (rememberCheckbox.isChecked()) {
+                    //Turned off
+                    SettingsService.getInstance().setRemember(false);
+                } else {
+                    // Turned on
+                    SettingsService.getInstance().setRemember(true);
+                }
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+
+        addActor(rememberCheckbox);
+    }
+
+    private void initLoginButton() {
+        loginButton = new RedTextButton("Connect", new IClickCallback() {
+            @Override
+            public void onClick() {
+                SoundService.getInstance().playClickSound();
+
+                String login = loginTextField.getText();
+                String password = passwordTextField.getText();
+
+                ScoreService.getInstance().setLastLogin(login);
+                ScoreService.getInstance().setLastPassword(password);
+
+                ScoreService.getInstance().loadScore(login, password);
+            }
+        });
     }
 
     private void initTextFields() {
-        loginTextField = new TextField("Login", skin);
-        passwordTextField = new TextField("Password", skin);
+        final String loginText, passwordText;
+        if (SettingsService.getInstance().isRemember()) {
+            loginText = ScoreService.getInstance().getLastLogin();
+            passwordText = ScoreService.getInstance().getLastPassword();
+        } else {
+            loginText = "login";
+            passwordText = "password";
+        }
+
+        loginTextField = new TextField(loginText, skin);
+        passwordTextField = new TextField(passwordText, skin);
+        passwordTextField.setPasswordCharacter('*');
+
+        if (SettingsService.getInstance().isRemember()){
+            passwordTextField.setPasswordMode(true);
+        }
+
+        loginTextField.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (!SettingsService.getInstance().isRemember()){
+                    loginTextField.setText("");
+                }
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+
+        passwordTextField.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (!SettingsService.getInstance().isRemember()){
+                    passwordTextField.setText("");
+                }
+                passwordTextField.setPasswordMode(true);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
 
         final float X = TeleClicker.WIDTH / 2 - loginTextField.getWidth() / 2;
         final float START_Y = 450f;
@@ -114,6 +172,8 @@ public class LoginScreen extends AbstractScreen {
 
         loginTextField.setPosition(X, START_Y);
         passwordTextField.setPosition(X, START_Y - INTERVAL);
+        //rememberChceckbox position
+        rememberCheckbox.setPosition(X,START_Y-INTERVAL - passwordTextField.getHeight());
 
         addActor(loginTextField);
         addActor(passwordTextField);
@@ -123,35 +183,8 @@ public class LoginScreen extends AbstractScreen {
         skin = new Skin(Gdx.files.internal("libgdx/uiskin.json"));
     }
 
-
     private void initHttpService() {
         httpService = new HttpService();
-    }
-
-    private void initCloseButton() {
-        closeButton = new CloseSettingsButton(new IClickCallback() {
-            @Override
-            public void onClick() {
-                SoundService.getInstance().playClickSound();
-                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
-            }
-        });
-        addActor(closeButton);
-    }
-
-    private void initLoginButton() {
-        loginButton = new ResetScoreButton(new IClickCallback() {
-            @Override
-            public void onClick() {
-                SoundService.getInstance().playClickSound();
-                ScoreService.getInstance().loadScore(loginTextField.getText(), passwordTextField.getText());
-            }
-        });
-        final float X = TeleClicker.WIDTH / 2 - loginButton.getWidth() / 2;
-        final int Y = 10;
-        loginButton.setPosition(X, Y);
-
-        addActor(loginButton);
     }
 
     private void initLabels() {
@@ -185,9 +218,6 @@ public class LoginScreen extends AbstractScreen {
     }
 
     private void update() {
-        if (ScoreService.getInstance().getLoginStatus() != null)
-            statusLabel.setText(ScoreService.getInstance().getLoginStatus().toString());
-
         if (ScoreService.getInstance().isLoaded()) {
             ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
         }

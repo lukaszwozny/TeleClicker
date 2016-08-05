@@ -31,6 +31,7 @@ public class TeleClicker extends Game {
     public void pause() {
         super.pause();
         ScoreService.getInstance().saveCurrentGameState();
+        SettingsService.getInstance().saveCurrentSettingsState();
     }
 
     @Override
