@@ -17,18 +17,16 @@ import com.mygdx.teleclicker.Service.HttpService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
-import com.mygdx.teleclicker.ui.CloseSettingsButton;
-import com.mygdx.teleclicker.ui.IClickCallback;
-import com.mygdx.teleclicker.ui.ResetScoreButton;
+import com.mygdx.teleclicker.ui.*;
 
 /**
  * Created by Senpai on 01/08/2016.
  */
 public class NewPlayerScreen extends AbstractScreen {
-    private CloseSettingsButton closeButton;
     private Label addPlayerResponseLabel;
     private Label addPlayerStatusLabel;
-    private ResetScoreButton addPlayerButton;
+
+    private MyTextButton createButton;
 
     private HttpService httpService;
 
@@ -44,12 +42,53 @@ public class NewPlayerScreen extends AbstractScreen {
         initSkin();
         initTextFields();
 
+        initButtons();
         initHttpService();
 
-        initAddPlayerButton();
-        initCloseButton();
-
         initLabels();
+    }
+
+    private void initButtons() {
+        initCreateButton();
+
+        final float BUTTON_WIDTH = 180.0f;
+        final float BUTTON_HEIGHT = 50.0f;
+
+        createButton.setSize(BUTTON_WIDTH,BUTTON_HEIGHT);
+
+
+        final float X = TeleClicker.WIDTH/2 - BUTTON_WIDTH/2;
+        final float Y = 270.0f;
+        final float INTERVAL = BUTTON_HEIGHT + 10;
+
+        createButton.setPosition(X,Y);
+
+        addActor(createButton);
+    }
+
+    private void initCreateButton() {
+        createButton = new RedTextButton("Create", new IClickCallback() {
+            @Override
+            public void onClick() {
+                SoundService.getInstance().playClickSound();
+                httpService.addPlayerRequest(
+                        loginTextField.getText(),
+                        emailTextField.getText(),
+                        passwordTextField.getText()
+                );
+                final Timer timer = new Timer();
+                timer.scheduleTask(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        addPlayerStatusLabel.setText("Status: " + httpService.getStatus().toString());
+                        if (httpService.getStatus() == DBStatusEnum.SUCCES) {
+                            addPlayerResponseLabel.setText("Response:" + httpService.getResponsStr());
+                            timer.clear();
+                        }
+                    }
+                }, 0, 1);
+            }
+        });
     }
 
     private void initTextFields() {
@@ -77,47 +116,6 @@ public class NewPlayerScreen extends AbstractScreen {
 
     private void initHttpService() {
         httpService = new HttpService();
-    }
-
-    private void initCloseButton() {
-        closeButton = new CloseSettingsButton(new IClickCallback() {
-            @Override
-            public void onClick() {
-                SoundService.getInstance().playClickSound();
-                ScreenService.getInstance().setScreen(ScreenEnum.LOGIN);
-            }
-        });
-        addActor(closeButton);
-    }
-
-    private void initAddPlayerButton() {
-        addPlayerButton = new ResetScoreButton(new IClickCallback() {
-            @Override
-            public void onClick() {
-                SoundService.getInstance().playClickSound();
-                httpService.addPlayerRequest(
-                        loginTextField.getText(),
-                        emailTextField.getText(),
-                        passwordTextField.getText()
-                );
-                final Timer timer = new Timer();
-                timer.scheduleTask(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        addPlayerStatusLabel.setText("Status: " + httpService.getStatus().toString());
-                        if (httpService.getStatus() == DBStatusEnum.SUCCES) {
-                            addPlayerResponseLabel.setText("Response:" + httpService.getResponsStr());
-                            timer.clear();
-                        }
-                    }
-                }, 0, 1);
-            }
-        });
-        final float X = TeleClicker.WIDTH / 2 - addPlayerButton.getWidth() / 2;
-        final int Y = 10;
-        addPlayerButton.setPosition(X, Y);
-
-        addActor(addPlayerButton);
     }
 
     private void initLabels() {
