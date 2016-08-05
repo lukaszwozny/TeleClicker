@@ -2,22 +2,20 @@ package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
-import com.mygdx.teleclicker.Service.FontService;
-import com.mygdx.teleclicker.Service.HttpService;
-import com.mygdx.teleclicker.Service.ScreenService;
-import com.mygdx.teleclicker.Service.SoundService;
+import com.mygdx.teleclicker.Service.*;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.*;
+
+import java.util.ArrayList;
 
 /**
  * Created by Senpai on 01/08/2016.
@@ -30,9 +28,12 @@ public class NewPlayerScreen extends AbstractScreen {
 
     private HttpService httpService;
 
-    private TextField loginTextField;
-    private TextField emailTextField;
-    private TextField passwordTextField;
+    private MyTextField loginTextField;
+    private MyTextField emailTextField;
+    private MyTextField passwordTextField;
+    private boolean loginPut = false;
+    private boolean emailPut = false;
+    private boolean passwordPut = false;
 
     private Skin skin;
 
@@ -54,14 +55,13 @@ public class NewPlayerScreen extends AbstractScreen {
         final float BUTTON_WIDTH = 180.0f;
         final float BUTTON_HEIGHT = 50.0f;
 
-        createButton.setSize(BUTTON_WIDTH,BUTTON_HEIGHT);
+        createButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-
-        final float X = TeleClicker.WIDTH/2 - BUTTON_WIDTH/2;
+        final float X = TeleClicker.WIDTH / 2 - BUTTON_WIDTH / 2;
         final float Y = 270.0f;
         final float INTERVAL = BUTTON_HEIGHT + 10;
 
-        createButton.setPosition(X,Y);
+        createButton.setPosition(X, Y);
 
         addActor(createButton);
     }
@@ -92,21 +92,55 @@ public class NewPlayerScreen extends AbstractScreen {
     }
 
     private void initTextFields() {
-        loginTextField = new TextField("Login", skin);
-        emailTextField = new TextField("E-mail", skin);
-        passwordTextField = new TextField("Password", skin);
+        loginTextField = new MyTextField("login", skin);
+        emailTextField = new MyTextField("e-mail", skin);
+        passwordTextField = new MyTextField("password", skin);
 
+        ArrayList<MyTextField> textFieldArrayList = new ArrayList<MyTextField>();
+        textFieldArrayList.add(loginTextField);
+        textFieldArrayList.add(emailTextField);
+        textFieldArrayList.add(passwordTextField);
+
+        setTextFieldsPossition(textFieldArrayList);
+        initTextFieldsListeners(textFieldArrayList);
+
+        passwordTextField.setPasswordCharacter('*');
+        passwordTextField.setPasswordMode(true);
+
+        addTextFieldToStage(textFieldArrayList);
+    }
+
+    private void addTextFieldToStage(ArrayList<MyTextField> textFieldArrayList) {
+        for(MyTextField f : textFieldArrayList){
+            addActor(f);
+        }
+    }
+
+    private void setTextFieldsPossition(ArrayList<MyTextField> textFieldArrayList) {
         final float X = TeleClicker.WIDTH / 2 - loginTextField.getWidth() / 2;
         final float START_Y = 450f;
         final float INTERVAL = loginTextField.getHeight() + 20;
 
-        loginTextField.setPosition(X, START_Y);
-        emailTextField.setPosition(X, START_Y - INTERVAL);
-        passwordTextField.setPosition(X, START_Y - 2 * INTERVAL);
+        int counter = 0;
+        for(MyTextField f : textFieldArrayList){
+            f.setPosition(X,START_Y - counter * INTERVAL);
+            counter++;
+        }
+    }
 
-        addActor(loginTextField);
-        addActor(emailTextField);
-        addActor(passwordTextField);
+    private void initTextFieldsListeners(ArrayList<MyTextField> textFieldArrayList) {
+        for (final MyTextField f : textFieldArrayList) {
+            f.addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    if (!f.isClicked()) {
+                        f.setText("");
+                        f.setClicked(true);
+                    }
+                    return super.touchDown(event, x, y, pointer, button);
+                }
+            });
+        }
     }
 
     private void initSkin() {
@@ -119,7 +153,6 @@ public class NewPlayerScreen extends AbstractScreen {
     }
 
     private void initLabels() {
-
         Label titleLabel = new Label("New Player Screen", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
         titleLabel.setPosition(10, 600);
 
