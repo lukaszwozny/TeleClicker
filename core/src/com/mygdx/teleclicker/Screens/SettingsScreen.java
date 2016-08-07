@@ -21,7 +21,7 @@ public class SettingsScreen extends AbstractScreen {
     private CheckboxLabel checkboxMusic;
     private CheckboxLabel checkboxSound;
 
-    private ResetScoreButton resetScoreButton;
+    private MyTextButton resetScoreButton;
     private WarningBox resetScoreWarningBox;
 
     @Override
@@ -60,14 +60,15 @@ public class SettingsScreen extends AbstractScreen {
     }
 
     private void initResetScoreButton() {
-        resetScoreButton = new ResetScoreButton(new IClickCallback() {
+        resetScoreButton = new RedTextButton("Reset data", new IClickCallback() {
             @Override
             public void onClick() {
                 initResetScoreWarningBox();
             }
         });
-        resetScoreButton.setPosition(TeleClicker.WIDTH / 2 - resetScoreButton.getWidth() / 2, 50);
 
+        resetScoreButton.setSize(150,70);
+        resetScoreButton.setPosition(TeleClicker.WIDTH / 2 - resetScoreButton.getWidth() / 2, 50);
         addActor(resetScoreButton);
     }
 
