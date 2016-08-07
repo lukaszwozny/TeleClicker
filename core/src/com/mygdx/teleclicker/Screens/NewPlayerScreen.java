@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
+import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
@@ -21,8 +23,7 @@ import java.util.ArrayList;
  * Created by Senpai on 01/08/2016.
  */
 public class NewPlayerScreen extends AbstractScreen {
-    private Label addPlayerResponseLabel;
-    private Label addPlayerStatusLabel;
+    private MyLabel statusLabel;
 
     private MyTextButton createButton;
 
@@ -31,9 +32,6 @@ public class NewPlayerScreen extends AbstractScreen {
     private MyTextField loginTextField;
     private MyTextField emailTextField;
     private MyTextField passwordTextField;
-    private boolean loginPut = false;
-    private boolean emailPut = false;
-    private boolean passwordPut = false;
 
     private Skin skin;
 
@@ -70,25 +68,95 @@ public class NewPlayerScreen extends AbstractScreen {
         createButton = new RedTextButton("Create", new IClickCallback() {
             @Override
             public void onClick() {
+                // Play sound
                 SoundService.getInstance().playClickSound();
+                // DB Request
                 httpService.addPlayerRequest(
                         loginTextField.getText(),
                         emailTextField.getText(),
                         passwordTextField.getText()
                 );
+                //Init timer to check connection status each sec.
                 final Timer timer = new Timer();
                 timer.scheduleTask(new Timer.Task() {
                     @Override
                     public void run() {
-                        addPlayerStatusLabel.setText("Status: " + httpService.getStatus().toString());
-                        if (httpService.getStatus() == DBStatusEnum.SUCCES) {
-                            addPlayerResponseLabel.setText("Response:" + httpService.getResponsStr());
-                            timer.clear();
+                        DBStatusEnum status = httpService.getStatus();
+                        switch (status){
+                            case CONNECTING:
+                                statusLabel.setText("Connecting to server.");
+                                statusLabel.setColor(Color.BLACK);
+                                break;
+                            case SUCCES:
+                                updateStatusLabel(httpService.getResponsStr());
+                                timer.clear();
+                                break;
+                            case AUTHORIZATION_FAILED:
+                                statusLabel.setText("Authorization failed.");
+                                statusLabel.setColor(Color.RED);
+                                timer.clear();
+                                break;
+                            default:
+                                statusLabel.setText("We're sorry. Unrecognized error.");
+                                statusLabel.setColor(Color.RED);
+                                timer.clear();
+                                break;
                         }
                     }
                 }, 0, 1);
             }
         });
+    }
+
+    private void updateStatusLabel(String responsStr) {
+        Json json = new Json();
+        PlayerStats playerStats = json.fromJson(PlayerStats.class, responsStr);
+        DBStatusEnum statusEnum = DBStatusEnum.valueOf(playerStats.getStatus());
+
+        System.out.println(statusEnum.toString());
+
+        String statusString = "";
+        switch (statusEnum) {
+            case AUTHORIZATION_FAILED:
+                statusString = "Authorization error.";
+                statusLabel.setColor(Color.RED);
+                break;
+            case PLAYER_ADDED:
+                statusString = "Player successfully added.";
+                statusLabel.setColor(Color.GREEN);
+                break;
+            case FAILED:
+                statusString = "we're sorry. Connection ends with 'fail error'.\n" +
+                        "Try again later.";
+                statusLabel.setColor(Color.RED);
+                break;
+            case CANCELLED:
+                statusString = "Connection was cancelled. Try again.";
+                statusLabel.setColor(Color.RED);
+                break;
+            case PLAYER_ALREADY_EXIST:
+                statusString = "Player with this login already exists.";
+                statusLabel.setColor(Color.RED);
+                break;
+            case LOGIN_IS_NULL:
+                statusString = "Login is required.";
+                statusLabel.setColor(Color.RED);
+                break;
+            case EMAIL_IS_NULL:
+                statusString = "E-mail is required.";
+                statusLabel.setColor(Color.RED);
+                break;
+            case PASSWORD_IS_NULL:
+                statusString = "Password is required.";
+                statusLabel.setColor(Color.RED);
+                break;
+            default:
+                statusString = "We're sorry. Unrecognized error.";
+                statusLabel.setColor(Color.RED);
+                break;
+        }
+
+        statusLabel.setText(statusString);
     }
 
     private void initTextFields() {
@@ -101,7 +169,7 @@ public class NewPlayerScreen extends AbstractScreen {
         textFieldArrayList.add(emailTextField);
         textFieldArrayList.add(passwordTextField);
 
-        setTextFieldsPossition(textFieldArrayList);
+        setTextFieldsPosition(textFieldArrayList);
         initTextFieldsListeners(textFieldArrayList);
 
         passwordTextField.setPasswordCharacter('*');
@@ -116,7 +184,7 @@ public class NewPlayerScreen extends AbstractScreen {
         }
     }
 
-    private void setTextFieldsPossition(ArrayList<MyTextField> textFieldArrayList) {
+    private void setTextFieldsPosition(ArrayList<MyTextField> textFieldArrayList) {
         final float X = TeleClicker.WIDTH / 2 - loginTextField.getWidth() / 2;
         final float START_Y = 450f;
         final float INTERVAL = loginTextField.getHeight() + 20;
@@ -147,25 +215,18 @@ public class NewPlayerScreen extends AbstractScreen {
         skin = new Skin(Gdx.files.internal("libgdx/uiskin.json"));
     }
 
-
     private void initHttpService() {
         httpService = new HttpService();
     }
 
     private void initLabels() {
-        Label titleLabel = new Label("New Player Screen", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
-        titleLabel.setPosition(10, 600);
+        statusLabel = new MyLabel("");
+        statusLabel.setPosition(10, 500);
 
-        addPlayerResponseLabel = new Label("Response: ", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
-        addPlayerResponseLabel.setPosition(10, 550);
-
-        addPlayerStatusLabel = new Label("Status: ", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
-        addPlayerStatusLabel.setPosition(10, 500);
-
-        addActor(titleLabel);
-        addActor(addPlayerResponseLabel);
-        addActor(addPlayerStatusLabel);
+        addActor(statusLabel);
     }
+
+
 
     @Override
     public void initBgTexture() {
