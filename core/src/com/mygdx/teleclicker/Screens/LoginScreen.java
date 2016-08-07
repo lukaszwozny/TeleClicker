@@ -110,6 +110,7 @@ public class LoginScreen extends AbstractScreen {
         rememberCheckbox.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                SoundService.getInstance().playClickSound();
                 if (rememberCheckbox.isChecked()) {
                     //Turned off
                     SettingsService.getInstance().setRemember(false);
@@ -202,13 +203,9 @@ public class LoginScreen extends AbstractScreen {
     }
 
     private void initLabels() {
-        responseLabel = new Label("Response", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
-        responseLabel.setPosition(10, 550);
-
-        statusLabel = new MyLabel("Status");
+        statusLabel = new MyLabel("");
         statusLabel.setPosition(10, 500);
 
-        addActor(responseLabel);
         addActor(statusLabel);
     }
 
@@ -233,6 +230,13 @@ public class LoginScreen extends AbstractScreen {
     }
 
     private void update() {
+        DBStatusEnum status = ScoreService.getInstance().getLoginStatus();
+        if(status != null){
+            statusLabel.setText(status.toString());
+            statusLabel.setColor(status.getMessageColor());
+
+        }
+
         if (ScoreService.getInstance().isLoaded()) {
             ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
         }
