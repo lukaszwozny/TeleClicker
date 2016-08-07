@@ -1,6 +1,7 @@
 package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -26,6 +27,7 @@ public class NewPlayerScreen extends AbstractScreen {
     private MyLabel statusLabel;
 
     private MyTextButton createButton;
+    private MyTextButton backButton;
 
     private HttpService httpService;
 
@@ -49,19 +51,34 @@ public class NewPlayerScreen extends AbstractScreen {
 
     private void initButtons() {
         initCreateButton();
+        initBackButton();
 
         final float BUTTON_WIDTH = 180.0f;
         final float BUTTON_HEIGHT = 50.0f;
 
         createButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        backButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         final float X = TeleClicker.WIDTH / 2 - BUTTON_WIDTH / 2;
         final float Y = 270.0f;
         final float INTERVAL = BUTTON_HEIGHT + 10;
 
         createButton.setPosition(X, Y);
+        backButton.setPosition(X, Y - INTERVAL);
 
         addActor(createButton);
+        addActor(backButton);
+    }
+
+    private void initBackButton() {
+        backButton = new RedTextButton("Back", new IClickCallback() {
+            @Override
+            public void onClick() {
+                SoundService.getInstance().playClickSound();
+
+                ScreenService.getInstance().setScreen(ScreenEnum.LOGIN);
+            }
+        });
     }
 
     private void initCreateButton() {
@@ -82,7 +99,7 @@ public class NewPlayerScreen extends AbstractScreen {
                     @Override
                     public void run() {
                         DBStatusEnum status = httpService.getStatus();
-                        switch (status){
+                        switch (status) {
                             case CONNECTING:
                                 statusLabel.setText("Connecting to server.");
                                 statusLabel.setColor(Color.BLACK);
@@ -179,7 +196,7 @@ public class NewPlayerScreen extends AbstractScreen {
     }
 
     private void addTextFieldToStage(ArrayList<MyTextField> textFieldArrayList) {
-        for(MyTextField f : textFieldArrayList){
+        for (MyTextField f : textFieldArrayList) {
             addActor(f);
         }
     }
@@ -190,8 +207,8 @@ public class NewPlayerScreen extends AbstractScreen {
         final float INTERVAL = loginTextField.getHeight() + 20;
 
         int counter = 0;
-        for(MyTextField f : textFieldArrayList){
-            f.setPosition(X,START_Y - counter * INTERVAL);
+        for (MyTextField f : textFieldArrayList) {
+            f.setPosition(X, START_Y - counter * INTERVAL);
             counter++;
         }
     }
@@ -225,7 +242,6 @@ public class NewPlayerScreen extends AbstractScreen {
 
         addActor(statusLabel);
     }
-
 
 
     @Override
