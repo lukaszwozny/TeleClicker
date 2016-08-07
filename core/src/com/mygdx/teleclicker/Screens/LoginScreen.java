@@ -27,10 +27,11 @@ import com.mygdx.teleclicker.ui.*;
  */
 public class LoginScreen extends AbstractScreen {
     private Label responseLabel;
-    private Label statusLabel;
+    private MyLabel statusLabel;
 
     private MyTextButton loginButton;
     private MyTextButton newPlayerButton;
+    private MyTextButton quitButton;
 
     private HttpService httpService;
 
@@ -59,23 +60,36 @@ public class LoginScreen extends AbstractScreen {
     private void initButtons() {
         initLoginButton();
         initNewPlayerButton();
+        initQuitButton();
 
         final float BUTTON_WIDTH = 180.0f;
         final float BUTTON_HEIGHT = 50.0f;
 
-        loginButton.setSize(BUTTON_WIDTH,BUTTON_HEIGHT);
-        newPlayerButton.setSize(BUTTON_WIDTH,BUTTON_HEIGHT);
+        loginButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        newPlayerButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        quitButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
 
-        final float X = TeleClicker.WIDTH/2 - BUTTON_WIDTH/2;
+        final float X = TeleClicker.WIDTH / 2 - BUTTON_WIDTH / 2;
         final float Y = 300.0f;
         final float INTERVAL = BUTTON_HEIGHT + 10;
 
-        loginButton.setPosition(X,Y);
-        newPlayerButton.setPosition(X,Y-INTERVAL);
+        loginButton.setPosition(X, Y);
+        newPlayerButton.setPosition(X, Y - INTERVAL);
+        quitButton.setPosition(X, Y - 2 * INTERVAL);
 
         addActor(loginButton);
         addActor(newPlayerButton);
+        addActor(quitButton);
+    }
+
+    private void initQuitButton() {
+        quitButton = new RedTextButton("Quit", new IClickCallback() {
+            @Override
+            public void onClick() {
+                Gdx.app.exit();
+            }
+        });
     }
 
     private void initNewPlayerButton() {
@@ -141,14 +155,14 @@ public class LoginScreen extends AbstractScreen {
         passwordTextField = new TextField(passwordText, skin);
         passwordTextField.setPasswordCharacter('*');
 
-        if (SettingsService.getInstance().isRemember()){
+        if (SettingsService.getInstance().isRemember()) {
             passwordTextField.setPasswordMode(true);
         }
 
         loginTextField.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (!SettingsService.getInstance().isRemember()){
+                if (!SettingsService.getInstance().isRemember()) {
                     loginTextField.setText("");
                 }
                 return super.touchDown(event, x, y, pointer, button);
@@ -158,7 +172,7 @@ public class LoginScreen extends AbstractScreen {
         passwordTextField.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (!SettingsService.getInstance().isRemember()){
+                if (!SettingsService.getInstance().isRemember()) {
                     passwordTextField.setText("");
                 }
                 passwordTextField.setPasswordMode(true);
@@ -173,7 +187,7 @@ public class LoginScreen extends AbstractScreen {
         loginTextField.setPosition(X, START_Y);
         passwordTextField.setPosition(X, START_Y - INTERVAL);
         //rememberChceckbox position
-        rememberCheckbox.setPosition(X,START_Y-INTERVAL - passwordTextField.getHeight());
+        rememberCheckbox.setPosition(X, START_Y - INTERVAL - passwordTextField.getHeight());
 
         addActor(loginTextField);
         addActor(passwordTextField);
@@ -191,7 +205,7 @@ public class LoginScreen extends AbstractScreen {
         responseLabel = new Label("Response", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
         responseLabel.setPosition(10, 550);
 
-        statusLabel = new Label("Status", new Label.LabelStyle(FontService.getFont(), Color.BLACK));
+        statusLabel = new MyLabel("Status");
         statusLabel.setPosition(10, 500);
 
         addActor(responseLabel);

@@ -99,25 +99,17 @@ public class NewPlayerScreen extends AbstractScreen {
                     @Override
                     public void run() {
                         DBStatusEnum status = httpService.getStatus();
-                        switch (status) {
-                            case CONNECTING:
-                                statusLabel.setText("Connecting to server.");
-                                statusLabel.setColor(Color.BLACK);
-                                break;
-                            case SUCCES:
-                                updateStatusLabel(httpService.getResponsStr());
-                                timer.clear();
-                                break;
-                            case AUTHORIZATION_FAILED:
-                                statusLabel.setText("Authorization failed.");
-                                statusLabel.setColor(Color.RED);
-                                timer.clear();
-                                break;
-                            default:
-                                statusLabel.setText("We're sorry. Unrecognized error.");
-                                statusLabel.setColor(Color.RED);
-                                timer.clear();
-                                break;
+
+                        if (status == DBStatusEnum.SUCCES){
+                            updateStatusLabel(httpService.getResponsStr());
+                        }
+                        else {
+                            statusLabel.setText(status.toString());
+                            statusLabel.setColor(status.getMessageColor());
+                        }
+
+                        if(status != DBStatusEnum.CONNECTING){
+                            timer.clear();
                         }
                     }
                 }, 0, 1);
@@ -130,50 +122,8 @@ public class NewPlayerScreen extends AbstractScreen {
         PlayerStats playerStats = json.fromJson(PlayerStats.class, responsStr);
         DBStatusEnum statusEnum = DBStatusEnum.valueOf(playerStats.getStatus());
 
-        System.out.println(statusEnum.toString());
-
-        String statusString = "";
-        switch (statusEnum) {
-            case AUTHORIZATION_FAILED:
-                statusString = "Authorization error.";
-                statusLabel.setColor(Color.RED);
-                break;
-            case PLAYER_ADDED:
-                statusString = "Player successfully added.";
-                statusLabel.setColor(Color.GREEN);
-                break;
-            case FAILED:
-                statusString = "we're sorry. Connection ends with 'fail error'.\n" +
-                        "Try again later.";
-                statusLabel.setColor(Color.RED);
-                break;
-            case CANCELLED:
-                statusString = "Connection was cancelled. Try again.";
-                statusLabel.setColor(Color.RED);
-                break;
-            case PLAYER_ALREADY_EXIST:
-                statusString = "Player with this login already exists.";
-                statusLabel.setColor(Color.RED);
-                break;
-            case LOGIN_IS_NULL:
-                statusString = "Login is required.";
-                statusLabel.setColor(Color.RED);
-                break;
-            case EMAIL_IS_NULL:
-                statusString = "E-mail is required.";
-                statusLabel.setColor(Color.RED);
-                break;
-            case PASSWORD_IS_NULL:
-                statusString = "Password is required.";
-                statusLabel.setColor(Color.RED);
-                break;
-            default:
-                statusString = "We're sorry. Unrecognized error.";
-                statusLabel.setColor(Color.RED);
-                break;
-        }
-
-        statusLabel.setText(statusString);
+        statusLabel.setText(statusEnum.toString());
+        statusLabel.setColor(statusEnum.getMessageColor());
     }
 
     private void initTextFields() {
