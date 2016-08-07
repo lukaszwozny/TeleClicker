@@ -35,6 +35,12 @@ public abstract class MyTextButton extends Group {
         initListener(calback);
     }
 
+    public void changeDrawables(Drawable up, Drawable down){
+        upDrawable = up;
+        downDrawable = down;
+        image.setDrawable(downDrawable);
+    }
+
     @Override
     public void setSize(float width, float height) {
         super.setSize(width, height);

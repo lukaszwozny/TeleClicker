@@ -1,23 +1,31 @@
-package com.mygdx.teleclicker.ui;
+package com.mygdx.teleclicker.ui.Buttons;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.teleclicker.TeleClicker;
+import com.mygdx.teleclicker.ui.IClickCallback;
 
 /**
  * Created by Senpai on 22.07.2016.
  */
-public class CornerPhoneButton extends Button {
-    public CornerPhoneButton(final IClickCallback callback){
+public class CloseSettingsButton extends Button {
+    private final int WIDTH = 42;
+    private final int HEIGHT = 42;
+
+    private final int START_X = TeleClicker.WIDTH-WIDTH;
+    private final int START_Y = TeleClicker.HEIGHT-HEIGHT;
+
+    public CloseSettingsButton(final IClickCallback callback) {
         super(new ButtonStyle());
         init(callback);
     }
 
     private void init(final IClickCallback callback) {
-        this.setWidth(100);
-        this.setHeight(70);
-        this.setX(0);
-        this.setY(0);
+        this.setWidth(WIDTH);
+        this.setHeight(HEIGHT);
+        this.setX(START_X);
+        this.setY(START_Y);
 
         this.addListener(new ClickListener(){
             @Override
@@ -26,6 +34,5 @@ public class CornerPhoneButton extends Button {
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
-
     }
 }

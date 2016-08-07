@@ -10,25 +10,25 @@ public enum FlyingObjectTypeEnum {
     MONEY {
         @Override
         public Texture getTexture() {
-            return Assets.getInstance().manager.get(AssetsEnum.MONEY_TEX.toString());
+            return AssetsEnum.MONEY_TEX.getAsset();
         }
     },
     MONEY_DOWN {
         @Override
         public Texture getTexture() {
-            return Assets.getInstance().manager.get(AssetsEnum.BOMB_TEX.toString());
+            return AssetsEnum.BOMB_TEX.getAsset();
         }
     },
     PASSIVE {
         @Override
         public Texture getTexture() {
-            return Assets.getInstance().manager.get(AssetsEnum.DIAMOND_TEX.toString());
+            return AssetsEnum.DIAMOND_TEX.getAsset();
         }
     },
     PASSIVE_DOWN {
         @Override
         public Texture getTexture() {
-            return Assets.getInstance().manager.get(AssetsEnum.JEW_TEX.toString());
+            return AssetsEnum.JEW_TEX.getAsset();
         }
     };
 

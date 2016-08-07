@@ -82,13 +82,13 @@ public class ShopEntry extends Group {
     }
 
     private static void prepareResetButtonStyle() {
-        TextureAtlas atlasRed = Assets.getInstance().manager.get(AssetsEnum.RED_ATLAS.toString());
+        TextureAtlas atlasRed = AssetsEnum.RED_ATLAS.getAsset();
         Skin skinRed = new Skin(atlasRed);
         buttonStyleRed = new Button.ButtonStyle();
         buttonStyleRed.up = skinRed.getDrawable("button_04");
         buttonStyleRed.down = skinRed.getDrawable("button_02");
 
-        TextureAtlas atlasGreen = Assets.getInstance().manager.get(AssetsEnum.GREEN_ATLAS.toString());
+        TextureAtlas atlasGreen = AssetsEnum.GREEN_ATLAS.getAsset();
         Skin skinGreen = new Skin(atlasGreen);
         buttonStyleGreen = new Button.ButtonStyle();
         buttonStyleGreen.up = skinGreen.getDrawable("button_04");

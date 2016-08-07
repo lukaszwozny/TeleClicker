@@ -1,10 +1,11 @@
-package com.mygdx.teleclicker.ui;
+package com.mygdx.teleclicker.ui.Buttons;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.teleclicker.Service.SettingsService;
 import com.mygdx.teleclicker.Service.SoundService;
+import com.mygdx.teleclicker.ui.IClickCallback;
 
 /**
  * Created by Senpai on 11.07.2016.

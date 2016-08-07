@@ -35,7 +35,7 @@ public class Player extends Image {
     }
 
     private static Texture getPlayerTexture(){
-        return Assets.getInstance().manager.get(AssetsEnum.PLAYER_TEX.toString());
+        return AssetsEnum.PLAYER_TEX.getAsset();
     }
 
     public void reactOnClick(){

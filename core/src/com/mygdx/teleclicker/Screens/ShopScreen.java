@@ -13,7 +13,7 @@ import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.ShopEntry;
-import com.mygdx.teleclicker.ui.CloseShopButton;
+import com.mygdx.teleclicker.ui.Buttons.CloseShopButton;
 import com.mygdx.teleclicker.ui.IClickCallback;
 
 /**
@@ -101,7 +101,7 @@ public class ShopScreen extends AbstractScreen {
 
     @Override
     public void initBgTexture() {
-        bgTexture = Assets.getInstance().manager.get(AssetsEnum.SHOP_BG.toString());
+        bgTexture = AssetsEnum.SHOP_BG.getAsset();
         addActor(new Image(bgTexture));
     }
 

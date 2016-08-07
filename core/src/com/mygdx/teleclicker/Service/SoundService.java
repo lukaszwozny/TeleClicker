@@ -41,13 +41,13 @@ public class SoundService {
 
 
     private void init() {
-        popSound = Assets.getInstance().manager.get(AssetsEnum.POP_SOUND.toString());
-        cashRegisterSound = Assets.getInstance().manager.get(AssetsEnum.CASH_REGISTER_SOUND.toString());
-        evilLaughJewSound = Assets.getInstance().manager.get(AssetsEnum.EVIL_LAUGH_SOUND.toString());
-        bombExplosionSound = Assets.getInstance().manager.get(AssetsEnum.BOMP_EXPLOSION_SOUND.toString());
-        clickSound = Assets.getInstance().manager.get(AssetsEnum.CLICK_SOUND_1.toString());
+        popSound = AssetsEnum.POP_SOUND.getAsset();
+        cashRegisterSound = AssetsEnum.CASH_REGISTER_SOUND.getAsset();
+        evilLaughJewSound = AssetsEnum.EVIL_LAUGH_SOUND.getAsset();
+        bombExplosionSound = AssetsEnum.BOMP_EXPLOSION_SOUND.getAsset();
+        clickSound = AssetsEnum.CLICK_SOUND_1.getAsset();
 
-        caketownMusic = Assets.getInstance().manager.get(AssetsEnum.CAKETOWN_MUSIC.toString());
+        caketownMusic = AssetsEnum.CAKETOWN_MUSIC.getAsset();
     }
 
     public void playPopSound() {

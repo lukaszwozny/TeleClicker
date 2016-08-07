@@ -42,7 +42,7 @@ public class SettingsButton extends ImageButton {
     }
 
     private static Drawable prepareSkin() {
-        Texture tex = Assets.getInstance().manager.get(AssetsEnum.SETTINGS_TEX.toString());
+        Texture tex = AssetsEnum.SETTINGS_TEX.getAsset();
         Image img = new Image(tex);
         return img.getDrawable();
     }

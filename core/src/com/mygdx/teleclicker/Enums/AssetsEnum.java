@@ -1,5 +1,7 @@
 package com.mygdx.teleclicker.Enums;
 
+import com.mygdx.teleclicker.Core.Assets;
+
 /**
  * Created by Senpai on 21.07.2016.
  */
@@ -55,5 +57,9 @@ public enum AssetsEnum {
     @Override
     public String toString() {
         return dir;
+    }
+
+    public synchronized <T> T getAsset(){
+        return Assets.getInstance().manager.get(toString());
     }
 }

@@ -212,8 +212,7 @@ public class LoginScreen extends AbstractScreen {
     @Override
     public void initBgTexture() {
         // ToDo Change background
-        bgTexture = Assets.getInstance().manager
-                .get(AssetsEnum.SETTINGS_BG.toString());
+        bgTexture = AssetsEnum.SETTINGS_BG.getAsset();
         addActor(new Image(bgTexture));
     }
 

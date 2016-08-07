@@ -69,7 +69,7 @@ public class EventDialog extends Group {
     }
 
     private void initDialogBox() {
-        Texture dialogBoxTex = Assets.getInstance().manager.get(AssetsEnum.DIALOG_BOG_TEX.toString());
+        Texture dialogBoxTex = AssetsEnum.DIALOG_BOG_TEX.getAsset();
         dialogBox = new Image(dialogBoxTex);
         addActor(dialogBox);
     }

@@ -32,7 +32,7 @@ public class CornerPhone extends Image {
     }
 
     public static Texture getPhoneTexture() {
-        return Assets.getInstance().manager.get(AssetsEnum.PHONE_OFF_TEX.toString());
+        return AssetsEnum.PHONE_OFF_TEX.getAsset();
     }
 
     public void reactOnClick(){
@@ -42,13 +42,13 @@ public class CornerPhone extends Image {
     private void changeTexture() {
         Texture newTexture;
         if(isOff){
-            newTexture = Assets.getInstance().manager.get(AssetsEnum.PHONE_ON_TEX.toString());
+            newTexture = AssetsEnum.PHONE_ON_TEX.getAsset();
             this.setWidth(WIDTH_ON);
             this.setHeight(HEIGHT_ON);
             this.setDrawable(new SpriteDrawable(new Sprite(newTexture)));
             isOff = false;
         } else {
-            newTexture = Assets.getInstance().manager.get(AssetsEnum.PHONE_OFF_TEX.toString());
+            newTexture = AssetsEnum.PHONE_OFF_TEX.getAsset();
             this.setWidth(WIDTH_OFF);
             this.setHeight(HEIGHT_OFF);
             this.setDrawable(new SpriteDrawable(new Sprite(newTexture)));

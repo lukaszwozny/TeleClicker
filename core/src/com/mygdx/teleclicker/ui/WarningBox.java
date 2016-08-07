@@ -34,8 +34,8 @@ public class WarningBox extends Group {
     }
 
     private final void initButtons(final IWarningCallback callback) {
-        Texture buttonYesTex = Assets.getInstance().manager.get(AssetsEnum.BUTTON_YES_TEX.toString());
-        Texture buttonNoTex = Assets.getInstance().manager.get(AssetsEnum.BUTTON_NO_TEX.toString());
+        Texture buttonYesTex = AssetsEnum.BUTTON_YES_TEX.getAsset();
+        Texture buttonNoTex = AssetsEnum.BUTTON_NO_TEX.getAsset();
 
         buttonYes = new Image(buttonYesTex);
         buttonNo = new Image(buttonNoTex);
@@ -94,7 +94,7 @@ public class WarningBox extends Group {
     }
 
     private void initImages() {
-        Texture bgTexture = Assets.getInstance().manager.get(AssetsEnum.WARNING_BG.toString());
+        Texture bgTexture = AssetsEnum.WARNING_BG.getAsset();
         bgImage = new Image(bgTexture);
     }
 }

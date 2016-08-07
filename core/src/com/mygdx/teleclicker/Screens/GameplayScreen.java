@@ -27,7 +27,7 @@ public class GameplayScreen extends AbstractScreen {
     private Player player;
     private PlayerButton playerButton;
     private CornerPhone cornerPhone;
-    private CornerPhoneButton cornerPhoneButton;
+    private com.mygdx.teleclicker.ui.Buttons.CornerPhoneButton cornerPhoneButton;
     private SettingsButton settingsButton;
 
     public GameplayScreen(){
@@ -38,7 +38,7 @@ public class GameplayScreen extends AbstractScreen {
 
     @Override
     public void initBgTexture() {
-        bgTexture = Assets.getInstance().manager.get(AssetsEnum.GAMEPLAY_BG.toString());
+        bgTexture = AssetsEnum.GAMEPLAY_BG.getAsset();
         addActor(new Image(bgTexture));
     }
 
@@ -64,7 +64,7 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initCornerPhoneButton() {
-        cornerPhoneButton = new CornerPhoneButton(new IClickCallback() {
+        cornerPhoneButton = new com.mygdx.teleclicker.ui.Buttons.CornerPhoneButton(new IClickCallback() {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();

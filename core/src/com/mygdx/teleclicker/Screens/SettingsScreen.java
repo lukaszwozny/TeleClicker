@@ -16,7 +16,7 @@ import com.mygdx.teleclicker.ui.*;
  * Created by Senpai on 22.07.2016.
  */
 public class SettingsScreen extends AbstractScreen {
-    private CloseSettingsButton closeButton;
+    private com.mygdx.teleclicker.ui.Buttons.CloseSettingsButton closeButton;
 
     private CheckboxLabel checkboxMusic;
     private CheckboxLabel checkboxSound;
@@ -118,7 +118,7 @@ public class SettingsScreen extends AbstractScreen {
     }
 
     private void initCloseButton() {
-        closeButton = new CloseSettingsButton(new IClickCallback() {
+        closeButton = new com.mygdx.teleclicker.ui.Buttons.CloseSettingsButton(new IClickCallback() {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
@@ -130,7 +130,7 @@ public class SettingsScreen extends AbstractScreen {
 
     @Override
     public void initBgTexture() {
-        bgTexture = Assets.getInstance().manager.get(AssetsEnum.SETTINGS_BG.toString());
+        bgTexture = AssetsEnum.SETTINGS_BG.getAsset();
         addActor(new Image(bgTexture));
     }
 
