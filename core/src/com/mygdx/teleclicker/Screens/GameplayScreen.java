@@ -1,5 +1,7 @@
 package com.mygdx.teleclicker.Screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -32,6 +34,7 @@ public class GameplayScreen extends AbstractScreen {
 
     public GameplayScreen(){
         super();
+        Gdx.input.setCatchBackKey(true);
         FlyingObjectController.getInstance().Initialize(this);
         RandomEventsController.getInstance().Initialize(this);
     }
@@ -40,6 +43,16 @@ public class GameplayScreen extends AbstractScreen {
     public void initBgTexture() {
         bgTexture = AssetsEnum.GAMEPLAY_BG.getAsset();
         addActor(new Image(bgTexture));
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        switch (keyCode){
+            case Input.Keys.BACK:
+                Gdx.app.exit();
+                break;
+        }
+        return false;
     }
 
     @Override

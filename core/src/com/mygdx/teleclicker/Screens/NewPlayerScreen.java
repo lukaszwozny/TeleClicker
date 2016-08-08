@@ -1,6 +1,7 @@
 package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -36,6 +37,20 @@ public class NewPlayerScreen extends AbstractScreen {
     private MyTextField passwordTextField;
 
     private Skin skin;
+
+    public NewPlayerScreen(){
+        Gdx.input.setCatchBackKey(true);
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        switch (keyCode){
+            case Input.Keys.BACK:
+                ScreenService.getInstance().setScreen(ScreenEnum.LOGIN);
+                break;
+        }
+        return false;
+    }
 
     @Override
     public void buildStage() {

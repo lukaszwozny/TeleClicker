@@ -1,5 +1,7 @@
 package com.mygdx.teleclicker.Screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -40,6 +42,17 @@ public class ShopScreen extends AbstractScreen {
         initScoreLabels();
         initCloseShopButton();
         initShopEntrys();
+        Gdx.input.setCatchBackKey(true);
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        switch (keyCode){
+            case Input.Keys.BACK:
+                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
+                break;
+        }
+        return false;
     }
 
     // ToDo Move to shop entry manager

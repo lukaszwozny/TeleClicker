@@ -1,5 +1,6 @@
 package com.mygdx.teleclicker;
 
+import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -32,6 +33,7 @@ public class TeleClicker extends Game {
         super.pause();
         ScoreService.getInstance().saveCurrentGameState();
         SettingsService.getInstance().saveCurrentSettingsState();
+        Assets.getInstance().dispose();
     }
 
     @Override

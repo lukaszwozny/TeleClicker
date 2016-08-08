@@ -1,5 +1,7 @@
 package com.mygdx.teleclicker.Screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
@@ -21,6 +23,17 @@ public class SplashScreen extends AbstractScreen {
                 ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
             }
         },2);
+        Gdx.input.setCatchBackKey(true);
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        switch (keyCode){
+            case Input.Keys.BACK:
+                Gdx.app.exit();
+                break;
+        }
+        return false;
     }
 
     @Override

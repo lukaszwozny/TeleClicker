@@ -1,5 +1,7 @@
 package com.mygdx.teleclicker.Screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Core.Assets;
@@ -12,6 +14,8 @@ import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.*;
 
+import java.util.Set;
+
 /**
  * Created by Senpai on 22.07.2016.
  */
@@ -23,6 +27,20 @@ public class SettingsScreen extends AbstractScreen {
 
     private MyTextButton resetScoreButton;
     private WarningBox resetScoreWarningBox;
+
+    public SettingsScreen(){
+        Gdx.input.setCatchBackKey(true);
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        switch (keyCode){
+            case Input.Keys.BACK:
+                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
+                break;
+        }
+        return false;
+    }
 
     @Override
     public void buildStage() {

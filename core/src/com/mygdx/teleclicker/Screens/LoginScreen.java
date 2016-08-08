@@ -1,7 +1,9 @@
 package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
@@ -26,7 +28,6 @@ import com.mygdx.teleclicker.ui.*;
  * Created by Senpai on 01/08/2016.
  */
 public class LoginScreen extends AbstractScreen {
-    private Label responseLabel;
     private MyLabel statusLabel;
 
     private MyTextButton loginButton;
@@ -43,6 +44,20 @@ public class LoginScreen extends AbstractScreen {
     private Skin skin;
 
     private PlayerStats playerStats;
+
+    public LoginScreen(){
+        Gdx.input.setCatchBackKey(true);
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        switch (keyCode){
+            case Input.Keys.BACK:
+                Gdx.app.exit();
+                break;
+        }
+        return false;
+    }
 
     @Override
     public void buildStage() {
@@ -105,7 +120,6 @@ public class LoginScreen extends AbstractScreen {
     private void initRememberCheckbox() {
         rememberCheckbox = new CheckBox(" Remember me", skin);
 
-        System.out.println(SettingsService.getInstance().isRemember());
         rememberCheckbox.setChecked(SettingsService.getInstance().isRemember());
         rememberCheckbox.addListener(new InputListener() {
             @Override
@@ -212,7 +226,8 @@ public class LoginScreen extends AbstractScreen {
     @Override
     public void initBgTexture() {
         // ToDo Change background
-        bgTexture = AssetsEnum.SETTINGS_BG.getAsset();
+//        bgTexture = AssetsEnum.SETTINGS_BG.getAsset();
+        bgTexture = new Texture(Gdx.files.internal("img/bg/settings_bg.png"));
         addActor(new Image(bgTexture));
     }
 
