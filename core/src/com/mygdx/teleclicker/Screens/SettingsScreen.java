@@ -13,6 +13,7 @@ import com.mygdx.teleclicker.Service.SettingsService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.*;
+import org.omg.CORBA.INTERNAL;
 
 import java.util.Set;
 
@@ -20,12 +21,12 @@ import java.util.Set;
  * Created by Senpai on 22.07.2016.
  */
 public class SettingsScreen extends AbstractScreen {
-    private com.mygdx.teleclicker.ui.Buttons.CloseSettingsButton closeButton;
-
     private CheckboxLabel checkboxMusic;
     private CheckboxLabel checkboxSound;
 
+    private MyTextButton closeButton;
     private MyTextButton resetScoreButton;
+
     private WarningBox resetScoreWarningBox;
 
     public SettingsScreen(){
@@ -45,9 +46,30 @@ public class SettingsScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         initBgTexture();
-        initCloseButton();
         initCheckboxes();
+
+        initButtons();
+    }
+
+    private void initButtons() {
+        initCloseButton();
         initResetScoreButton();
+
+        final int WIDTH = 150;
+        final int HEIGHT = 70;
+
+        final int X = TeleClicker.WIDTH / 2 - WIDTH / 2;
+        final int Y = 300;
+        final int NTERVAL = HEIGHT + 20;
+
+        closeButton.setSize(WIDTH,HEIGHT);
+        resetScoreButton.setSize(WIDTH,HEIGHT);
+
+        closeButton.setPosition(X, Y);
+        resetScoreButton.setPosition(X, Y - 3* NTERVAL);
+
+        addActor(closeButton);
+        addActor(resetScoreButton);
     }
 
     private void initResetScoreWarningBox() {
@@ -84,10 +106,6 @@ public class SettingsScreen extends AbstractScreen {
                 initResetScoreWarningBox();
             }
         });
-
-        resetScoreButton.setSize(150,70);
-        resetScoreButton.setPosition(TeleClicker.WIDTH / 2 - resetScoreButton.getWidth() / 2, 50);
-        addActor(resetScoreButton);
     }
 
     private void initCheckboxes() {
@@ -136,7 +154,7 @@ public class SettingsScreen extends AbstractScreen {
     }
 
     private void initCloseButton() {
-        closeButton = new com.mygdx.teleclicker.ui.Buttons.CloseSettingsButton(new IClickCallback() {
+        closeButton = new RedTextButton("Back", new IClickCallback() {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
