@@ -95,6 +95,7 @@ public class Assets implements Disposable {
 
     public static Assets getInstance() {
         if(instance == null){
+            System.out.println("Assets == null");
             instance = new Assets();
         }
         return instance;

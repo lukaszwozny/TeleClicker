@@ -248,7 +248,6 @@ public class LoginScreen extends AbstractScreen {
         if(status != null){
             statusLabel.setText(status.toString());
             statusLabel.setColor(status.getMessageColor());
-
         }
 
         if (ScoreService.getInstance().isLoaded()) {
