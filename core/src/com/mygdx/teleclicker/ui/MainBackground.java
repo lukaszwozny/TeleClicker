@@ -10,25 +10,26 @@ import com.mygdx.teleclicker.TeleClicker;
 /**
  * Created by Senpai on 09/08/2016.
  */
-public class LoginBackground extends Group {
+public class MainBackground extends Group {
     private Image partImage;
+    private Group star;
 
     public enum Direction {
         CLOCKWISE,
         COUNTER_CLOSKWISE
     }
 
-    public LoginBackground() {
+    public MainBackground() {
         this(Direction.CLOCKWISE);
     }
 
-    public LoginBackground(Direction direction) {
+    public MainBackground(Direction direction) {
         initPartImage();
         initRotation(direction);
     }
 
     private void initRotation(final Direction direction) {
-        setOrigin(TeleClicker.WIDTH / 2, TeleClicker.HEIGHT / 2);
+        star.setOrigin(TeleClicker.WIDTH / 2, TeleClicker.HEIGHT / 2);
         Timer timer = new Timer();
 
         final float ROTATE_SPEED = 0.2f;
@@ -36,15 +37,19 @@ public class LoginBackground extends Group {
             @Override
             public void run() {
                 if (direction == Direction.CLOCKWISE)
-                    rotateBy(ROTATE_SPEED);
+                    star.rotateBy(ROTATE_SPEED);
                 else
-                    rotateBy(-ROTATE_SPEED);
+                    star.rotateBy(-ROTATE_SPEED);
             }
         }, 0.030f, 0.030f);
     }
 
     private void initPartImage() {
+        Texture purpleBg = new Texture(Gdx.files.internal("img/bg/purple_bg.png"));
+        addActor(new Image(purpleBg));
+
         Texture tex = new Texture(Gdx.files.internal("img/bg/spin_wheel_part.png"));
+        star = new Group();
 
         float rotation = 0f;
         final float PART_NUMBER = 25f;
@@ -54,9 +59,10 @@ public class LoginBackground extends Group {
             partImage.setOrigin(partImage.getWidth(), 0);
             partImage.setPosition(TeleClicker.WIDTH / 2 - partImage.getWidth(), TeleClicker.HEIGHT / 2);
             partImage.rotateBy(rotation);
-            addActor(partImage);
+            star.addActor(partImage);
 
             rotation += 360.f / PART_NUMBER;
         }
+        addActor(star);
     }
 }

@@ -2,22 +2,12 @@ package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
-import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Entities.PlayerStats;
-import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.*;
@@ -225,13 +215,8 @@ public class LoginScreen extends AbstractScreen {
 
     @Override
     public void initBgTexture() {
-        // ToDo Change background
-        bgTexture = new Texture(Gdx.files.internal("img/bg/purple_bg.png"));
-        addActor(new Image(bgTexture));
-
-        LoginBackground loginBackground = new LoginBackground();
-
-        addActor(loginBackground);
+        MainBackground mainBackground = new MainBackground();
+        addActor(mainBackground);
     }
 
     @Override

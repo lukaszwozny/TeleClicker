@@ -20,6 +20,7 @@ import com.mygdx.teleclicker.ui.Buttons.CornerPhoneButton;
 import com.mygdx.teleclicker.ui.Buttons.MyImageButton;
 import com.mygdx.teleclicker.ui.Buttons.StatsButton;
 import com.mygdx.teleclicker.ui.IClickCallback;
+import com.mygdx.teleclicker.ui.MainBackground;
 import com.mygdx.teleclicker.ui.PlayerButton;
 import com.mygdx.teleclicker.ui.SettingsButton;
 
@@ -90,8 +91,8 @@ public class GameplayScreen extends AbstractScreen {
 
     @Override
     public void initBgTexture() {
-        bgTexture = AssetsEnum.GAMEPLAY_BG.getAsset();
-        addActor(new Image(bgTexture));
+        MainBackground mainBackground = new MainBackground(MainBackground.Direction.COUNTER_CLOSKWISE);
+        addActor(mainBackground);
     }
 
     @Override
