@@ -37,6 +37,12 @@ public enum ScreenEnum {
             return new ShopScreen();
         }
     },
+    STATS {
+        @Override
+        public AbstractScreen getScreen() {
+            return new StatsScreen();
+        }
+    },
     SETTINGS {
         @Override
         public AbstractScreen getScreen() {

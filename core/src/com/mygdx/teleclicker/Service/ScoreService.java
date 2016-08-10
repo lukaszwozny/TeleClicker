@@ -35,13 +35,22 @@ public class ScoreService {
     private static ScoreService instance;
 
     // For the "remember me" option
-    private String lastLogin = "TTT";
-    private String lastPassword = "DDD";
+    private String lastLogin;
+    private String lastPassword;
 
     private float points;
     private float pointsPerSec;
     private float pointsPerClick = 1.0f;
     private float passiveIncomeTimeInHour;
+    private long playTimeSec;
+
+    private int clickSpeedPerSec;
+    private int clickSpeedPerMinute;
+
+    // Highscore
+    private int bestTimeInGame;
+    private int bestClckSpeedPerSec;
+    private int bestClckSpeedPerMinute;
 
     private long delayTime;
 
@@ -50,7 +59,6 @@ public class ScoreService {
     private int numberOfPointsPerClickPBuys;
     private int numberOfPointsPerSecBuys;
 
-    private int clickSpeed;
 
     private Preferences prefs;
 
@@ -66,8 +74,8 @@ public class ScoreService {
         initTimer();
     }
 
-    public void saveStatsOnServer() {
-        System.out.println(Player.ID);
+    public void checkHighscore(){
+
     }
 
     public void saveStats() {
@@ -111,7 +119,6 @@ public class ScoreService {
         playerStats.setNumberOfPointsPerClickPBuys(numberOfPointsPerClickPBuys);
         playerStats.setNumberOfPointsPerSecBuys(numberOfPointsPerSecBuys);
     }
-
 
     private void loadStatsFromPlayerStats(PlayerStats pStats) {
         points = pStats.getPoints();
@@ -205,6 +212,15 @@ public class ScoreService {
         }, 1, 0.1f);
     }
 
+    public void initPlayTimeTimer(){
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                playTimeSec++;
+            }
+        },1,1);
+    }
+
     public static ScoreService getInstance() {
         if (instance == null) {
             instance = new ScoreService();
@@ -231,13 +247,28 @@ public class ScoreService {
     }
 
     public void addClickSpeed(){
-        clickSpeed++;
+        clickSpeedPerSec++;
+        clickSpeedPerMinute++;
+
+        if(clickSpeedPerSec > bestClckSpeedPerSec)
+            bestClckSpeedPerSec = clickSpeedPerSec;
+        if(clickSpeedPerMinute > bestClckSpeedPerMinute)
+            bestClckSpeedPerMinute = clickSpeedPerMinute;
+
+        // Remove after sec
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                clickSpeed--;
+                clickSpeedPerSec--;
             }
         },1);
+        // Remove after minute
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                clickSpeedPerMinute--;
+            }
+        },60);
     }
 
     public void addPoint() {
@@ -299,10 +330,28 @@ public class ScoreService {
         prefs.flush();
     }
 
+    public long getPlayTimeSec() {
+        return playTimeSec;
+    }
+
+    public int getBestTimeInGame() {
+        return bestTimeInGame;
+    }
+
+    public int getBestClckSpeedPerSec() {
+        return bestClckSpeedPerSec;
+    }
+
+    public int getBestClckSpeedPerMinute() {
+        return bestClckSpeedPerMinute;
+    }
+
     /**
      * ---------------------
      * getters and setters
      */
+
+
 
     public boolean isLoaded() {
         return isLoaded;
@@ -360,7 +409,11 @@ public class ScoreService {
         points *= multiplier;
     }
 
-    public int getClickSpeed() {
-        return clickSpeed;
+    public int getClickSpeedPerSec() {
+        return clickSpeedPerSec;
+    }
+
+    public int getClickSpeedPerMinute() {
+        return clickSpeedPerMinute;
     }
 }

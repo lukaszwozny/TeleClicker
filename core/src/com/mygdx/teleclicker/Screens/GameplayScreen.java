@@ -3,13 +3,11 @@ package com.mygdx.teleclicker.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.teleclicker.Controllers.FlyingObjectController;
 import com.mygdx.teleclicker.Controllers.RandomEventsController;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Entities.Player;
-import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.FontService;
 import com.mygdx.teleclicker.Service.ScoreService;
@@ -41,6 +39,7 @@ public class GameplayScreen extends AbstractScreen {
     public GameplayScreen() {
         super();
         Gdx.input.setCatchBackKey(true);
+        ScoreService.getInstance().initPlayTimeTimer();
         FlyingObjectController.getInstance().Initialize(this);
         RandomEventsController.getInstance().Initialize(this);
     }
@@ -84,7 +83,7 @@ public class GameplayScreen extends AbstractScreen {
         statsButton = new StatsButton(new IClickCallback() {
             @Override
             public void onClick() {
-                System.out.println("Whoo");
+                ScreenService.getInstance().setScreen(ScreenEnum.STATS);
             }
         });
     }
@@ -157,7 +156,8 @@ public class GameplayScreen extends AbstractScreen {
     private void updateScoreLabel() {
         scoreLabel.setText("Erlangi: " + ScoreService.getInstance().getPoints() + "\n" +
                 "Per sec: " + ScoreService.getInstance().getPointsPerSec() + "\n" +
-                "Click speed: " + ScoreService.getInstance().getClickSpeed());
+                "Click speed: " + ScoreService.getInstance().getClickSpeedPerSec()+"\n" +
+                "Playtime: " + ScoreService.getInstance().getPlayTimeSec());
     }
 
     @Override

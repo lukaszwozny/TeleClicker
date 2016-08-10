@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
 import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.Enums.DBStatusEnum;
@@ -13,6 +15,10 @@ import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.*;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.*;
+
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Senpai on 01/08/2016.
@@ -24,8 +30,6 @@ public class LoginScreen extends AbstractScreen {
     private MyTextButton newPlayerButton;
     private MyTextButton quitButton;
 
-    private HttpService httpService;
-
     private TextField loginTextField;
     private TextField passwordTextField;
 
@@ -33,28 +37,10 @@ public class LoginScreen extends AbstractScreen {
 
     private Skin skin;
 
-    private PlayerStats playerStats;
-
-    public LoginScreen(){
-        Gdx.input.setCatchBackKey(true);
-    }
-
-    @Override
-    public boolean keyDown(int keyCode) {
-        switch (keyCode){
-            case Input.Keys.BACK:
-                Gdx.app.exit();
-                break;
-        }
-        return false;
-    }
-
     @Override
     public void buildStage() {
         initBgTexture();
         initSkin();
-
-        initHttpService();
 
         initRememberCheckbox();
         initTextFields();
@@ -200,10 +186,6 @@ public class LoginScreen extends AbstractScreen {
 
     private void initSkin() {
         skin = new Skin(Gdx.files.internal("libgdx/uiskin.json"));
-    }
-
-    private void initHttpService() {
-        httpService = new HttpService();
     }
 
     private void initLabels() {
