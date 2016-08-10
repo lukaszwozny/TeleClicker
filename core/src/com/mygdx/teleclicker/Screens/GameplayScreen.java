@@ -137,6 +137,7 @@ public class GameplayScreen extends AbstractScreen {
                 SoundService.getInstance().playClickSound();
                 player.reactOnClick();
                 ScoreService.getInstance().addPoint();
+                ScoreService.getInstance().addClickSpeed();
                 ScoreService.getInstance().increseNumberOfClick();
             }
         });
@@ -155,7 +156,8 @@ public class GameplayScreen extends AbstractScreen {
 
     private void updateScoreLabel() {
         scoreLabel.setText("Erlangi: " + ScoreService.getInstance().getPoints() + "\n" +
-                "Per sec: " + ScoreService.getInstance().getPointsPerSec());
+                "Per sec: " + ScoreService.getInstance().getPointsPerSec() + "\n" +
+                "Click speed: " + ScoreService.getInstance().getClickSpeed());
     }
 
     @Override

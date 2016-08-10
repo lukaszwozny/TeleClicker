@@ -50,6 +50,8 @@ public class ScoreService {
     private int numberOfPointsPerClickPBuys;
     private int numberOfPointsPerSecBuys;
 
+    private int clickSpeed;
+
     private Preferences prefs;
 
     private DBStatusEnum loginStatus;
@@ -228,6 +230,16 @@ public class ScoreService {
             points = 0;
     }
 
+    public void addClickSpeed(){
+        clickSpeed++;
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                clickSpeed--;
+            }
+        },1);
+    }
+
     public void addPoint() {
         points += pointsPerClick;
     }
@@ -346,5 +358,9 @@ public class ScoreService {
 
     public void multiplierPoints(float multiplier) {
         points *= multiplier;
+    }
+
+    public int getClickSpeed() {
+        return clickSpeed;
     }
 }
