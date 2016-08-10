@@ -14,6 +14,7 @@ import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
+import com.mygdx.teleclicker.ui.CashLabel;
 import com.mygdx.teleclicker.ui.ShopEntry;
 import com.mygdx.teleclicker.ui.Buttons.CloseShopButton;
 import com.mygdx.teleclicker.ui.IClickCallback;
@@ -22,6 +23,7 @@ import com.mygdx.teleclicker.ui.IClickCallback;
  * Created by Senpai on 21.07.2016.
  */
 public class ShopScreen extends AbstractScreen {
+    private CashLabel cashLabel;
 
     private Label scoreLabelPoints;
     private Label scoreLabelPointsPerClick;
@@ -39,10 +41,18 @@ public class ShopScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         initBgTexture();
+        initCashLabel();
+
         initScoreLabels();
         initCloseShopButton();
         initShopEntrys();
         Gdx.input.setCatchBackKey(true);
+    }
+
+    private void initCashLabel() {
+        cashLabel = new CashLabel();
+
+        addActor(cashLabel);
     }
 
     @Override
@@ -125,7 +135,6 @@ public class ShopScreen extends AbstractScreen {
     }
 
     private void update() {
-        updateScoreLabels();
         updateButtonsColor();
         updateShopEntrysLabels();
     }

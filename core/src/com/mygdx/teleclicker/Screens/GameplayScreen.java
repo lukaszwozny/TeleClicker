@@ -23,6 +23,8 @@ import com.mygdx.teleclicker.ui.Buttons.StatsButton;
  * Created by Senpai on 21.07.2016.
  */
 public class GameplayScreen extends AbstractScreen {
+    private CashLabel cashLabel;
+
     private Label scoreLabel;
     private Player player;
     private PlayerButton playerButton;
@@ -43,13 +45,19 @@ public class GameplayScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         initBgTexture();
-        addActor(ScoreService.getInstance().getCashLabel());
+        initCashLabel();
 
         initScoreLabel();
         initPlayer();
         initPlayerButton();
 
         initButtons();
+    }
+
+    private void initCashLabel() {
+        cashLabel = new CashLabel();
+
+        addActor(cashLabel);
     }
 
     private void initButtons() {
@@ -148,7 +156,6 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void update() {
-        updateScoreLabel();
     }
 
     private void updateScoreLabel() {

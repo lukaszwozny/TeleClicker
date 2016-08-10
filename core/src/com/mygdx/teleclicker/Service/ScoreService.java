@@ -33,8 +33,6 @@ public class ScoreService {
 
     final HttpService httpService;
 
-    private CashLabel cashLabel;
-
     private static ScoreService instance;
 
     // For the "remember me" option
@@ -75,11 +73,6 @@ public class ScoreService {
         loadPlayerStatsFromLocal();
         calculateGainedPassiveIncome();
         initTimer();
-        initCashLabel();
-    }
-
-    private void initCashLabel() {
-        cashLabel = new CashLabel();
     }
 
     public void saveStats() {
@@ -212,7 +205,6 @@ public class ScoreService {
             @Override
             public void run() {
                 points += pointsPerSec / 10;
-                cashLabel.updateCashLabel();
             }
         }, 1, 0.1f);
     }
@@ -422,7 +414,4 @@ public class ScoreService {
         return clickSpeedPerMinute;
     }
 
-    public CashLabel getCashLabel() {
-        return cashLabel;
-    }
 }
