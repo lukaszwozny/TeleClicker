@@ -14,19 +14,15 @@ import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
+import com.mygdx.teleclicker.ui.*;
 import com.mygdx.teleclicker.ui.Buttons.CornerPhoneButton;
 import com.mygdx.teleclicker.ui.Buttons.MyImageButton;
 import com.mygdx.teleclicker.ui.Buttons.StatsButton;
-import com.mygdx.teleclicker.ui.IClickCallback;
-import com.mygdx.teleclicker.ui.MainBackground;
-import com.mygdx.teleclicker.ui.PlayerButton;
-import com.mygdx.teleclicker.ui.SettingsButton;
 
 /**
  * Created by Senpai on 21.07.2016.
  */
 public class GameplayScreen extends AbstractScreen {
-
     private Label scoreLabel;
     private Player player;
     private PlayerButton playerButton;
@@ -47,6 +43,8 @@ public class GameplayScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         initBgTexture();
+        addActor(ScoreService.getInstance().getCashLabel());
+
         initScoreLabel();
         initPlayer();
         initPlayerButton();
@@ -59,7 +57,7 @@ public class GameplayScreen extends AbstractScreen {
         initStatsButton();
         initSettingsButton();
 
-        final float Y = 0;
+        final float Y = 50;
 
         cornerPhoneButton.setPosition(0, Y);
         statsButton.setPosition(TeleClicker.WIDTH / 2 - statsButton.getWidth() / 2, Y);

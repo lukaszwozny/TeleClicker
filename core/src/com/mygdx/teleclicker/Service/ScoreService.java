@@ -9,6 +9,7 @@ import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.TeleClicker;
+import com.mygdx.teleclicker.ui.CashLabel;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +32,8 @@ public class ScoreService {
     public final static String GAME_LAST_PASSWORD = "com.mygdx.clicker.prefs.lastpassword";
 
     final HttpService httpService;
+
+    private CashLabel cashLabel;
 
     private static ScoreService instance;
 
@@ -72,10 +75,11 @@ public class ScoreService {
         loadPlayerStatsFromLocal();
         calculateGainedPassiveIncome();
         initTimer();
+        initCashLabel();
     }
 
-    public void checkHighscore(){
-
+    private void initCashLabel() {
+        cashLabel = new CashLabel();
     }
 
     public void saveStats() {
@@ -208,25 +212,20 @@ public class ScoreService {
             @Override
             public void run() {
                 points += pointsPerSec / 10;
+                cashLabel.updateCashLabel();
             }
         }, 1, 0.1f);
     }
 
-    public void initPlayTimeTimer(){
+    public void initPlayTimeTimer() {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 playTimeSec++;
             }
-        },1,1);
+        }, 1, 1);
     }
 
-    public static ScoreService getInstance() {
-        if (instance == null) {
-            instance = new ScoreService();
-        }
-        return instance;
-    }
 
     private void calculateGainedPassiveIncome() {
         final float multiplier = 0.1f;
@@ -246,13 +245,13 @@ public class ScoreService {
             points = 0;
     }
 
-    public void addClickSpeed(){
+    public void addClickSpeed() {
         clickSpeedPerSec++;
         clickSpeedPerMinute++;
 
-        if(clickSpeedPerSec > bestClckSpeedPerSec)
+        if (clickSpeedPerSec > bestClckSpeedPerSec)
             bestClckSpeedPerSec = clickSpeedPerSec;
-        if(clickSpeedPerMinute > bestClckSpeedPerMinute)
+        if (clickSpeedPerMinute > bestClckSpeedPerMinute)
             bestClckSpeedPerMinute = clickSpeedPerMinute;
 
         // Remove after sec
@@ -261,14 +260,14 @@ public class ScoreService {
             public void run() {
                 clickSpeedPerSec--;
             }
-        },1);
+        }, 1);
         // Remove after minute
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 clickSpeedPerMinute--;
             }
-        },60);
+        }, 60);
     }
 
     public void addPoint() {
@@ -330,6 +329,13 @@ public class ScoreService {
         prefs.flush();
     }
 
+    public static ScoreService getInstance() {
+        if (instance == null) {
+            instance = new ScoreService();
+        }
+        return instance;
+    }
+
     public long getPlayTimeSec() {
         return playTimeSec;
     }
@@ -350,7 +356,6 @@ public class ScoreService {
      * ---------------------
      * getters and setters
      */
-
 
 
     public boolean isLoaded() {
@@ -415,5 +420,9 @@ public class ScoreService {
 
     public int getClickSpeedPerMinute() {
         return clickSpeedPerMinute;
+    }
+
+    public CashLabel getCashLabel() {
+        return cashLabel;
     }
 }

@@ -49,11 +49,11 @@ public class Assets implements Disposable {
 
     public void loadGameplayAssets(){
         // Textures
-        manager.load(AssetsEnum.GAMEPLAY_BG.toString(), Texture.class);
         manager.load(AssetsEnum.PLAYER_TEX.toString(), Texture.class);
         manager.load(AssetsEnum.PHONE_ON_TEX.toString(), Texture.class);
         manager.load(AssetsEnum.PHONE_OFF_TEX.toString(), Texture.class);
         manager.load(AssetsEnum.SETTINGS_TEX.toString(), Texture.class);
+        manager.load(AssetsEnum.CASH_LABEL.toString(), Texture.class);
 
         loadFlyingObjectAssets();
 
