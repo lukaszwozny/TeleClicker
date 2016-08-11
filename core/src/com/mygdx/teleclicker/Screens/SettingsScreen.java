@@ -52,24 +52,24 @@ public class SettingsScreen extends AbstractScreen {
     }
 
     private void initButtons() {
-        initCloseButton();
         initResetScoreButton();
+        initCloseButton();
 
         final int WIDTH = 150;
         final int HEIGHT = 70;
 
         final int X = TeleClicker.WIDTH / 2 - WIDTH / 2;
-        final int Y = 300;
+        final int Y = 10;
         final int NTERVAL = HEIGHT + 20;
 
-        closeButton.setSize(WIDTH,HEIGHT);
         resetScoreButton.setSize(WIDTH,HEIGHT);
+        closeButton.setSize(WIDTH,HEIGHT);
 
+        resetScoreButton.setPosition(X, Y + 3* NTERVAL);
         closeButton.setPosition(X, Y);
-        resetScoreButton.setPosition(X, Y - 3* NTERVAL);
 
-        addActor(closeButton);
         addActor(resetScoreButton);
+        addActor(closeButton);
     }
 
     private void initResetScoreWarningBox() {
@@ -158,7 +158,7 @@ public class SettingsScreen extends AbstractScreen {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
-                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
+                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY2);
             }
         });
         addActor(closeButton);

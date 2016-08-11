@@ -24,7 +24,7 @@ public abstract class MyTextButton extends Group {
     private Vector2 labelDownVector;
 
     public MyTextButton(IClickCallback callback) {
-        this("",callback);
+        this("", callback);
     }
 
     public MyTextButton(String text, IClickCallback calback) {
@@ -35,7 +35,7 @@ public abstract class MyTextButton extends Group {
         initListener(calback);
     }
 
-    public void changeDrawables(Drawable up, Drawable down){
+    public void changeDrawables(Drawable up, Drawable down) {
         upDrawable = up;
         downDrawable = down;
         image.setDrawable(downDrawable);
@@ -74,7 +74,6 @@ public abstract class MyTextButton extends Group {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 image.setDrawable(downDrawable);
                 label.setPosition(labelX + labelDownVector.x, labelY + labelDownVector.y);
-                calback.onClick();
                 return super.touchDown(event, x, y, pointer, button);
             }
 
@@ -82,6 +81,8 @@ public abstract class MyTextButton extends Group {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 image.setDrawable(upDrawable);
                 label.setPosition(labelX, labelY);
+                if (this.isVisualPressed())
+                    calback.onClick();
                 super.touchUp(event, x, y, pointer, button);
             }
         });
@@ -103,7 +104,7 @@ public abstract class MyTextButton extends Group {
         refreshLabelPositon();
     }
 
-    protected void refreshLabelPositon(){
+    protected void refreshLabelPositon() {
         labelX = image.getWidth() / 2 - label.getWidth() / 2;
         labelY = image.getHeight() / 2 - label.getHeight() / 2;
 

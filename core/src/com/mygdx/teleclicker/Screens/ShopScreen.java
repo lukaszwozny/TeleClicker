@@ -14,10 +14,8 @@ import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
 import com.mygdx.teleclicker.Service.SoundService;
 import com.mygdx.teleclicker.TeleClicker;
-import com.mygdx.teleclicker.ui.CashLabel;
-import com.mygdx.teleclicker.ui.ShopEntry;
+import com.mygdx.teleclicker.ui.*;
 import com.mygdx.teleclicker.ui.Buttons.CloseShopButton;
-import com.mygdx.teleclicker.ui.IClickCallback;
 
 /**
  * Created by Senpai on 21.07.2016.
@@ -29,7 +27,7 @@ public class ShopScreen extends AbstractScreen {
     private Label scoreLabelPointsPerClick;
     private Label scoreLabelPointsPerSec;
 
-    private CloseShopButton closeShopButton;
+    private MyTextButton backButton;
 
     private ShopEntry buyPointsPerSecEntry;
     private ShopEntry buyPointsPerClickEntry;
@@ -44,9 +42,37 @@ public class ShopScreen extends AbstractScreen {
         initCashLabel();
 
         initScoreLabels();
-        initCloseShopButton();
+        initButtons();
         initShopEntrys();
         Gdx.input.setCatchBackKey(true);
+    }
+
+    private void initButtons() {
+        initBackButton();
+
+        final int WIDTH = 150;
+        final int HEIGHT = 70;
+
+        final int X = TeleClicker.WIDTH / 2 - WIDTH / 2;
+        final int Y = 10;
+        final int NTERVAL = HEIGHT + 20;
+
+        backButton.setSize(WIDTH,HEIGHT);
+
+        backButton.setPosition(X, Y);
+
+        addActor(backButton);
+    }
+
+    private void initBackButton() {
+        backButton = new RedTextButton("Back", new IClickCallback() {
+            @Override
+            public void onClick() {
+                SoundService.getInstance().playClickSound();
+                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY2);
+            }
+        });
+        addActor(backButton);
     }
 
     private void initCashLabel() {
@@ -109,17 +135,6 @@ public class ShopScreen extends AbstractScreen {
         addActor(scoreLabelPoints);
         addActor(scoreLabelPointsPerClick);
         addActor(scoreLabelPointsPerSec);
-    }
-
-    private void initCloseShopButton() {
-        closeShopButton = new CloseShopButton(new IClickCallback() {
-            @Override
-            public void onClick() {
-                SoundService.getInstance().playClickSound();
-                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY2);
-            }
-        });
-        addActor(closeShopButton);
     }
 
     @Override

@@ -7,7 +7,12 @@ import com.mygdx.teleclicker.Enums.AssetsEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.ScoreService;
 import com.mygdx.teleclicker.Service.ScreenService;
+import com.mygdx.teleclicker.Service.SoundService;
+import com.mygdx.teleclicker.TeleClicker;
+import com.mygdx.teleclicker.ui.IClickCallback;
 import com.mygdx.teleclicker.ui.MyLabel;
+import com.mygdx.teleclicker.ui.MyTextButton;
+import com.mygdx.teleclicker.ui.RedTextButton;
 
 /**
  * Created by Senpai on 10/08/2016.
@@ -16,11 +21,42 @@ public class StatsScreen extends AbstractScreen {
 
     private MyLabel scores;
 
+    private MyTextButton backButton;
+
     @Override
     public void buildStage() {
         initBgTexture();
 
         initLabels();
+        initButtons();
+    }
+
+    private void initButtons() {
+        initBackButton();
+
+        final int WIDTH = 150;
+        final int HEIGHT = 70;
+
+        final int X = TeleClicker.WIDTH / 2 - WIDTH / 2;
+        final int Y = 10;
+        final int NTERVAL = HEIGHT + 20;
+
+        backButton.setSize(WIDTH,HEIGHT);
+
+        backButton.setPosition(X, Y);
+
+        addActor(backButton);
+    }
+
+    private void initBackButton() {
+        backButton = new RedTextButton("Back", new IClickCallback() {
+            @Override
+            public void onClick() {
+                SoundService.getInstance().playClickSound();
+                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY2);
+            }
+        });
+        addActor(backButton);
     }
 
     private void initLabels() {
