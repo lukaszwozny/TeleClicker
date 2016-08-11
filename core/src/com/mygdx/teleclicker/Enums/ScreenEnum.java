@@ -7,6 +7,12 @@ import com.mygdx.teleclicker.Screens.*;
  * Created by Senpai on 21.07.2016.
  */
 public enum ScreenEnum {
+    LOADING {
+        @Override
+        public AbstractScreen getScreen() {
+            return new LoadingScreen();
+        }
+    },
     SPLASH {
         @Override
         public AbstractScreen getScreen() {

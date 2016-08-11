@@ -23,9 +23,9 @@ public class TeleClicker extends Game {
 
     @Override
     public void create() {
-        SoundService.getInstance().playCaketownMusic(true);
+//        SoundService.getInstance().playCaketownMusic(true);
         ScreenService.getInstance().initialize(this);
-        ScreenService.getInstance().setScreen(ScreenEnum.LOGIN);
+        ScreenService.getInstance().setScreen(ScreenEnum.LOADING);
     }
 
     @Override

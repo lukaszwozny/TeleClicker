@@ -19,14 +19,14 @@ public class Assets implements Disposable {
 
     private Assets(){
         super();
-        loadAll();
-        manager.finishLoading();
-        if(manager.update()){
-            System.out.println("Finished loading");
-        }
+//        loadAll();
+//        manager.finishLoading();
+//        if(manager.update()){
+//            System.out.println("Finished loading");
+//        }
     }
 
-    private void loadAll() {
+    public void loadAll() {
         loadSplahAssets();
         loadGameplayAssets();
         loadShopAssets();
