@@ -33,7 +33,13 @@ public class TeleClicker extends Game {
         super.pause();
         ScoreService.getInstance().saveCurrentGameState();
         SettingsService.getInstance().saveCurrentSettingsState();
-        Assets.getInstance().dispose();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+
+//        Assets.getInstance().dispose();
     }
 
     @Override

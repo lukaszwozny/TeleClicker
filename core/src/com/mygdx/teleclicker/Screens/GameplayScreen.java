@@ -28,7 +28,7 @@ public class GameplayScreen extends AbstractScreen {
     private Label scoreLabel;
     private Player player;
     private PlayerButton playerButton;
-    private com.mygdx.teleclicker.ui.Buttons.CornerPhoneButton cornerPhoneButton;
+    private CornerPhoneButton cornerPhoneButton;
 
     private MyImageButton cornerPhone;
     private MyImageButton settingsButton;
@@ -65,7 +65,7 @@ public class GameplayScreen extends AbstractScreen {
         initStatsButton();
         initSettingsButton();
 
-        final float Y = 50;
+        final float Y = TeleClicker.HEIGHT - 110;
 
         cornerPhoneButton.setPosition(0, Y);
         statsButton.setPosition(TeleClicker.WIDTH / 2 - statsButton.getWidth() / 2, Y);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.teleclicker.Core.AbstractScreen;
+import com.mygdx.teleclicker.Core.Assets;
 import com.mygdx.teleclicker.Entities.PlayerStats;
 import com.mygdx.teleclicker.Enums.DBStatusEnum;
 import com.mygdx.teleclicker.Enums.ScreenEnum;
@@ -208,6 +209,15 @@ public class LoginScreen extends AbstractScreen {
     }
 
     @Override
+    public void resume() {
+        super.resume();
+
+        System.out.println("Login");
+        if (Assets.getInstance().manager.update())
+            System.out.println("LOADED");
+    }
+
+    @Override
     public void render(float delta) {
         super.render(delta);
         update();
@@ -215,7 +225,7 @@ public class LoginScreen extends AbstractScreen {
 
     private void update() {
         DBStatusEnum status = ScoreService.getInstance().getLoginStatus();
-        if(status != null){
+        if (status != null) {
             statusLabel.setText(status.toString());
             statusLabel.setColor(status.getMessageColor());
         }

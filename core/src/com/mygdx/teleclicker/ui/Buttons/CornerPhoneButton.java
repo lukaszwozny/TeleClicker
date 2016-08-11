@@ -17,7 +17,7 @@ public class CornerPhoneButton extends MyImageButton {
     }
 
     private static Image prepareImage() {
-        Image settingImage = new Image((Texture) AssetsEnum.PHONE_ON_TEX.getAsset());
+        Image settingImage = new Image((Texture) AssetsEnum.PHONE_OFF_TEX.getAsset());
         return settingImage;
     }
 }
