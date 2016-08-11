@@ -17,29 +17,29 @@ public class FlyingObjectController {
     private final int MIN_SPAWN_TIME_INTERVAL = 0;
     private final int MAX_SPAWN_TIME_INTERVAL = 10;
 
-    private static FlyingObjectController instance;
+    private Timer timer;
 
     private AbstractScreen screen;
 
-    private FlyingObjectController() {
+    public FlyingObjectController(AbstractScreen screen) {
+        this.screen = screen;
         initTimer();
     }
 
-    public void Initialize(AbstractScreen screen) {
-        this.screen = screen;
-    }
-
     private void initTimer() {
+        timer = new Timer();
         randomizeSpawnTime();
 
-        Timer.schedule(new Timer.Task() {
+        timer.scheduleTask(new Timer.Task() {
 
             @Override
             public void run() {
+                System.out.println("WORK");
                 boolean rand = MathUtils.randomBoolean();
-                if (rand && ScreenService.getInstance().getActualScreenEnum() == ScreenEnum.GAMEPLAY) {
+                rand = true;
+                if (rand) {
                     {
-                        Timer.schedule(new Timer.Task() {
+                        timer.scheduleTask(new Timer.Task() {
                             @Override
                             public void run() {
                                 addRandomFlyingObjectToStage();
@@ -50,6 +50,10 @@ public class FlyingObjectController {
                 }
             }
         }, 0, RANDOM_TICK_INTERVAL);
+    }
+
+    public void clearTimer(){
+        timer.clear();
     }
 
     private void addRandomFlyingObjectToStage() {
@@ -76,12 +80,5 @@ public class FlyingObjectController {
 
     private void randomizeSpawnTime() {
         spawnTime = MathUtils.random(MIN_SPAWN_TIME_INTERVAL, MAX_SPAWN_TIME_INTERVAL);
-    }
-
-    public static FlyingObjectController getInstance() {
-        if (instance == null) {
-            instance = new FlyingObjectController();
-        }
-        return instance;
     }
 }

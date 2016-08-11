@@ -38,7 +38,6 @@ public class GameplayScreen_old extends AbstractScreen {
         super();
         Gdx.input.setCatchBackKey(true);
         ScoreService.getInstance().initPlayTimeTimer();
-        FlyingObjectController.getInstance().Initialize(this);
         RandomEventsController.getInstance().Initialize(this);
     }
 

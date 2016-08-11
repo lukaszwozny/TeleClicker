@@ -36,7 +36,6 @@ public class MainBackground extends Group {
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                System.out.println(")");
                 if (direction == Direction.CLOCKWISE)
                     star.rotateBy(ROTATE_SPEED);
                 else
