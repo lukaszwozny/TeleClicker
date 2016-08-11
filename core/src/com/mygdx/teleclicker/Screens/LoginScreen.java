@@ -205,16 +205,11 @@ public class LoginScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
-        ScreenService.getInstance().setActualScreenEnum(ScreenEnum.LOGIN);
     }
 
     @Override
     public void resume() {
         super.resume();
-
-        System.out.println("Login");
-        if (Assets.getInstance().manager.update())
-            System.out.println("LOADED");
     }
 
     @Override
@@ -228,10 +223,6 @@ public class LoginScreen extends AbstractScreen {
         if (status != null) {
             statusLabel.setText(status.toString());
             statusLabel.setColor(status.getMessageColor());
-        }
-
-        if (ScoreService.getInstance().isLoaded()) {
-            ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
         }
     }
 }

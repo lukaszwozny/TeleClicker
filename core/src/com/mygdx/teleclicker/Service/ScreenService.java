@@ -12,9 +12,6 @@ public class ScreenService {
 
     private static ScreenService instance;
 
-    private AbstractScreen gameplayScreen;
-    private AbstractScreen shopScreen;
-
     private ScreenEnum actualScreenEnum;
 
     private TeleClicker game;
@@ -34,30 +31,34 @@ public class ScreenService {
 
         AbstractScreen newScreen = null;
 
-        switch (screenEnum){
-            case GAMEPLAY:
-                if(gameplayScreen == null){
-                    gameplayScreen = screenEnum.getScreen();
-                    gameplayScreen.buildStage();
-                }
-                newScreen = gameplayScreen;
-                break;
-            case SHOP:
-                if(shopScreen == null){
-                    shopScreen = screenEnum.getScreen();
-                    shopScreen.buildStage();
-                }
-                newScreen = shopScreen;
-                break;
-            default:
-                newScreen = screenEnum.getScreen();
-                newScreen.buildStage();
-                break;
-        }
+//        switch (screenEnum){
+//            case GAMEPLAY:
+//                if(gameplayScreen == null){
+//                    gameplayScreen = screenEnum.getScreen();
+//                    gameplayScreen.buildStage();
+//                }
+//                newScreen = gameplayScreen;
+//                break;
+//            case SHOP:
+//                if(shopScreen == null){
+//                    shopScreen = screenEnum.getScreen();
+//                    shopScreen.buildStage();
+//                }
+//                newScreen = shopScreen;
+//                break;
+//            default:
+//                newScreen = screenEnum.getScreen();
+//                newScreen.buildStage();
+//                break;
+//        }
+
+
+        newScreen = screenEnum.getScreen();
+        newScreen.buildStage();
         game.setScreen(newScreen);
 
         // Dispose old screen
-        if(curentScreen!=null && currentScreenEnum != ScreenEnum.GAMEPLAY && currentScreenEnum != ScreenEnum.SHOP){
+        if(curentScreen!=null){
             curentScreen.dispose();
         }
     }

@@ -23,23 +23,22 @@ public class TeleClicker extends Game {
 
     @Override
     public void create() {
-//        SoundService.getInstance().playCaketownMusic(true);
+        SoundService.getInstance().playCaketownMusic(true);
         ScreenService.getInstance().initialize(this);
-        ScreenService.getInstance().setScreen(ScreenEnum.LOADING);
+        ScreenService.getInstance().setScreen(ScreenEnum.LOGIN);
     }
 
     @Override
     public void pause() {
         super.pause();
-        ScoreService.getInstance().saveCurrentGameState();
-        SettingsService.getInstance().saveCurrentSettingsState();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-
-//        Assets.getInstance().dispose();
+        ScoreService.getInstance().saveCurrentGameState();
+        SettingsService.getInstance().saveCurrentSettingsState();
+        Assets.getInstance().dispose();
     }
 
     @Override

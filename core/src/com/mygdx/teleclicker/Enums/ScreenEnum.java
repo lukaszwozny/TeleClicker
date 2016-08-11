@@ -31,10 +31,16 @@ public enum ScreenEnum {
             return new NewPlayerScreen();
         }
     },
-    GAMEPLAY {
+    GAMEPLAY2 {
         @Override
         public AbstractScreen getScreen() {
             return new GameplayScreen();
+        }
+    },
+    GAMEPLAY {
+        @Override
+        public AbstractScreen getScreen() {
+            return new GameplayScreen_old();
         }
     },
     SHOP {

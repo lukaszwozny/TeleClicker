@@ -161,7 +161,7 @@ public class ScoreService {
                                             playerStats = pStat;
                                             loadStatsFromPlayerStats(playerStats);
                                             loginStatus = statusEnum;
-                                            ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
+                                            ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY2);
                                             statsTimer.clear();
                                             break;
                                         default:

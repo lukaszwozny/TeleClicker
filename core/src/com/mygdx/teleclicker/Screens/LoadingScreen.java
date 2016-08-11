@@ -2,6 +2,7 @@ package com.mygdx.teleclicker.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
@@ -22,6 +23,7 @@ public class LoadingScreen extends AbstractScreen {
     private Image logo;
     private Image loadingFrame;
     private Image loadingBarHidden;
+    private Image loadingBarI;
     private Image screenBg;
     private Image loadingBg;
 
@@ -47,12 +49,16 @@ public class LoadingScreen extends AbstractScreen {
 
         // Grab the regions from the atlas and create some images
         logo = new Image(atlas.findRegion("libgdx-logo"));
-        loadingFrame = new Image(atlas.findRegion("loading-frame"));
+        loadingFrame = new Image(new Texture(Gdx.files.internal("data/frame.png")));
+
         loadingBarHidden = new Image(atlas.findRegion("loading-bar-hidden"));
+
         screenBg = new Image(atlas.findRegion("screen-bg"));
         loadingBg = new Image(atlas.findRegion("loading-frame-bg"));
 
         // Add the loading bar animation
+        loadingBarI = new Image(new Texture(Gdx.files.internal("data/bar.png")));
+
         Animation anim = new Animation(0.05f, atlas.findRegions("loading-bar-anim") );
         anim.setPlayMode(Animation.PlayMode.LOOP_REVERSED);
         loadingBar = new LoadingBar(anim);
@@ -67,6 +73,7 @@ public class LoadingScreen extends AbstractScreen {
         addActor(loadingBarHidden);
         addActor(loadingFrame);
         addActor(logo);
+        addActor(loadingBarI);
 
         // Add everything to be loaded, for instance:
         Assets.getInstance().loadAll();
@@ -104,34 +111,31 @@ public class LoadingScreen extends AbstractScreen {
         endX = 440;
 
         // The rest of the hidden bar
-        loadingBg.setSize(450, 50);
+        loadingBg.setSize(405, 50);
         loadingBg.setX(loadingBarHidden.getX() + 30);
         loadingBg.setY(loadingBarHidden.getY() + 3);
     }
 
     @Override
     public void render(float delta) {
-        // Clear the screen
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        super.render(delta);
 
-        if (Assets.getInstance().manager.update()) { // Load some, will return true if done loading
-            if (Gdx.input.isTouched()) { // If the screen is touched after the game is done loading, go to the main menu screen
-                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
-            }
-        }
-
-        // Interpolate the percentage to make it more smooth
-        percent = Interpolation.linear.apply(percent, Assets.getInstance().manager.getProgress(), 0.1f);
-
-        // Update positions (and size) to match the percentage
-        loadingBarHidden.setX(startX + endX * percent);
-        loadingBg.setX(loadingBarHidden.getX() + 30);
-        loadingBg.setWidth(450 - 450 * percent);
-        loadingBg.invalidate();
-
-        // Show the loading screen
-        act();
-        draw();
+//        if (Assets.getInstance().manager.update()) { // Load some, will return true if done loading
+//                ScreenService.getInstance().setScreen(ScreenEnum.LOGIN);
+//        }
+//
+//        // Interpolate the percentage to make it more smooth
+//        percent = Interpolation.linear.apply(percent, Assets.getInstance().manager.getProgress(), 0.1f);
+//
+//        // Update positions (and size) to match the percentage
+//        loadingBarHidden.setX(startX + endX * percent);
+//        loadingBg.setX(loadingBarHidden.getX() + 30);
+//        loadingBg.setWidth(TeleClicker.WIDTH - TeleClicker.WIDTH * percent);
+//        loadingBg.invalidate();
+//
+//        // Show the loading screen
+//        act();
+//        draw();
     }
 
     @Override
