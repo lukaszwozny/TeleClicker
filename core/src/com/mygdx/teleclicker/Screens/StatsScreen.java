@@ -38,7 +38,7 @@ public class StatsScreen extends AbstractScreen {
         final int HEIGHT = 70;
 
         final int X = TeleClicker.WIDTH / 2 - WIDTH / 2;
-        final int Y = 10;
+        final int Y = 38+10;
         final int NTERVAL = HEIGHT + 20;
 
         backButton.setSize(WIDTH,HEIGHT);

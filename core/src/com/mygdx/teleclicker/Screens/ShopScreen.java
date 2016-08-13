@@ -41,7 +41,7 @@ public class ShopScreen extends AbstractScreen {
         initBgTexture();
         initCashLabel();
 
-        initScoreLabels();
+//        initScoreLabels();
         initButtons();
         initShopEntrys();
         Gdx.input.setCatchBackKey(true);
@@ -54,7 +54,7 @@ public class ShopScreen extends AbstractScreen {
         final int HEIGHT = 70;
 
         final int X = TeleClicker.WIDTH / 2 - WIDTH / 2;
-        final int Y = 10;
+        final int Y = 38+10;
         final int NTERVAL = HEIGHT + 20;
 
         backButton.setSize(WIDTH,HEIGHT);
@@ -85,7 +85,7 @@ public class ShopScreen extends AbstractScreen {
     public boolean keyDown(int keyCode) {
         switch (keyCode){
             case Input.Keys.BACK:
-                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY);
+                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY2);
                 break;
         }
         return false;
