@@ -16,6 +16,8 @@ import com.mygdx.teleclicker.Enums.ScreenEnum;
 import com.mygdx.teleclicker.Service.*;
 import com.mygdx.teleclicker.TeleClicker;
 import com.mygdx.teleclicker.ui.*;
+import com.mygdx.teleclicker.ui.MyTextButton;
+import com.mygdx.teleclicker.ui.RedTextButton;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -29,6 +31,7 @@ public class LoginScreen extends AbstractScreen {
 
     private MyTextButton loginButton;
     private MyTextButton newPlayerButton;
+    private MyTextButton playAsGuestButton;
     private MyTextButton quitButton;
 
     private TextField loginTextField;
@@ -52,6 +55,7 @@ public class LoginScreen extends AbstractScreen {
     private void initButtons() {
         initLoginButton();
         initNewPlayerButton();
+        initPlayAsGuestButton();
         initQuitButton();
 
         final float BUTTON_WIDTH = 180.0f;
@@ -59,6 +63,7 @@ public class LoginScreen extends AbstractScreen {
 
         loginButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         newPlayerButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        playAsGuestButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         quitButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
 
@@ -68,11 +73,27 @@ public class LoginScreen extends AbstractScreen {
 
         loginButton.setPosition(X, Y);
         newPlayerButton.setPosition(X, Y - INTERVAL);
-        quitButton.setPosition(X, Y - 2 * INTERVAL);
+        playAsGuestButton.setPosition(X, Y - 2 * INTERVAL);
+        quitButton.setPosition(X, Y - 3 * INTERVAL);
 
         addActor(loginButton);
         addActor(newPlayerButton);
+        addActor(playAsGuestButton);
         addActor(quitButton);
+    }
+
+    private void initPlayAsGuestButton() {
+        playAsGuestButton = new RedTextButton("Play as Guest", new IClickCallback() {
+            @Override
+            public void onClick() {
+                SoundService.getInstance().playClickSound();
+
+                ScoreService.getInstance().setLastLogin("Guest");
+                ScoreService.getInstance().setLastPassword("");
+
+                ScreenService.getInstance().setScreen(ScreenEnum.GAMEPLAY2);
+            }
+        });
     }
 
     private void initQuitButton() {
