@@ -83,7 +83,7 @@ public class LoginScreen extends AbstractScreen {
     }
 
     private void initPlayAsGuestButton() {
-        playAsGuestButton = new RedTextButton("Play as Guest", new IClickCallback() {
+        playAsGuestButton = new RedTextButton("Play without login", new IClickCallback() {
             @Override
             public void onClick() {
                 SoundService.getInstance().playClickSound();
